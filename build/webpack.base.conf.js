@@ -91,7 +91,9 @@ module.exports = {
 
       new webpack.ContextReplacementPlugin(/moment[\/\\]locale$/, /en/),
     */
-
+    new webpack.ProvidePlugin({
+      'd3': 'd3'
+    }),
     new webpack.DefinePlugin({
       'process.env': config[env.prod ? 'build' : 'dev'].env,
       'DEV': env.dev,
