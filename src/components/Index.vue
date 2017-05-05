@@ -2,7 +2,7 @@
   <q-layout>
     <div slot="header" class="toolbar">
       <q-toolbar-title :padding="0">
-        Quasar Framework v{{$q.version}}
+        DoRothEA v2
       </q-toolbar-title>
     </div>
 
@@ -12,82 +12,41 @@
       if using subRoutes
     -->
     <div class="layout-view">
-      <div class="logo-container non-selectable no-pointer-events">
-        <div class="logo" :style="position">
-          <img src="~assets/quasar-logo.png">
-          <p class="caption text-center">
-            <span class="desktop-only">Move your mouse.</span>
-            <span class="touch-only">Touch screen and move.</span>
-          </p>
-        </div>
-      </div>
+      <q-select type="list" v-model="selectedDrug" :options="drugs"></q-select>
+      <volcano-plot v-show="selectedDrug" v-bind:drug="selectedDrug" v-bind:click-tf-handler="clickTrFaHandler"></volcano-plot>
+      <sample-plot v-show="selectedDrug && selectedTf" v-bind:drug="selectedDrug" v-bind:tf="selectedTf"></sample-plot>
     </div>
   </q-layout>
 </template>
 
 <script>
-var moveForce = 30
-var rotateForce = 40
-
-import { Utils } from 'quasar'
+import store from '../store'
 
 export default {
   data () {
     return {
-      moveX: 0,
-      moveY: 0,
-      rotateY: 0,
-      rotateX: 0
+      selectedDrug: null,
+      selectedTf: null
     }
   },
   computed: {
-    position () {
-      let transform = `rotateX(${this.rotateX}deg) rotateY(${this.rotateY}deg)`
-      return {
-        top: this.moveY + 'px',
-        left: this.moveX + 'px',
-        '-webkit-transform': transform,
-        '-ms-transform': transform,
-        transform
-      }
+    drugs () {
+      if (!store.state.aDrugs) return []
+      return store.state.aDrugs.map((drug) => {
+        return {
+          label: drug.drugName,
+          value: drug.drugId
+        }
+      })
     }
   },
   methods: {
-    move (event) {
-      const {width, height} = Utils.dom.viewport()
-      const {top, left} = Utils.event.position(event)
-      const halfH = height / 2
-      const halfW = width / 2
-
-      this.moveX = (left - halfW) / halfW * -moveForce
-      this.moveY = (top - halfH) / halfH * -moveForce
-      this.rotateY = (left / width * rotateForce * 2) - rotateForce
-      this.rotateX = -((top / height * rotateForce * 2) - rotateForce)
+    clickTrFaHandler (d) {
+      this.selectedTf = d.transcriptionFactor
     }
-  },
-  mounted () {
-    this.$nextTick(() => {
-      document.addEventListener('mousemove', this.move)
-      document.addEventListener('touchmove', this.move)
-    })
-  },
-  beforeDestroy () {
-    document.removeEventListener('mousemove', this.move)
-    document.removeEventListener('touchmove', this.move)
   }
 }
 </script>
 
-<style lang="styl">
-.logo-container
-  width 192px
-  height 268px
-  perspective 800px
-  position absolute
-  top 50%
-  left 50%
-  transform translateX(-50%) translateY(-50%)
-.logo
-  position absolute
-  transform-style preserve-3d
+<style>
 </style>
