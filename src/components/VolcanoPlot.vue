@@ -1,6 +1,6 @@
 <template>
   <div class="card">
-    <div class="card-title bg-primary text-white">Drug: {{ drug }}</div>
+    <div class="card-title bg-primary text-white">{{ drugSummary.drugName }} [{{ drugSummary.putativeTarget }}]</div>
     <div class="card-content">
       <div class="volcano-plot"></div>
     </div>
@@ -13,6 +13,13 @@ import store from '../store'
 
 export default {
   props: ['drug', 'clickTfHandler'],
+  computed: {
+    drugSummary: function () {
+      let summary = store.getters.drugSummary(this.drug)
+      if (!summary) summary = {}
+      return summary
+    }
+  },
   mounted () {
     this.createPlot()
   },
