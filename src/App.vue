@@ -27,20 +27,15 @@ d3.tsv('./statics/data/a_drugs.txt')
     // require data
     if (!data) return
 
-    // // convert list to object (where sample id is the key)
-    // let converted = {}
-    // data.map(el => {
-    //   converted[el.drugId] = el
-    // })
-
-    // store.commit('setData', {
-    //   name: 'aDrugs',
-    //   data: converted
-    // })
+    // convert list to object (where sample id is the key)
+    let converted = {}
+    data.map(el => {
+      converted[el.drugId] = el
+    })
 
     store.commit('setData', {
       name: 'aDrugs',
-      data: data
+      data: converted
     })
   })
 

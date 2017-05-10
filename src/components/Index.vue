@@ -12,9 +12,18 @@
       if using subRoutes
     -->
     <div class="layout-view">
-      <q-select type="list" v-model="selectedDrug" :options="drugs"></q-select>
-      <volcano-plot v-show="selectedDrug" v-bind:drug="selectedDrug" v-bind:click-tf-handler="clickTrFaHandler"></volcano-plot>
-      <sample-plot v-show="selectedDrug && selectedTf" v-bind:drug="selectedDrug" v-bind:tf="selectedTf"></sample-plot>
+      <div class="layout-padding">
+        <div class="card">
+          <div class="card-title bg-primary text-white">Drug Selection</div>
+          <div class="card-content">
+            <span>Please select a drug.</span>
+            <q-select type="list" v-model="selectedDrug" :options="drugs" @input="deselectTrFa"></q-select>
+          </div>
+        </div>
+        <volcano-plot v-show="selectedDrug" v-bind:drug="selectedDrug" v-bind:click-tf-handler="clickTrFaHandler"></volcano-plot>
+        <sample-plot v-show="selectedDrug && selectedTf" v-bind:drug="selectedDrug" v-bind:tf="selectedTf"></sample-plot>
+      </div>
+
     </div>
   </q-layout>
 </template>
@@ -31,18 +40,15 @@ export default {
   },
   computed: {
     drugs () {
-      if (!store.state.aDrugs) return []
-      return store.state.aDrugs.map((drug) => {
-        return {
-          label: drug.drugName,
-          value: drug.drugId
-        }
-      })
+      return store.getters.drugIndexNamePairs()
     }
   },
   methods: {
     clickTrFaHandler (d) {
       this.selectedTf = d.transcriptionFactor
+    },
+    deselectTrFa () {
+      this.selectedTf = null
     }
   }
 }

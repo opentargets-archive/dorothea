@@ -23,12 +23,16 @@ export default new Vuex.Store({
     sampleResponsesForDrug: (state) => (drugId) => {
       return state.mDrugIc50Gdsc[drugId]
     },
+    drugSummary: (state) => (drugId) => {
+      return state.aDrugs[drugId]
+    },
     drugIndexNamePairs: (state) => () => {
       if (!state.aDrugs) return []
-      return state.aDrugs.map((drug) => {
+      let keys = Object.keys(state.aDrugs)
+      return keys.map((drugId) => {
         return {
-          label: drug.drugName,
-          value: drug.drugId
+          label: state.aDrugs[drugId].drugName,
+          value: state.aDrugs[drugId].drugId
         }
       })
     },
@@ -50,12 +54,22 @@ export default new Vuex.Store({
     samplePlotData: (state) => (drugId, tfId) => {
       if (!state.mDrugIc50Gdsc || !state.mTfActivitiesGdsc) return []
       let ic50sForDrug = state.mDrugIc50Gdsc[drugId]
-      let sampleIds = Object.keys(ic50sForDrug).map(d => +d)
+      let ActivitiesForTf = state.mTfActivitiesGdsc[tfId]
+      let sampleIdsForDrug = Object.keys(ic50sForDrug).map(d => +d)
+      let sampleIdsForTf = Object.keys(ActivitiesForTf).map(d => +d)
+      let tfSet = new Set(sampleIdsForTf)
+      let sampleIds = []
+      sampleIdsForDrug.map(sampleId => {
+        if (tfSet.has(sampleId)) sampleIds.push(sampleId)
+      })
+
+      // console.log('TF: ' + tfId + ', drugCount: ' + sampleIdsForDrug.length + ', tfCount: ' + sampleIdsForTf.length + ', intersectionCount: ' + sampleIds.length)
       return sampleIds.map(sampleId => {
         return {
+          sampleId: sampleId,
           ic50: state.mDrugIc50Gdsc[drugId][sampleId],
-          tfActivity: state.mTfActivitiesGdsc[tfId][sampleId]
-        // sampleSummary: state.aSamples[sampleId]
+          tfActivity: state.mTfActivitiesGdsc[tfId][sampleId],
+          sample: state.aSamples[sampleId]
         }
       })
     }
