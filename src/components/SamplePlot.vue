@@ -1,6 +1,6 @@
 <template>
   <div class="card">
-    <div class="card-title bg-primary text-white">Drug: {{ drug }}, Transcription Factor: {{ tf }}</div>
+    <div class="card-title bg-primary text-white">Drug: {{ drugSummary.drugName }}, Transcription Factor: {{ tf }}</div>
     <div class="card-content">
       <div class="sample-plot"></div>
     </div>
@@ -14,6 +14,13 @@ import store from '../store'
 
 export default {
   props: ['drug', 'tf'],
+  computed: {
+    drugSummary: function () {
+      let summary = store.getters.drugSummary(this.drug)
+      if (!summary) summary = {}
+      return summary
+    }
+  },
   mounted () {
     this.createPlot()
   },
