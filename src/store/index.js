@@ -8,6 +8,7 @@ export default new Vuex.Store({
     aSamples: null,
     aDrugs: null,
     mDrugIc50Gdsc: null,
+    mDrugIc50CorrectedGdsc: null,
     mTfActivitiesGdsc: null,
     rTfDrugAssoGdsc: []
   },
@@ -51,9 +52,9 @@ export default new Vuex.Store({
       })
       return tfDrugAssociationsWithSampleCount
     },
-    samplePlotData: (state) => (drugId, tfId) => {
+    samplePlotData: (state) => (drugId, tfId, correctedIc50) => {
       if (!state.mDrugIc50Gdsc || !state.mTfActivitiesGdsc) return []
-      let ic50sForDrug = state.mDrugIc50Gdsc[drugId]
+      let ic50sForDrug = correctedIc50 ? state.mDrugIc50CorrectedGdsc[drugId] : state.mDrugIc50Gdsc[drugId]
       let ActivitiesForTf = state.mTfActivitiesGdsc[tfId]
       let sampleIdsForDrug = Object.keys(ic50sForDrug).map(d => +d)
       let sampleIdsForTf = Object.keys(ActivitiesForTf).map(d => +d)
@@ -67,7 +68,7 @@ export default new Vuex.Store({
       return sampleIds.map(sampleId => {
         return {
           sampleId: sampleId,
-          ic50: state.mDrugIc50Gdsc[drugId][sampleId],
+          ic50: ic50sForDrug[sampleId],
           tfActivity: state.mTfActivitiesGdsc[tfId][sampleId],
           sample: state.aSamples[sampleId]
         }

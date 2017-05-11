@@ -121,6 +121,41 @@ d3.tsv('./statics/data/m_drug_ic50_gdsc.txt')
     })
   })
 
+d3.tsv('./statics/data/m_drug_ic50corrected_gdsc.txt')
+  .row(function (r, i) {
+    // extract drug id
+    const drugId = +r.drug_id
+
+    // filter each row to remove NA values
+    const responses = {}
+    for (let key in r) {
+      if (r[key] !== 'NA' && key !== 'drug_id') {
+        responses[key] = +r[key]
+      }
+    }
+
+    return {
+      drugId,
+      responses
+    }
+  })
+  .get(function (data) {
+    // require data
+    if (!data) return
+
+    // convert list to object (where drug id is the key)
+    let converted = {}
+    data.map(el => {
+      converted[el.drugId] = el.responses
+    })
+
+    // save to store
+    store.commit('setData', {
+      name: 'mDrugIc50CorrectedGdsc',
+      data: converted
+    })
+  })
+
 d3.tsv('./statics/data/m_tf_activities_gdsc.txt')
   .row(function (r, i) {
     // extract transcription factor id
