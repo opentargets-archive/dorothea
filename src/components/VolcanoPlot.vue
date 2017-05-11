@@ -15,6 +15,36 @@
 import resize from 'vue-resize-directive'
 import volcanoPlot from 'volcano-plot'
 import store from '../store'
+import * as d3 from 'd3'
+
+function tooltipAccessor (d) {
+  return '<table>' +
+    '<tr>' +
+      '<th>Transcription Factor</th>' +
+      '<th>' + d.transcriptionFactor + '</th>' +
+    '</tr>' +
+    '<tr>' +
+      '<td>Effect Size</td>' +
+      '<td>' + d3.format('.3g')(d.effectSize) + '</td>' +
+    '</tr>' +
+    '<tr>' +
+      '<td>FDR</td>' +
+      '<td>' + d3.format('.3g')(d.fdr) + '</td>' +
+    '</tr>' +
+    '<tr>' +
+      '<td>Sample Count</td>' +
+      '<td>' + d.sampleCount + '</td>' +
+    '</tr>' +
+    '<tr>' +
+      '<td>P Value</td>' +
+      '<td>' + d3.format('.3g')(d.pval) + '</td>' +
+    '</tr>' +
+    '<tr>' +
+      '<td>Drug Targets</td>' +
+      '<td>' + d.drugTargets + '</td>' +
+    '</tr>' +
+  '</table>'
+}
 
 export default {
   props: ['drug', 'clickTfHandler', 'selectedTf'],
@@ -53,6 +83,7 @@ export default {
                     .handleCircleClick(this.clickTfHandler)
                     .selectedCircle(this.selectedTf)
                     .showCircleLabels(this.showLabels)
+                    .tooltipAccessor(tooltipAccessor)
                     .xLabel('Effect Size')
                     .yLabel('-log (FDR)')
       this.plot.render()
