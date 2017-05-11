@@ -5,7 +5,7 @@
       <div class="volcano-plot"></div>
       <label>
       <q-checkbox v-model="showLabels"></q-checkbox>
-        Show Labels
+      Show Labels
       </label>
     </div>
   </div>
