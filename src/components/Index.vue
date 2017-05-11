@@ -20,8 +20,8 @@
             <q-select type="list" v-model="selectedDrug" :options="drugs" @input="deselectTrFa"></q-select>
           </div>
         </div>
-        <volcano-plot v-show="selectedDrug" v-bind:drug="selectedDrug" v-bind:click-tf-handler="clickTrFaHandler"></volcano-plot>
-        <sample-plot v-show="selectedDrug && selectedTf" v-bind:drug="selectedDrug" v-bind:tf="selectedTf"></sample-plot>
+        <volcano-plot v-show="selectedDrug" :drug="selectedDrug" :selectedTf="selectedTf" :click-tf-handler="clickTrFaHandler"></volcano-plot>
+        <sample-plot v-show="selectedDrug && selectedTf" :drug="selectedDrug" :tf="selectedTf"></sample-plot>
       </div>
 
     </div>
