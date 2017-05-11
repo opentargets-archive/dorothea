@@ -59,7 +59,8 @@ export default {
     },
     handleResize () {
       let aspectRatio = 4.0 / 3
-      let width = this.$el.offsetWidth
+      let element = this.$el.querySelector('div.volcano-plot')
+      let width = element.offsetWidth
       let height = width / aspectRatio
       this.plot.width(width)
                .height(height)
