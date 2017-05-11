@@ -3,6 +3,10 @@
     <div class="card-title bg-primary text-white">{{ drugSummary.drugName }} [{{ drugSummary.putativeTarget }}]</div>
     <div class="card-content">
       <div class="volcano-plot"></div>
+      <label>
+      <q-checkbox v-model="showLabels"></q-checkbox>
+        Show Labels
+      </label>
     </div>
   </div>
 </template>
@@ -12,7 +16,12 @@ import volcanoPlot from 'volcano-plot'
 import store from '../store'
 
 export default {
-  props: ['drug', 'clickTfHandler'],
+  props: ['drug', 'clickTfHandler', 'selectedTf'],
+  data () {
+    return {
+      showLabels: true
+    }
+  },
   computed: {
     drugSummary: function () {
       let summary = store.getters.drugSummary(this.drug)
@@ -25,6 +34,8 @@ export default {
   },
   updated () {
     this.plot.data(store.getters.volcanoPlotData(this.drug))
+             .selectedCircle(this.selectedTf)
+             .showCircleLabels(this.showLabels)
              .render()
   },
   methods: {
@@ -33,9 +44,11 @@ export default {
                     .data(store.getters.volcanoPlotData(this.drug))
                     .xAccessor(d => d.effectSize)
                     .yAccessor(d => d.fdr)
-                    // .rAccessor(d => d.fdr)
+                    .textAccessor(d => d.transcriptionFactor)
                     .rAccessor(d => d.sampleCount)
                     .handleCircleClick(this.clickTfHandler)
+                    .selectedCircle(this.selectedTf)
+                    .showCircleLabels(this.showLabels)
                     .xLabel('Effect Size')
                     .yLabel('-log (FDR)')
       this.plot.render()
