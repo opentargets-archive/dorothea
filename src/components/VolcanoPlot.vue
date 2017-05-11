@@ -1,5 +1,5 @@
 <template>
-  <div class="card">
+  <div class="card" v-resize="handleResize">
     <div class="card-title bg-primary text-white">{{ drugSummary.drugName }} [{{ drugSummary.putativeTarget }}]</div>
     <div class="card-content">
       <div class="volcano-plot"></div>
@@ -12,11 +12,15 @@
 </template>
 
 <script>
+import resize from 'vue-resize-directive'
 import volcanoPlot from 'volcano-plot'
 import store from '../store'
 
 export default {
   props: ['drug', 'clickTfHandler', 'selectedTf'],
+  directives: {
+    resize
+  },
   data () {
     return {
       showLabels: true
@@ -52,6 +56,14 @@ export default {
                     .xLabel('Effect Size')
                     .yLabel('-log (FDR)')
       this.plot.render()
+    },
+    handleResize () {
+      let aspectRatio = 4.0 / 3
+      let width = this.$el.offsetWidth
+      let height = width / aspectRatio
+      this.plot.width(width)
+               .height(height)
+               .render()
     }
   }
 }
