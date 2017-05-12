@@ -21,7 +21,7 @@
 
 <script>
 import resize from 'vue-resize-directive'
-import volcanoPlot from 'sample-plot'
+import samplePlot from 'sample-plot'
 import store from '../store'
 import * as d3 from 'd3'
 
@@ -89,7 +89,7 @@ export default {
   },
   methods: {
     createPlot () {
-      this.plot = volcanoPlot('.sample-plot')
+      this.plot = samplePlot('.sample-plot')
                     .data(store.getters.samplePlotData(this.drug, this.tf, this.useCorrectedIc50))
                     .xAccessor(d => d.tfActivity)
                     .yAccessor(d => d.ic50)
