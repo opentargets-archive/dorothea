@@ -10,4 +10,3 @@ cordova/platforms
 cordova/plugins
 thumbs.db
 !.gitkeep
-src/statics/data
