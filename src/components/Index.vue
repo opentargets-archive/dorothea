@@ -17,11 +17,18 @@
           <div class="card-title bg-primary text-white">Drug Selection</div>
           <div class="card-content">
             <span>Please select a drug.</span>
-            <q-select type="list" v-model="selectedDrug" :options="drugs" @input="deselectTrFa"></q-select>
+            <q-select type="list" v-model="selectedDrug" :options="drugs"></q-select>
           </div>
         </div>
-        <volcano-plot v-show="selectedDrug" :drug="selectedDrug" :selectedTf="selectedTf" :click-tf-handler="clickTrFaHandler"></volcano-plot>
-        <sample-plot v-show="selectedDrug && selectedTf" :drug="selectedDrug" :tf="selectedTf"></sample-plot>
+        <div class="card">
+          <div class="card-title bg-primary text-white">Transcription Factor Selection</div>
+          <div class="card-content">
+            <span>Please select a transcription factor.</span>
+            <q-select type="list" v-model="selectedTf" :options="tfs"></q-select>
+          </div>
+        </div>
+        <volcano-plot v-show="selectedDrug" :selectedDrug="selectedDrug" :selectedTf="selectedTf" :click-association-handler="clickAssociationHandler"></volcano-plot>
+        <sample-plot v-show="(selectedDrug !== 'all') && (selectedTf !== 'all')" :drug="selectedDrug" :tf="selectedTf"></sample-plot>
       </div>
 
     </div>
@@ -34,21 +41,22 @@ import store from '../store'
 export default {
   data () {
     return {
-      selectedDrug: null,
-      selectedTf: null
+      selectedDrug: 'all',
+      selectedTf: 'all'
     }
   },
   computed: {
     drugs () {
       return store.getters.drugIndexNamePairs()
+    },
+    tfs () {
+      return store.getters.tfIndexNamePairs()
     }
   },
   methods: {
-    clickTrFaHandler (d) {
+    clickAssociationHandler (d) {
+      this.selectedDrug = d.drugId
       this.selectedTf = d.transcriptionFactor
-    },
-    deselectTrFa () {
-      this.selectedTf = null
     }
   }
 }

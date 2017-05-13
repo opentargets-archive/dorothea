@@ -30,29 +30,56 @@ export default new Vuex.Store({
     drugIndexNamePairs: (state) => () => {
       if (!state.aDrugs) return []
       let keys = Object.keys(state.aDrugs)
-      return keys.map((drugId) => {
+      let pairs = keys.map((drugId) => {
         return {
           label: state.aDrugs[drugId].drugName,
           value: state.aDrugs[drugId].drugId
         }
       })
+      pairs.push({
+        label: 'All',
+        value: 'all'
+      })
+      return pairs
     },
-    volcanoPlotData: (state, getters) => (drugId) => {
+    tfIndexNamePairs: (state) => () => {
       if (!state.rTfDrugAssoGdsc) return []
-
-      // get drug-transcription factor links (x/y coords)
-      let tfDrugAssociations = state.rTfDrugAssoGdsc.filter((item) => item.drugId === drugId)
-
-      // get number of samples (r coord)
-      let tfDrugAssociationsWithSampleCount = tfDrugAssociations.map(item => {
+      // get unique tfs from this table
+      // (ie. they appear in at least one association)
+      let tfIdsSet = new Set(state.rTfDrugAssoGdsc.map(d => d.transcriptionFactor))
+      let pairs = [...tfIdsSet].map((tfId) => {
         return {
-          ...item,
-          sampleCount: getters.samplePlotData(drugId, item.transcriptionFactor).length
+          label: tfId,
+          value: tfId
         }
       })
-      return tfDrugAssociationsWithSampleCount
+      pairs.push({
+        label: 'All',
+        value: 'all'
+      })
+      return pairs
+    },
+    volcanoPlotData: (state, getters) => (drugId, tfId) => {
+      if (!state.rTfDrugAssoGdsc) return []
+      // drugId and tfId can each be either an individual identifier or the word 'all'
+      const allDrugs = (drugId === 'all')
+      const allTfs = (tfId === 'all')
+      let associations = state.rTfDrugAssoGdsc.filter((item) => {
+        const filteredForDrug = allDrugs || (item.drugId === drugId)
+        const filteredForTf = allTfs || (item.transcriptionFactor === tfId)
+        return filteredForDrug && filteredForTf
+      })
+      let associationsWithSampleCounts = associations.map(item => {
+        return {
+          ...item,
+          sampleCount: 10 // TODO: Fix this (cache?)
+          // sampleCount: getters.samplePlotData(item.drugId, item.transcriptionFactor).length
+        }
+      })
+      return associationsWithSampleCounts
     },
     samplePlotData: (state) => (drugId, tfId, correctedIc50) => {
+      if (drugId === 'all' || tfId === 'all') return []
       if (!state.mDrugIc50Gdsc || !state.mTfActivitiesGdsc) return []
       let ic50sForDrug = correctedIc50 ? state.mDrugIc50CorrectedGdsc[drugId] : state.mDrugIc50Gdsc[drugId]
       let ActivitiesForTf = state.mTfActivitiesGdsc[tfId]
@@ -63,8 +90,6 @@ export default new Vuex.Store({
       sampleIdsForDrug.map(sampleId => {
         if (tfSet.has(sampleId)) sampleIds.push(sampleId)
       })
-
-      // console.log('TF: ' + tfId + ', drugCount: ' + sampleIdsForDrug.length + ', tfCount: ' + sampleIdsForTf.length + ', intersectionCount: ' + sampleIds.length)
       return sampleIds.map(sampleId => {
         return {
           sampleId: sampleId,

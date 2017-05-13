@@ -1,6 +1,6 @@
 <template>
   <div class="card" v-resize="handleResize">
-    <div class="card-title bg-primary text-white">{{ drugSummary.drugName }} [{{ drugSummary.putativeTarget }}]</div>
+    <div class="card-title bg-primary text-white">{{ title }}</div>
     <div class="card-content">
       <div class="volcano-plot"></div>
       <label>
@@ -47,7 +47,7 @@ function tooltipAccessor (d) {
 }
 
 export default {
-  props: ['drug', 'clickTfHandler', 'selectedTf'],
+  props: ['selectedDrug', 'selectedTf', 'clickAssociationHandler'],
   directives: {
     resize
   },
@@ -58,29 +58,50 @@ export default {
   },
   computed: {
     drugSummary: function () {
-      let summary = store.getters.drugSummary(this.drug)
+      let summary = store.getters.drugSummary(this.selectedDrug)
       if (!summary) summary = {}
       return summary
+    },
+    title: function () {
+      const allDrugs = (this.selectedDrug === 'all')
+      const allTfs = (this.selectedTf === 'all')
+
+      let title
+      if (allDrugs && allTfs) {
+        title = 'Showing associations between all drugs and all transcription factors'
+      }
+      else if (allDrugs && !allTfs) {
+        title = 'Showing associations between all drugs and the transcription factor ' + this.selectedTf
+      }
+      else if (!allDrugs && allTfs) {
+        title = 'Showing associations between the drug ' + store.getters.drugSummary(this.selectedDrug).drugName + ' and all transcription factors'
+      }
+      else {
+        title = 'Showing the association between the drug ' + store.getters.drugSummary(this.selectedDrug).drugName + ' and the transcription factor ' + this.selectedTf
+      }
+      return title
     }
   },
   mounted () {
     this.createPlot()
   },
   updated () {
-    this.plot.data(store.getters.volcanoPlotData(this.drug))
+    let data = store.getters.volcanoPlotData(this.selectedDrug, this.selectedTf)
+    this.plot.data(data)
              .selectedCircle(this.selectedTf)
              .showCircleLabels(this.showLabels)
              .render()
   },
   methods: {
     createPlot () {
+      let data = store.getters.volcanoPlotData(this.selectedDrug, this.selectedTf)
       this.plot = volcanoPlot('.volcano-plot')
-                    .data(store.getters.volcanoPlotData(this.drug))
+                    .data(data)
                     .xAccessor(d => d.effectSize)
                     .yAccessor(d => d.fdr)
                     .textAccessor(d => d.transcriptionFactor)
                     .rAccessor(d => d.sampleCount)
-                    .handleCircleClick(this.clickTfHandler)
+                    .handleCircleClick(this.clickAssociationHandler)
                     .selectedCircle(this.selectedTf)
                     .showCircleLabels(this.showLabels)
                     .tooltipAccessor(tooltipAccessor)

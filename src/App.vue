@@ -12,6 +12,8 @@
 import * as d3 from 'd3'
 import store from './store'
 
+// TODO: Move data loading into store methods
+
 d3.tsv('./statics/data/a_drugs.txt')
   .row(function (r, i) {
     return {
