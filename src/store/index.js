@@ -25,6 +25,7 @@ export default new Vuex.Store({
       return state.mDrugIc50Gdsc[drugId]
     },
     drugSummary: (state) => (drugId) => {
+      if (!state.aDrugs) return {}
       return state.aDrugs[drugId]
     },
     drugIndexNamePairs: (state) => () => {
