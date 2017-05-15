@@ -10,3 +10,5 @@ cordova/platforms
 cordova/plugins
 thumbs.db
 !.gitkeep
+src/statics/data/README
+src/statics/data/get_data2web.r
