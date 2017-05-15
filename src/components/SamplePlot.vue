@@ -15,6 +15,10 @@
         <q-checkbox v-model="useCorrectedIc50"></q-checkbox>
         Use Corrected IC50
       </label>
+      <label>
+        <q-checkbox v-model="showLegend"></q-checkbox>
+        Show Legend
+      </label>
     </div>
   </div>
 </template>
@@ -67,7 +71,8 @@ export default {
     return {
       showLabels: true,
       showRegression: true,
-      useCorrectedIc50: true
+      useCorrectedIc50: true,
+      showLegend: true
     }
   },
   computed: {
@@ -84,6 +89,7 @@ export default {
     this.plot.data(store.getters.samplePlotData(this.drug, this.tf, this.useCorrectedIc50))
              .showCircleLabels(this.showLabels)
              .showRegression(this.showRegression)
+             .showLegend(this.showLegend)
              .yLabel(this.useCorrectedIc50 ? 'Corrected IC50' : 'IC50')
              .render()
   },
@@ -95,6 +101,8 @@ export default {
                     .yAccessor(d => d.ic50)
                     .textAccessor(d => d.sampleId)
                     .tooltipAccessor(tooltipAccessor)
+                    .legendFieldAccessor(d => d.sample.gdscDesc1)
+                    .legendTitle('GDSC Description 1')
                     .xLabel('Activity')
                     .yLabel(this.useCorrectedIc50 ? 'Corrected IC50' : 'IC50')
       this.plot.render()

@@ -45,9 +45,10 @@ d3.tsv('./statics/data/a_samples.txt')
   .row(function (r, i) {
     return {
       cosmicId: +r.CosmicID,
-      analysisSetName: r['Analysis.Set.Name'],
-      gdscDesc1: r.gdsc_desc_1,
-      studyAbbreviation: r['Study.Abbreviation'],
+      analysisSetName: r['Cell.line.name'],
+      gdscDesc1: r.Primary_Site_GDSC1,
+      gdscDesc2: r.Primary_Site_GDSC2,
+      studyAbbreviation: r['TCGA_label'],
       comment: r.Comment,
       mmr: r.MMR,
       screenMedium: r.Screen_Medium
