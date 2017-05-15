@@ -35,11 +35,15 @@ export default new Vuex.Store({
           label: state.aDrugs[drugId].drugName,
           value: state.aDrugs[drugId].drugId
         }
+      }).sort((a, b) => {
+        if (a.label < b.label) return -1
+        if (a.label > b.label) return 1
+        return 0
       })
-      pairs.push({
+      pairs = [{
         label: 'All',
         value: 'all'
-      })
+      }, ...pairs]
       return pairs
     },
     tfIndexNamePairs: (state) => () => {
@@ -47,16 +51,16 @@ export default new Vuex.Store({
       // get unique tfs from this table
       // (ie. they appear in at least one association)
       let tfIdsSet = new Set(state.rTfDrugAssoGdsc.map(d => d.transcriptionFactor))
-      let pairs = [...tfIdsSet].map((tfId) => {
+      let pairs = [...tfIdsSet].sort().map((tfId) => {
         return {
           label: tfId,
           value: tfId
         }
       })
-      pairs.push({
+      pairs = [{
         label: 'All',
         value: 'all'
-      })
+      }, ...pairs]
       return pairs
     },
     volcanoPlotData: (state, getters) => (drugId, tfId) => {
