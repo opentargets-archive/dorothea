@@ -92,6 +92,11 @@ export default {
              .showCircleLabels(this.showLabels)
              .render()
   },
+  beforeDestroy () {
+    // destroy tooltip created by chart constructor
+    d3.select('.d3-tip.volcano-plot')
+        .remove()
+  },
   methods: {
     createPlot () {
       let data = store.getters.volcanoPlotData(this.selectedDrug, this.selectedTf)
