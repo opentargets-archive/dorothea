@@ -1,5 +1,5 @@
 <template>
-  <div class="card" v-resize="handleResize">
+  <div class="card" v-resize="handlerResize">
     <div class="card-title bg-primary text-white">Drug: {{ drugSummary.drugName }}, Transcription Factor: {{ tf }}</div>
     <div class="card-content">
       <div class="sample-plot"></div>
@@ -52,8 +52,12 @@ function tooltipAccessor (d) {
       '<td>' + d.sample.mmr + '</td>' +
     '</tr>' +
     '<tr>' +
-      '<td>GDSC Description</td>' +
+      '<td>GDSC Description 1</td>' +
       '<td>' + d.sample.gdscDesc1 + '</td>' +
+    '</tr>' +
+    '<tr>' +
+      '<td>GDSC Description 2</td>' +
+      '<td>' + d.sample.gdscDesc2 + '</td>' +
     '</tr>' +
     '<tr>' +
       '<td>Screen Medium</td>' +
@@ -93,6 +97,11 @@ export default {
              .yLabel(this.useCorrectedIc50 ? 'Corrected IC50' : 'IC50')
              .render()
   },
+  beforeDestroy () {
+    // destroy tooltip created by chart constructor
+    d3.select('.d3-tip.sample-plot')
+        .remove()
+  },
   methods: {
     createPlot () {
       this.plot = samplePlot('.sample-plot')
@@ -107,7 +116,7 @@ export default {
                     .yLabel(this.useCorrectedIc50 ? 'Corrected IC50' : 'IC50')
       this.plot.render()
     },
-    handleResize () {
+    handlerResize () {
       let aspectRatio = 4.0 / 3
       let element = this.$el.querySelector('div.sample-plot')
       let width = element.offsetWidth
