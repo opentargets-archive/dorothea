@@ -59,6 +59,7 @@ export default {
   data () {
     return {
       showLabels: true
+      // lastChanged: null
     }
   },
   computed: {
@@ -87,15 +88,46 @@ export default {
       return title
     }
   },
+  // watch: {
+  //   selectedDrug: function (val, oldVal) {
+  //     this.lastChanged = 'drug'
+  //     console.log('selectedDrug changed from ' + oldVal + ' to ' + val)
+  //   },
+  //   selectedTf: function (val, oldVal) {
+  //     this.lastChanged = 'tf'
+  //     console.log('selectedTf changed from ' + oldVal + ' to ' + val)
+  //   }
+  // },
   mounted () {
     this.createPlot()
   },
   updated () {
-    let data = store.getters.volcanoPlotData(this.selectedDrug, this.selectedTf)
-    this.plot.data(data)
-             .selectedCircle(this.selectedTf)
-             .showCircleLabels(this.showLabels)
-             .render()
+    // // always update, but use lastChanged parameter
+    // if (lastChanged === 'drug') {
+    // // the volcano-plot should show the current drug against
+    // }
+
+    // update only if at least one all
+    if ((this.selectedDrug !== 'all') && (this.selectedTf !== 'all')) {
+      // don't update the data because otherwise the
+      // volcano-plot will only show a single point
+      this.plot.showCircleLabels(this.showLabels)
+               .render()
+    }
+    else {
+      // do update the data
+      let data = store.getters.volcanoPlotData(this.selectedDrug, this.selectedTf)
+      this.plot.data(data)
+               .showCircleLabels(this.showLabels)
+               .render()
+    }
+
+    // // always update
+    // let data = store.getters.volcanoPlotData(this.selectedDrug, this.selectedTf)
+    // this.plot.data(data)
+    //         //  .selectedCircle(this.selectedTf)
+    //          .showCircleLabels(this.showLabels)
+    //          .render()
   },
   beforeDestroy () {
     // destroy tooltip created by chart constructor
@@ -112,7 +144,6 @@ export default {
                     .textAccessor(d => d.transcriptionFactor)
                     .rAccessor(d => d.sampleCount)
                     .handleCircleClick(this.clickAssociationHandler)
-                    .selectedCircle(this.selectedTf)
                     .showCircleLabels(this.showLabels)
                     .tooltipAccessor(tooltipAccessor)
                     .xLabel('Effect Size')
