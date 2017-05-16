@@ -18,10 +18,15 @@ import store from '../store'
 import * as d3 from 'd3'
 
 function tooltipAccessor (d) {
+  const cancerRxGeneUrl = 'http://www.cancerrxgene.org/translation/Drug/' + d.drugId
   return '<table>' +
-    '<tr>' +
-      '<th>Transcription Factor</th>' +
-      '<th>' + d.transcriptionFactor + '</th>' +
+    '<tr class="emphasis-row">' +
+      '<td>Transcription Factor</td>' +
+      '<td>' + d.transcriptionFactor + '</td>' +
+    '</tr>' +
+    '<tr class="emphasis-row">' +
+      '<td>Drug</td>' +
+      '<td><a class="drug-link" target="_blank" href="' + cancerRxGeneUrl + '">' + d.drugName + '</a></td>' +
     '</tr>' +
     '<tr>' +
       '<td>Effect Size</td>' +
@@ -128,4 +133,7 @@ export default {
 </script>
 
 <style>
+.drug-link:before {
+  content: url(../assets/cancerrxgene_logo_14x14.png)
+}
 </style>
