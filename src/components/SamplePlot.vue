@@ -30,10 +30,12 @@ import store from '../store'
 import * as d3 from 'd3'
 
 function tooltipAccessor (d) {
+  const cosmicUrl = 'http://cancer.sanger.ac.uk/cosmic/mutation/overview?id=' + d.sampleId
   return '<table>' +
     '<tr>' +
       '<th>COSMIC ID</th>' +
-      '<th>' + d.sampleId + '</th>' +
+      // '<th>' + d.sampleId + '</th>' +
+      '<th><a class="cosmic-link" target="_blank" href="' + cosmicUrl + '">' + d.sampleId + '</a></th>' +
     '</tr>' +
     '<tr>' +
       '<td>Activity</td>' +
@@ -130,4 +132,7 @@ export default {
 </script>
 
 <style>
+.cosmic-link:before {
+  content: url(../assets/logo_cosmic_14x14.png)
+}
 </style>
