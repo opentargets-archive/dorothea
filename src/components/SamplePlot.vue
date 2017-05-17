@@ -118,7 +118,7 @@ export default {
       this.plot.render()
     },
     handlerResize () {
-      let aspectRatio = 4.0 / 3
+      let aspectRatio = 5.0 / 3
       let element = this.$el.querySelector('div.sample-plot')
       let width = element.offsetWidth
       let height = width / aspectRatio
