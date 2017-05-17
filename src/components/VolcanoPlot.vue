@@ -102,32 +102,10 @@ export default {
     this.createPlot()
   },
   updated () {
-    // // always update, but use lastChanged parameter
-    // if (lastChanged === 'drug') {
-    // // the volcano-plot should show the current drug against
-    // }
-
-    // update only if at least one all
-    if ((this.selectedDrug !== 'all') && (this.selectedTf !== 'all')) {
-      // don't update the data because otherwise the
-      // volcano-plot will only show a single point
-      this.plot.showCircleLabels(this.showLabels)
-               .render()
-    }
-    else {
-      // do update the data
-      let data = store.getters.volcanoPlotData(this.selectedDrug, this.selectedTf)
-      this.plot.data(data)
-               .showCircleLabels(this.showLabels)
-               .render()
-    }
-
-    // // always update
-    // let data = store.getters.volcanoPlotData(this.selectedDrug, this.selectedTf)
-    // this.plot.data(data)
-    //         //  .selectedCircle(this.selectedTf)
-    //          .showCircleLabels(this.showLabels)
-    //          .render()
+    let data = store.getters.volcanoPlotData(this.selectedDrug, this.selectedTf)
+    this.plot.data(data)
+             .showCircleLabels(this.showLabels)
+             .render()
   },
   beforeDestroy () {
     // destroy tooltip created by chart constructor
@@ -141,7 +119,7 @@ export default {
                     .data(data)
                     .xAccessor(d => d.effectSize)
                     .yAccessor(d => d.fdr)
-                    .textAccessor(d => d.transcriptionFactor)
+                    .textAccessor(d => d.drugName + ':' + d.transcriptionFactor)
                     .rAccessor(d => d.sampleCount)
                     .handleCircleClick(this.clickAssociationHandler)
                     .showCircleLabels(this.showLabels)
@@ -151,7 +129,7 @@ export default {
       this.plot.render()
     },
     handleResize () {
-      let aspectRatio = 4.0 / 3
+      let aspectRatio = 5.0 / 3
       let element = this.$el.querySelector('div.volcano-plot')
       let width = element.offsetWidth
       let height = width / aspectRatio
