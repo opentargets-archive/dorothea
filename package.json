@@ -22,6 +22,7 @@
     "sass-loader": "^6.0.3",
     "volcano-plot": "git+https://git@github.com/opentargets/volcano-plot.git#v1.0.2",
     "vue": "^2.3.0",
+    "vue-awesome": "^2.3.1",
     "vue-resize-directive": "^1.0.0",
     "vue-router": "^2.0.0",
     "vuex": "^2.3.1"
