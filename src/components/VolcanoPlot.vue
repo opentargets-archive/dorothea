@@ -8,6 +8,7 @@
     </div>
     
     <div class="card-content">
+      <!--<spinner v-if="!dataLoaded" name="rings"></spinner>-->
       <div class="volcano-plot"></div>
       <label>
       <q-checkbox v-model="showLabels"></q-checkbox>
@@ -92,6 +93,14 @@ export default {
         title = 'Showing the association between the drug ' + store.getters.drugSummary(this.selectedDrug).drugName + ' and the transcription factor ' + this.selectedTf
       }
       return title
+    },
+    dataLoaded: function () {
+      return store.state.loaded
+    }
+  },
+  watch: {
+    dataLoaded: function (val) {
+      this.$forceUpdate()
     }
   },
   mounted () {

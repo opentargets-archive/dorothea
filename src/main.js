@@ -17,6 +17,7 @@ import VolcanoPlot from './components/VolcanoPlot.vue'
 import SamplePlot from './components/SamplePlot.vue'
 import 'vue-awesome/icons'
 import Icon from 'vue-awesome/components/Icon'
+import store from './store'
 
 Vue.use(Quasar) // Install Quasar Framework
 
@@ -26,9 +27,26 @@ Vue.component('icon', Icon)
 
 Quasar.start(() => {
   /* eslint-disable no-new */
-  new Vue({
+  let vm = new Vue({
     el: '#q-app',
     router,
-    render: h => h(require('./App'))
+    render: h => h(require('./App')),
+    methods: {
+      loadAll () {
+        Promise.all([
+          store.dispatch('loadADrugs'),
+          store.dispatch('loadASamples'),
+          store.dispatch('loadRTfDrugAssoGdsc'),
+          store.dispatch('loadMDrugIc50Gdsc'),
+          store.dispatch('loadMDrugIc50CorrectedGdsc'),
+          store.dispatch('loadMTfActivitiesGdsc')
+        ]).then(() => {
+          store.commit('setLoaded', {
+            value: true
+          })
+        })
+      }
+    }
   })
+  vm.loadAll()
 })
