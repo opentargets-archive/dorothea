@@ -2,7 +2,13 @@
   <div class="card" v-resize="handlerResize">
     <div class="card-title bg-primary text-white toolbar">Drug: {{ drugSummary.drugName }}, Transcription Factor: {{ tf }}
       <button>
-        <q-tooltip>Download chart image/data [Not currently implemented]</q-tooltip>
+        <!--<q-tooltip>Download chart image/data [Not currently implemented]</q-tooltip>-->
+        <q-popover ref="samplePlotDownloadPopover">
+          <div class="list item-delimiter hightlight">
+            <button class="item item-link" style="text-transform:none;min-width:300px;" @click="pngDownload(), $refs.samplePlotDownloadPopover.close()">Download chart as PNG</button>
+            <button class="item item-link" style="text-transform:none;min-width:300px" @click="csvDownload(), $refs.samplePlotDownloadPopover.close()">Download data as CSV</button>
+          </div>
+        </q-popover>
         <icon name="download"></icon>
       </button>
     </div>
@@ -34,6 +40,9 @@ import resize from 'vue-resize-directive'
 import samplePlot from 'sample-plot'
 import store from '../store'
 import * as d3 from 'd3'
+import json2csv from 'json2csv'
+import FileSaver from 'file-saver'
+import tntUtils from 'tnt.utils'
 
 function tooltipAccessor (d) {
   const cosmicUrl = 'http://cancer.sanger.ac.uk/cosmic/mutation/overview?id=' + d.sampleId
@@ -131,6 +140,49 @@ export default {
       this.plot.width(width)
                .height(height)
                .render()
+    },
+    filename () {
+      return 'samples_' + this.drug + '-' + this.tf
+    },
+    csvDownload () {
+      let data = store.getters.samplePlotData(this.drug, this.tf, this.useCorrectedIc50)
+      let sampleFields = [
+        'analysisSetName',
+        'cosmicId',
+        'gdscDesc1',
+        'gdscDesc2',
+        'mmr',
+        'screenMedium',
+        'studyAbbreviation',
+        'comment'
+      ]
+      let csv = json2csv({
+        data: data,
+        fields: [
+          ...sampleFields.map(x => ({
+            label: x,
+            value: 'sample.' + x
+          })),
+          'ic50',
+          'tfActivity'
+        ]
+      })
+      let blob = new Blob([csv], {type: 'text/plain;charset=utf-8'})
+      FileSaver.saveAs(blob, this.filename() + '.csv')
+    },
+    pngDownload () {
+      let pngExporter = tntUtils.png()
+                                .filename(this.filename() + '.png')
+                                .scale_factor(1)
+                                // TODO: Fix the stylesheet to be just the needed (not all)
+                                //  .stylesheets(['components-OpenTargetsWebapp.min.css'])
+                                .limit({
+                                  limit: 2100000,
+                                  onError: function () {
+                                    console.log('Could not create image: too large.')
+                                  }
+                                })
+      pngExporter(d3.select('svg.sample-plot'))
     }
   }
 }
