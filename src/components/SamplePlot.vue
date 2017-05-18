@@ -1,6 +1,12 @@
 <template>
   <div class="card" v-resize="handlerResize">
-    <div class="card-title bg-primary text-white">Drug: {{ drugSummary.drugName }}, Transcription Factor: {{ tf }}</div>
+    <div class="card-title bg-primary text-white toolbar">Drug: {{ drugSummary.drugName }}, Transcription Factor: {{ tf }}
+      <button>
+        <q-tooltip>Download chart image/data [Not currently implemented]</q-tooltip>
+        <icon name="download"></icon>
+      </button>
+    </div>
+
     <div class="card-content">
       <div class="sample-plot"></div>
       <label>
