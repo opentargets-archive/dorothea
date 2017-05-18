@@ -5,7 +5,7 @@
         <!--<q-tooltip>Download chart image/data [Not currently implemented]</q-tooltip>-->
         <q-popover ref="volcanoPlotDownloadPopover">
           <div class="list item-delimiter hightlight">
-            <button class="item item-link" style="text-transform:none;min-width:300px;" @click="$refs.volcanoPlotDownloadPopover.close()">Download chart as PNG</button>
+            <button class="item item-link" style="text-transform:none;min-width:300px;" @click="pngDownload(), $refs.volcanoPlotDownloadPopover.close()">Download chart as PNG</button>
             <button class="item item-link" style="text-transform:none;min-width:300px" @click="csvDownload(), $refs.volcanoPlotDownloadPopover.close()">Download data as CSV</button>
           </div>
         </q-popover>
@@ -31,6 +31,7 @@ import store from '../store'
 import * as d3 from 'd3'
 import json2csv from 'json2csv'
 import FileSaver from 'file-saver'
+import tntUtils from 'tnt.utils'
 
 function tooltipAccessor (d) {
   const cancerRxGeneUrl = 'http://www.cancerrxgene.org/translation/Drug/' + d.drugId
@@ -151,6 +152,9 @@ export default {
                .height(height)
                .render()
     },
+    filename () {
+      return 'associations_' + this.selectedDrug + '-' + this.selectedTf
+    },
     csvDownload () {
       let data = store.getters.volcanoPlotData(this.selectedDrug, this.selectedTf)
       let csv = json2csv({
@@ -166,7 +170,22 @@ export default {
         ]
       })
       let blob = new Blob([csv], {type: 'text/plain;charset=utf-8'})
-      FileSaver.saveAs(blob, 'associations_' + this.selectedDrug + '-' + this.selectedTf + '.csv')
+      FileSaver.saveAs(blob, this.filename() + '.csv')
+    },
+    pngDownload () {
+      // TODO: Combine svg and canvas
+      let pngExporter = tntUtils.png()
+                                .filename(this.filename() + '.png')
+                                .scale_factor(1)
+                                // TODO: Fix the stylesheet to be just the needed (not all)
+                                //  .stylesheets(['components-OpenTargetsWebapp.min.css'])
+                                .limit({
+                                  limit: 2100000,
+                                  onError: function () {
+                                    console.log('Could not create image: too large.')
+                                  }
+                                })
+      pngExporter(d3.select('svg.volcano-plot'))
     }
   }
 }
