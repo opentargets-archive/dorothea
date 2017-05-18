@@ -69,6 +69,19 @@ export default new Vuex.Store({
       }, ...pairs]
       return pairs
     },
+    sampleCount: (state) => (drugId, tfId, correctedIc50) => {
+      if (drugId === 'all' || tfId === 'all') return 0
+      let ic50sForDrug = correctedIc50 ? state.mDrugIc50CorrectedGdsc[drugId] : state.mDrugIc50Gdsc[drugId]
+      let activitiesForTf = state.mTfActivitiesGdsc[tfId]
+      let sampleIdsForDrug = Object.keys(ic50sForDrug).map(d => +d)
+      let sampleIdsForTf = Object.keys(activitiesForTf).map(d => +d)
+      let tfSet = new Set(sampleIdsForTf)
+      let sampleIds = []
+      sampleIdsForDrug.map(sampleId => {
+        if (tfSet.has(sampleId)) sampleIds.push(sampleId)
+      })
+      return sampleIds.length
+    },
     volcanoPlotData: (state, getters) => (drugId, tfId) => {
       if (!state.rTfDrugAssoGdsc) return []
       // drugId and tfId can each be either an individual identifier or the word 'all'
@@ -82,8 +95,7 @@ export default new Vuex.Store({
       let associationsWithSampleCounts = associations.map(item => {
         return {
           ...item,
-          sampleCount: 10 // TODO: Fix this (cache?)
-          // sampleCount: getters.samplePlotData(item.drugId, item.transcriptionFactor).length
+          sampleCount: getters.sampleCount(item.drugId, item.transcriptionFactor)
         }
       })
       return associationsWithSampleCounts
