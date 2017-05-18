@@ -4,6 +4,19 @@
       <q-toolbar-title :padding="0">
         DoRothEA v2
       </q-toolbar-title>
+
+      <button>
+        <q-tooltip>Go to the paper</q-tooltip>
+        <icon name="file-text-o"></icon>Paper
+      </button>
+      <button>
+        <q-tooltip>Download the all the data used in the website</q-tooltip>
+        <icon name="download"></icon>Data
+      </button>
+      <button onclick="window.open('http://www.github.com/opentargets/dorothea', '_blank')">
+        <q-tooltip>View the code of the website on Github</q-tooltip>
+        <icon name="github"></icon>Code
+      </button>
     </div>
 
     <!--
@@ -13,11 +26,9 @@
     -->
     <div class="layout-view">
       <div class="layout-padding">
-        
-        <!--start new layout-->
-        <!--<div class="column">
+        <div class="column lg-width-4of5 bg-width-4of5">
           <div class="row lt-bg-column justify-center gutter">
-            <div class="bg-width-1of2 lg-width-2of5">
+            <div class="gt-md-width-1of2">
               <div class="card">
                 <div class="card-title bg-primary text-white">Drug Selection</div>
                 <div class="card-content">
@@ -26,8 +37,7 @@
                 </div>
               </div>
             </div>
-            
-            <div class="bg-width-1of2 lg-width-2of5">
+            <div class="gt-md-width-1of2">
               <div class="card">
                 <div class="card-title bg-primary text-white">Transcription Factor Selection</div>
                 <div class="card-content">
@@ -37,51 +47,33 @@
               </div>
             </div>
           </div>
-          <div class="row lt-bg-column justify-center gutter">
-            <div class="lt-bg-auto bg-width-1of2 lg-width-2of5 column">
+          <div class="column justify-center gutter">
+            <div class="lg-width-4of5">
               <div class="auto">
-                <volcano-plot class="auto" :selectedDrug="selectedDrug" :selectedTf="selectedTf" :click-association-handler="clickAssociationHandler"></volcano-plot>
+                <volcano-plot :selectedDrug="selectedDrug" :selectedTf="selectedTf" :click-association-handler="clickAssociationHandler"></volcano-plot>
               </div>
             </div>
-            <div v-if="showSamplePlot" class="lt-bg-auto bg-width-1of2 lg-width-2of5">
+            <div v-if="showSamplePlot" class="lg-width-4of5">
               <div class="auto">
-                <sample-plot class="auto" :drug="selectedDrug" :tf="selectedTf"></sample-plot>
+                <sample-plot :drug="selectedDrug" :tf="selectedTf"></sample-plot>
               </div>
             </div>
           </div>
-        </div>-->
-        <!--end new layout-->
-
-
-        <div class="row">
-
-          <div class="card">
-            <div class="card-title bg-primary text-white">Drug Selection</div>
-            <div class="card-content">
-              <span>Please select a drug.</span>
-              <q-select type="list" v-model="selectedDrug" :options="drugs"></q-select>
+          <div class="row justify-start items-center gutter">
+            <div>
+              <a href="http://www.ebi.ac.uk" target="_blank">
+                <img src="../assets/ebi_195x60.png" alt="European Bioinformatics Institute" width="195px" height="60px">
+              </a>
+            </div>
+            <div>
+              <a href="https://www.targetvalidation.org/" target="_blank">
+                <img src="../assets/CTI_OT_Primary_Logo_RGB.svg" alt="Open Targets" width="200px" height="75px">
+              </a>
             </div>
           </div>
-          <div class="card">
-            <div class="card-title bg-primary text-white">Transcription Factor Selection</div>
-            <div class="card-content">
-              <span>Please select a transcription factor.</span>
-              <q-select type="list" v-model="selectedTf" :options="tfs"></q-select>
-            </div>
-          </div>
-          
         </div>
-        <volcano-plot :selectedDrug="selectedDrug" :selectedTf="selectedTf" :click-association-handler="clickAssociationHandler"></volcano-plot>
-        <sample-plot v-if="showSamplePlot" :drug="selectedDrug" :tf="selectedTf"></sample-plot>
-      </div>
-
       </div>
     </div>
-
-    <!--<div slot="footer" class="toolbar">
-      Hello, this is the footer
-    </div>-->
-
   </q-layout>
 </template>
 

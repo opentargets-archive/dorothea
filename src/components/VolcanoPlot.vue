@@ -1,6 +1,12 @@
 <template>
   <div class="card" v-resize="handleResize">
-    <div class="card-title bg-primary text-white">{{ title }}</div>
+    <div class="card-title bg-primary text-white">{{ title }}
+      <button>
+        <q-tooltip>Download the all the data used in this chart. [Not currently implemented]</q-tooltip>
+        <icon name="download"></icon>Data
+      </button>
+    </div>
+    
     <div class="card-content">
       <div class="volcano-plot"></div>
       <label>
