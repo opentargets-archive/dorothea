@@ -1,6 +1,6 @@
 # DoRothEA (v2)
 
-The [DoRothEA site](http://http://dorothea.opentargets.io/) displays data from a forthcoming paper.
+The [DoRothEA site](http://dorothea.opentargets.io/) displays data from a forthcoming paper.
 
 ## Build Setup
 
