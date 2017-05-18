@@ -1,9 +1,9 @@
 <template>
   <div class="card" v-resize="handleResize">
-    <div class="card-title bg-primary text-white">{{ title }}
+    <div class="card-title bg-primary text-white toolbar">{{ title }}
       <button>
-        <q-tooltip>Download the all the data used in this chart. [Not currently implemented]</q-tooltip>
-        <icon name="download"></icon>Data
+        <q-tooltip>Download chart image/data [Not currently implemented]</q-tooltip>
+        <icon name="download"></icon>
       </button>
     </div>
     
@@ -94,16 +94,6 @@ export default {
       return title
     }
   },
-  // watch: {
-  //   selectedDrug: function (val, oldVal) {
-  //     this.lastChanged = 'drug'
-  //     console.log('selectedDrug changed from ' + oldVal + ' to ' + val)
-  //   },
-  //   selectedTf: function (val, oldVal) {
-  //     this.lastChanged = 'tf'
-  //     console.log('selectedTf changed from ' + oldVal + ' to ' + val)
-  //   }
-  // },
   mounted () {
     this.createPlot()
   },
