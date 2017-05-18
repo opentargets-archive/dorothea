@@ -73,8 +73,8 @@ export default new Vuex.Store({
       if (drugId === 'all' || tfId === 'all') return 0
       let ic50sForDrug = correctedIc50 ? state.mDrugIc50CorrectedGdsc[drugId] : state.mDrugIc50Gdsc[drugId]
       let activitiesForTf = state.mTfActivitiesGdsc[tfId]
-      let sampleIdsForDrug = Object.keys(ic50sForDrug).map(d => +d)
-      let sampleIdsForTf = Object.keys(activitiesForTf).map(d => +d)
+      let sampleIdsForDrug = Object.keys(ic50sForDrug) // .map(d => +d)
+      let sampleIdsForTf = Object.keys(activitiesForTf) // .map(d => +d)
       let tfSet = new Set(sampleIdsForTf)
       let sampleIds = []
       sampleIdsForDrug.map(sampleId => {
@@ -94,8 +94,8 @@ export default new Vuex.Store({
       })
       let associationsWithSampleCounts = associations.map(item => {
         return {
-          ...item,
-          sampleCount: getters.sampleCount(item.drugId, item.transcriptionFactor)
+          ...item
+          // sampleCount: getters.sampleCount(item.drugId, item.transcriptionFactor)
         }
       })
       return associationsWithSampleCounts
