@@ -6,16 +6,16 @@
       </q-toolbar-title>
 
       <button>
-        <q-tooltip>Go to the paper</q-tooltip>
-        <icon name="file-text-o"></icon>Paper
+        <q-tooltip>Go to the paper [Not currently implemented]</q-tooltip>
+        <icon name="file-text-o"></icon>
       </button>
       <button>
-        <q-tooltip>Download the all the data used in the website</q-tooltip>
-        <icon name="download"></icon>Data
+        <q-tooltip>Download the all the data used in the website [Not currently implemented]</q-tooltip>
+        <icon name="download"></icon>
       </button>
       <button onclick="window.open('http://www.github.com/opentargets/dorothea', '_blank')">
         <q-tooltip>View the code of the website on Github</q-tooltip>
-        <icon name="github"></icon>Code
+        <icon name="github"></icon>
       </button>
     </div>
 
@@ -59,6 +59,7 @@
               </div>
             </div>
           </div>
+          <hr>
           <div class="row justify-start items-center gutter">
             <div>
               <a href="http://www.ebi.ac.uk" target="_blank">
