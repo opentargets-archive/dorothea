@@ -82,10 +82,11 @@
 import store from '../store'
 
 export default {
+  props: ['passedSelectedDrug', 'passedSelectedTf'],
   data () {
     return {
-      selectedDrug: 'all',
-      selectedTf: 'all'
+      selectedDrug: this.passedSelectedDrug ? this.passedSelectedDrug : 'all',
+      selectedTf: this.passedSelectedTf ? this.passedSelectedTf : 'all'
     }
   },
   computed: {

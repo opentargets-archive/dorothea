@@ -21,7 +21,20 @@ export default new VueRouter({
    */
 
   routes: [
-    { path: '/', component: load('Index') }, // Default
+    {
+      path: '/',
+      component: load('Index'),
+      props: (route) => {
+        let drug = 'all'
+        let tf = 'all'
+        if (route.query.drug) drug = parseInt(route.query.drug)
+        if (route.query.tf) tf = route.query.tf
+        return {
+          passedSelectedDrug: drug,
+          passedSelectedTf: tf
+        }
+      }
+    }, // Default with query
     { path: '*', component: load('Error404') } // Not found
   ]
 })
