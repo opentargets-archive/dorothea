@@ -2,7 +2,13 @@
   <div class="card" v-resize="handleResize">
     <div class="card-title bg-primary text-white toolbar">{{ title }}
       <button>
-        <q-tooltip>Download chart image/data [Not currently implemented]</q-tooltip>
+        <!--<q-tooltip>Download chart image/data [Not currently implemented]</q-tooltip>-->
+        <q-popover ref="volcanoPlotDownloadPopover">
+          <div class="list item-delimiter hightlight">
+            <button class="item item-link" style="text-transform:none;min-width:300px;" @click="$refs.volcanoPlotDownloadPopover.close()">Download chart as PNG</button>
+            <button class="item item-link" style="text-transform:none;min-width:300px" @click="csvDownload(), $refs.volcanoPlotDownloadPopover.close()">Download data as CSV</button>
+          </div>
+        </q-popover>
         <icon name="download"></icon>
       </button>
     </div>
@@ -23,6 +29,8 @@ import resize from 'vue-resize-directive'
 import volcanoPlot from 'volcano-plot'
 import store from '../store'
 import * as d3 from 'd3'
+import json2csv from 'json2csv'
+import FileSaver from 'file-saver'
 
 function tooltipAccessor (d) {
   const cancerRxGeneUrl = 'http://www.cancerrxgene.org/translation/Drug/' + d.drugId
@@ -142,6 +150,23 @@ export default {
       this.plot.width(width)
                .height(height)
                .render()
+    },
+    csvDownload () {
+      let data = store.getters.volcanoPlotData(this.selectedDrug, this.selectedTf)
+      let csv = json2csv({
+        data: data,
+        fields: [
+          'drugId',
+          'drugName',
+          'drugTargets',
+          'effectSize',
+          'fdr',
+          'pval',
+          'transcriptionFactor'
+        ]
+      })
+      let blob = new Blob([csv], {type: 'text/plain;charset=utf-8'})
+      FileSaver.saveAs(blob, 'associations_' + this.selectedDrug + '-' + this.selectedTf + '.csv')
     }
   }
 }
