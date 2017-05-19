@@ -9,8 +9,8 @@
         <q-tooltip>Go to the paper</q-tooltip>
         <icon name="file-text-o"></icon>
       </button>
-      <button>
-        <q-tooltip>Download the all the data used in the website [Not currently implemented]</q-tooltip>
+      <button onclick="window.open('../statics/data.zip')">
+        <q-tooltip>Download the all the data used in the website</q-tooltip>
         <icon name="download"></icon>
       </button>
       <button onclick="window.open('http://www.github.com/opentargets/dorothea', '_blank')">
