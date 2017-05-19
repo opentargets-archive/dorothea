@@ -5,8 +5,8 @@
         DoRothEA v2
       </q-toolbar-title>
 
-      <button>
-        <q-tooltip>Go to the paper [Not currently implemented]</q-tooltip>
+      <button onclick="window.open('http://biorxiv.org/content/early/2017/04/21/129478', '_blank')">
+        <q-tooltip>Go to the paper</q-tooltip>
         <icon name="file-text-o"></icon>
       </button>
       <button>
