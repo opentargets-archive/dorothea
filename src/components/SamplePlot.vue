@@ -124,7 +124,7 @@ export default {
                     .data(store.getters.samplePlotData(this.drug, this.tf, this.useCorrectedIc50))
                     .xAccessor(d => d.tfActivity)
                     .yAccessor(d => d.ic50)
-                    .textAccessor(d => d.sampleId)
+                    .textAccessor(d => d.sample.analysisSetName)
                     .tooltipAccessor(tooltipAccessor)
                     .legendFieldAccessor(d => d.sample.gdscDesc1)
                     .legendTitle('GDSC Description 1')
