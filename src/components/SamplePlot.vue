@@ -48,6 +48,10 @@ function tooltipAccessor (d) {
   const cosmicUrl = 'http://cancer.sanger.ac.uk/cosmic/mutation/overview?id=' + d.sampleId
   return '<table>' +
     '<tr class="emphasis-row">' +
+      '<td>Sample Name</td>' +
+      '<td>' + d.sample.analysisSetName + '</td>' +
+    '</tr>' +
+    '<tr>' +
       '<td>COSMIC ID</td>' +
       '<td><a class="cosmic-link" target="_blank" href="' + cosmicUrl + '">' + d.sampleId + '</a></td>' +
     '</tr>' +
@@ -58,10 +62,6 @@ function tooltipAccessor (d) {
     '<tr>' +
       '<td>IC50</td>' +
       '<td>' + d3.format('.3g')(d.ic50) + '</td>' +
-    '</tr>' +
-    '<tr>' +
-      '<td>Sample Name</td>' +
-      '<td>' + d.sample.analysisSetName + '</td>' +
     '</tr>' +
     '<tr>' +
       '<td>MMR</td>' +
