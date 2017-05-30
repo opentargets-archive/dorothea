@@ -1,0 +1,266 @@
+DRUG_ID	DRUG_NAME	SYNONYMS	BRAND_NAME	PUTATIVE_TARGET	DRUG_TYPE
+1	Erlotinib		Tarceva	EGFR	targetted
+3	Rapamycin	AY-22989,Sirolimus,WY-090217	Rapamune	MTOR	targetted
+5	Sunitinib		Sutent	PDGFRA, PDGFRB, KDR, KIT, FLT3	targetted
+6	PHA-665752			MET	targetted
+9	MG-132	zLLL		Proteasome	targetted
+11	Paclitaxel	BMS-181339-01	Taxol	Microtubules	cytotoxic
+17	Cyclopamine	11-deoxojervine		SMO	targetted
+29	AZ628			BRAF	targetted
+30	Sorafenib	BAY-43-9006	Nexavar	PDGFRA, PDGFRB, KDR, KIT, FLT3	targetted
+32	VX-680	MK-045,MK-0457,VX-68	MK-0457	AURKA, AURKB, AURKC, FLT3, ABL1, JAK2	targetted
+34	Imatinib	STI-571	Gleevec	ABL, KIT, PDGFR	targetted
+35	NVP-TAE684	KIN001-017	TAE684	ALK	targetted
+37	Crizotinib	PF-02341066	Xalkori	MET, ALK	targetted
+38	AZD-0530	Saracatinib,KIN001-045		SRC, ABL1	targetted
+41	S-Trityl-L-cysteine	NSC 83265		KIF11	targetted
+45	Z-LLNle-CHO	Z-L-Norleucine-CHO	na	g-secretase	targetted
+51	Dasatinib	KIN001-005	Sprycel	ABL, SRC, KIT, PDGFR	targetted
+52	GNF-2	KIN001-013 (GNF-2 / 3-(6-(4-(trifluoromethoxy)phenylamino)pyrimidin-4-yl)benzamide)		ABL [T315I]	targetted
+53	CGP-60474	KIN001-019		CDK1,CDK2,CDK5,CDK7,CDK9	targetted
+54	CGP-082996	CINK4,KIN001-021		CDK4	targetted
+55	A-770041	A770041,KIN001-111	A770041	SRC family	targetted
+56	WH-4-023	KIN001-112		SRC family, ABL	targetted
+59	WZ-1-84	KIN001-123		BMX	targetted
+60	BI-2536	KIN001-124	NPK33-1-98-1	PLK1, PLK2, PLK3	targetted
+62	BMS-536924	KIN001-126	BMS-536924	IGF1R	targetted
+63	BMS-509744	KIN001-127	BMS-509744	ITK	targetted
+64	CMK	KIN001-128	Chloromethylketone Rsk inhibitor	RSK	targetted
+71	Pyrimethamine		Daraprim	Dihydrofolate reductase (DHFR)	cytotoxic
+83	JW-7-52-1			MTOR	targetted
+86	A-443654	KIN001-139		AKT1, AKT2, AKT3	targetted
+87	GW843682X	KIN001-134	GW843682X (AN-13)	PLK1	targetted
+88	MS-275	MS275		HDAC	targetted
+89	Parthenolide			NFKB1	targetted
+91	KIN001-135	KIN001-135		IKKE	targetted
+94	TGX221			PI3Kbeta	targetted
+104	Bortezomib	LDP-341, PS-341	Velcade	Proteasome	targetted
+106	XMD8-85	XMD8-85		MAP2K5 (ERK5)	targetted
+110	Roscovitine	Seliciclib		CDKs	targetted
+111	Salubrinal	3-Phenyl-N-[2,2,2-trichloro-1-[[(8-quinolinylamino)thioxomethyl]amino]ethyl]-2-propenamide		GADD34-PP1C 	targetted
+119	Lapatinib	Tykerb, Tyverb	Tykerb, Tyverb	ERBB2, EGFR	targetted
+127	GSK269962A	KIN001-155		ROCK1, ROCK2	targetted
+133	Doxorubicin	Doxil,Rubex	Adriamycin	DNA intercalating	cytotoxic
+134	Etoposide	VP-16	Etophophos	TOP2	cytotoxic
+135	Gemcitabine	LY-188011	Gemzar	DNA replication	cytotoxic
+136	Mitomycin C			DNA crosslinker	cytotoxic
+140	Vinorelbine		Navelbine	Microtubules	cytotoxic
+147	NSC-87877			PTPN6 (SHP-1), PTPN11 (SHP-2)	targetted
+150	Bicalutamide	ICI-176334	Casodex	ANDR (androgen receptor)	targetted
+151	QS11	QS11		ARFGAP	targetted
+152	CP466722	[2-(6,7-dimethoxyquinazolin-4-yl)-5-(pyridin-2-yl)-2H-1,2,4-triazol-3-amine]		ATM	targetted
+153	Midostaurin	PKC 412		KIT	targetted
+154	CHIR-99021	CT 99021		GSK3B	targetted
+155	AP-24534	KIN001-192	Ponatinib	ABL	targetted
+156	AZD6482	KIN001-193		PI3Kbeta	targetted
+157	JNK-9L	KIN001-204		JNK	targetted
+158	PF-562271	(KIN001-205)		FAK	targetted
+159	HG-6-64-1	KIN001-206		BRAFV600E, TAK, MAP4K5	targetted
+163	JQ1	JQ1		BRD4	targetted
+164	JQ12	JQ12		HDAC	targetted
+165	DMOG	Dimethyloxalylglcine		Prolyl-4-Hydroxylase	targetted
+166	FTI-277			Farnesyl transferase (FNTA)	targetted
+167	OSU-03012	AR-12		PDPK1 (PDK1)	targetted
+170	Shikonin	Shikonin		unknown	not defined
+171	AKT inhibitor VIII			AKT1, AKT2, AKT3	targetted
+172	Embelin			XIAP	targetted
+173	FH535	FH535		unknown 	not defined
+175	PAC-1	PAC-1		CASP3 agonist	targetted
+176	IPA-3	IPA-3		PAK1, PAK2, PAK3	targetted
+177	GSK-650394			SGK3	targetted
+178	BAY 61-3606			SYK	targetted
+179	5-Fluorouracil	5-Fluorouracil		DNA antimetabolite	cytotoxic
+180	Thapsigargin			sarco-endoplasmic reticulum Ca2+-ATPases	targetted
+182	Obatoclax Mesylate		GX15-070	BCL2, BCL2L1, MCL1	targetted
+184	BMS-754807			IGF1R	targetted
+185	OSI-906	OSI-906		IGF1R	targetted
+186	Bexarotene	LG-100069,LGD-1069	Targretin	Retinioic acid X family agonist	targetted
+190	Bleomycin			DNA damage	cytotoxic
+192	LFM-A13	DDE-28		BTK	targetted
+193	GW-2580	GW-2580		CSF1R (cFMS)	targetted
+194	AUY922	VER-52296,NVP-AUY922		HSP90	targetted
+196	Phenformin	Phenformin	imidodica_rbonimidi_c diamide_, N-(2-ph_enylethyl_)-	AAPK1 (AMPK) agonist	targetted
+197	Bryostatin 1	Bryostatin 1	NSC 339555	PRKC	targetted
+199	Pazopanib	GW786034	Votrient	VEGFR, PDGFRA, PDGFRB, KIT	targetted
+200	LAQ824	Dacinostat, NVP-LAQ824		HDAC	targetted
+201	Epothilone B	GNF-PF-193	EPO906 (ixabepilone,Patupilone)	Microtubules	cytotoxic
+202	GSK-1904529A	GSK1904529A		IGF1R	targetted
+203	BMS-345541			IKBKB	targetted
+204	Tipifarnib		Zarnestra,IND58359,R115777	Farnesyl-transferase (FNTA)	targetted
+205	BMS-708163	Avagacestat		g-secretase	targetted
+206	Ruxolitinib	INCB-18424	Jakafi	JAK1, JAK2, TYK2	targetted
+207	AS601245	AS601245		JNK 	targetted
+208	SB-715992	Ispinesib Mesylate		KIF11	targetted
+211	TL-2-105			CRAF	targetted
+219	AT-7519			CDK9	targetted
+221	TAK-715	KIN001-201		p38a	targetted
+222	BX-912	KIN001-175		PDPK1 (PDK1)	targetted
+223	ZSTK474	KIN001-167		PI3K	targetted
+224	AS605240	KIN001-173		PI3Kgamma	targetted
+225	Genentech Cpd 10			AURKA, AURKB	targetted
+226	GSK1070916			AURKB	targetted
+228	KIN001-102			AKT1	targetted
+229	LY317615	Enzastaurin		PRKCB (PKCbeta)	targetted
+230	GSK429286A			ROCK2	targetted
+231	FMK	KIN001-242		RSK	targetted
+235	QL-XII-47			BTK, BMX	targetted
+238	CAL-101			PI3Kdelta	targetted
+245	UNC0638			G9a(EHMT2), GLP(EHMT1)	targetted
+249	XL-184	Cabozantinib	Cometriq	VEGFR, MET, RET, KIT, FLT1, FLT3, FLT4, Tie2,AXL	targetted
+252	WZ3105			CLK2, CNSK1E, FLT3, ULK1	targetted
+253	XMD14-99			EPHB3, CAMK1	targetted
+254	AC220	Quizartinib, AC-220		FLT3	targetted
+255	CP724714			ERBB2	targetted
+256	JW-7-24-1			LCK	targetted
+257	NPK76-II-72-1			PLK3	targetted
+258	STF-62247			stimulates autophagy	not defined
+260	NG-25			MAP3K7 (TAK1)	targetted
+261	TL-1-85			MAP3K7 (TAK1)	targetted
+262	VX-11e			ERK	targetted
+263	FR-180204			ERK	targetted
+265	Tubastatin A			HDAC6	targetted
+266	Zibotentan, ZD4054			Endothelin A Receptor	targetted
+268	YM155	Sepantronium bromide		BIRC5 (Survivin)	targetted
+269	NSC-207895	XI-006		MDM4	targetted
+271	VNLG/124	4-(Butanoyloxymethyl)phenyl-(2E,4E,6E,8E)-3,7-dimethyl-9-(2,6,6-trimethylcyclohex-1-enyl)nona-2,4,6,8-tetraenoate		HDAC, RAR 	targetted
+272	AR-42	HDAC-42		HDAC	targetted
+273	CUDC-101			HDAC, EGFR	targetted
+274	PXD101, Belinostat			HDAC	targetted
+275	I-BET	GSK525762A,(S)-À2-À(6-À(4-Àchlorophenyl)-À8-Àmethoxy-À4H-Àbenzo[f][1,À2,À4]triazolo[4,À3-Àa][1,À4]diazepin-À4-Àyl)-ÀN-Àethylacetamide		BRD2, BRD3, BRD4	targetted
+276	CAY10603			HDAC6	targetted
+277	ABT-869	Linifanib		VEGFR and PDGFR family	targetted
+279	BIX02189			MAP2K5 (MEK5)	targetted
+281	CH5424802			ALK	targetted
+282	EKB-569	Pelitinib		EGFR	targetted
+283	GSK2126458	EX-8678		PI3K, MTOR	targetted
+286	KIN001-236			TIE2	targetted
+287	KIN001-244			PDPK1 (PDK1)	targetted
+288	KIN001-055	WHI-P97, AC1L1GQE		JAK3, MNK1	targetted
+290	KIN001-260	Bayer IKKb inhibitor		IKK	targetted
+291	KIN001-266			MAP3K8 (COT)	targetted
+292	Masitinib	AB1010		KIT	targetted
+293	MP470			PDGFR	targetted
+294	MPS-1-IN-1			MPS1	targetted
+295	NVP-BHG712			EPHB4	targetted
+298	OSI-930			KIT, VEGFR, PDGFR	targetted
+299	OSI-027	activebiochem A-1065		MTORC1/2	targetted
+300	CX-5461			RNA Pol I	targetted
+301	PHA-793887			CDK-pan	targetted
+302	PI-103			PI3Ka, PRKDC (DNAPK)	targetted
+303	PIK-93			PI4K, PI3K	targetted
+304	SB52334			ALK5	targetted
+305	TPCA-1			IKK	targetted
+306	TG101348			JAK2	targetted
+308	XL-880	GSK1363089, foretinib		MET	targetted
+309	Y-39983			ROCK	targetted
+310	YM201636			FYV1	targetted
+312	AV-951	Tivozanib		VEGFR	targetted
+326	GSK690693			AKT	targetted
+328	SNX-2112			HSP90	targetted
+329	QL-XI-92			DDR1	targetted
+330	XMD13-2			RIPK	targetted
+331	QL-X-138			MNK2, PRKDC (DNAPK), MTOR, BTK, JAK3	targetted
+332	XMD15-27			CAMK2B, CLK2, DYRK1A, MAST1, STK39	targetted
+333	T0901317			LXR	targetted
+341	EX-527			SIRT1	targetted
+344	THZ-2-49			CDK9	targetted
+345	KIN001-270			CDK9	targetted
+346	THZ-2-102-1			CDK7	targetted
+1001	AICAR	N1-(b-D-Ribofuranosyl)-5-aminoimidazole-4-carboxamide	AICAR	AAPK1 (AMPK) agonist	targetted
+1003	Camptothecin	7-Ethyl-10-Hydroxy-Camptothecin,SN-38	SN-38	TOP1	cytotoxic
+1004	Vinblastine	Vinblastine sulphate	Vinblastine	Microtubules	cytotoxic
+1005	Cisplatin	cis-Diammineplatinum(II) dichloride	Cisplatin	DNA crosslinker	cytotoxic
+1006	Cytarabine	Ara-Cytidine,Arabinosyl Cytosine,U-19920	Cytarabine (AraC)	DNA synthesis	cytotoxic
+1007	Docetaxel	RP-56976	Taxotere	Microtubules	cytotoxic
+1008	Methotrexate		Methotrexate	Dihydrofolate reductase (DHFR)	cytotoxic
+1009	ATRA	Tretinoin	Vesanoid	Retinoic acid and retinoid X receptor agonist	targetted
+1010	Gefitinib	ZD-1839	Iressa	EGFR	targetted
+1011	ABT-263			BCL2, BCL2L1, BCL2L2	targetted
+1012	Vorinostat	SAHA	Zolinza	HDAC inhibitor Class I, IIa, IIb, IV	targetted
+1013	Nilotinib		Tasigna	ABL	targetted
+1014	RDEA119	RDEA119		MAP2K1 (MEK1), MAP2K2 (MEK2)	targetted
+1015	CI-1040	PD-18435,PD-184352		MAP2K1 (MEK1), MAP2K2 (MEK2)	targetted
+1016	Temsirolimus	CCI-779	Torisel	MTOR	targetted
+1017	Olaparib	KU-0059436, AZD-2281	Lynparza	PARP1, PARP2	targetted
+1018	ABT-888	ABT-888		PARP1, PARP2	targetted
+1019	Bosutinib	SKI-606	Bosulif	SRC, ABL, TEC	targetted
+1020	Lenalidomide		Revlimid	TNFA	targetted
+1021	Axitinib	AG-013736	Axitinib	PDGFR, KIT, VEGFR	targetted
+1022	AZD7762	AZD 7762		CHEK1, CHEK2	targetted
+1023	GW 441756			NTRK1	targetted
+1024	CEP-701	CEP-701	Lestaurtinib	FLT3, JAK2, NTRK1, RET	targetted
+1025	SB 216763	SB 216763		GSK3A, GSK3B	targetted
+1026	17-AAG	17-AAG	Telatinib	HSP90	targetted
+1028	VX-702			p38	targetted
+1029	AMG-706	AMG-706	Motesanib Diphosphate	VEGFR, RET, c-KIT, PDGFR	targetted
+1030	KU-55933			ATM	targetted
+1031	Elesclomol			HSP70	targetted
+1032	Afatinib	Tovok, BIBW2992	Gilotrif	ERBB2, EGFR	targetted
+1033	Vismodegib	GDC-0449	Erivedge	SMO	targetted
+1036	PLX4720	Vemurafenib (derivative)	Zelboraf (derivative)	BRAF	targetted
+1037	BX-795	BX 795		TBK1, PDPK1, IKK, AURKB, AURKC	targetted
+1038	NU-7441	NU-7432,KU-57788		PRKDC (DNAPK)	targetted
+1039	SL 0101-1			RSK, AURKB, PIM3	targetted
+1042	BIRB 0796		Doramapimod	p38, JNK2	targetted
+1043	JNK Inhibitor VIII	JNK Inhibitor VIII		JNK	targetted
+1046	681640	681640		WEE1, CHEK1	targetted
+1047	Nutlin-3a	Nutlin-3a (-) enantiomer		MDM2	targetted
+1049	PD-173074	PD-173074		FGFR1, FGFR3	targetted
+1050	ZM-447439	ZM447439		AURKB	targetted
+1052	RO-3306			CDK1	targetted
+1053	MK-2206			AKT1, AKT2	targetted
+1054	PD-0332991	PD-0332991		CDK4, CDK6	targetted
+1057	NVP-BEZ235	BEZ235		PI3K (Class 1) and MTORC1/2	targetted
+1058	GDC0941			PI3K (class 1)	targetted
+1059	AZD8055	AZD8055	pp242	MTORC1/2	targetted
+1060	PD-0325901	PD-0325901		MAP2K1 (MEK1), MAP2K2 (MEK2)	targetted
+1061	SB590885			BRAF	targetted
+1062	AZD6244			MAP2K1 (MEK1), MAP2K2 (MEK2)	targetted
+1066	AZD6482 (rescreen)	WO2009093972		PI3Kbeta	targetted
+1067	CCT007093			PPM1D	targetted
+1069	EHT 1864			Rac GTPases	targetted
+1072	BMS-708163 (rescreen)	Avagacestat		g-secretase	targetted
+1091	BMS-536924 (rescreen)	BMS-536924		IGF1R	targetted
+1114	Cetuximab	Cetuximab	Erbitux	EGFR	targetted
+1129	PF-4708671			RPS6KB1 (p70S6KA)	targetted
+1133	JNJ-26854165		Serdemetan	MDM2	targetted
+1142	HG-5-113-01			LOK, LTK, TRCB, ABL(T315I)	targetted
+1143	HG-5-88-01			EGFR, ADCK4	targetted
+1149	TW 37			BCL2, BCL2L1	targetted
+1158	XMD11-85h			BRSK2, FLT4, MARK4, PRKCD, RET, SPRK1	targetted
+1161	ZG-10			IRAK1	targetted
+1164	XMD8-92			MAP2K5 (ERK5)	targetted
+1166	QL-VIII-58			MTOR, ATR	targetted
+1170	CCT018159			HSP90	targetted
+1175	AG-014699	PF-01367338		PARP1, PARP2	targetted
+1192	GSK269962A (rescreen)	KIN001-155		ROCK1, ROCK2	targetted
+1194	SB-505124	2-(5-Benzo[1,3]dioxol-5-yl-2-tert-butyl-3H-imidazol-4-yl)-6-methylpyridine hydrochloride hydrate		TGFR1 (ALK5)	targetted
+1199	Tamoxifen			ER	targetted
+1203	QL-XII-61			BTK	targetted
+1218	JQ1 (rescreen)			BRD2, BRD3, BRD4	targetted
+1219	PFI-1			BRD2, BRD3, BRD4	targetted
+1230	IOX2			EGLN1	targetted
+1236	UNC0638 (rescreen)			G9a(EHMT2), GLP(EHMT1)	targetted
+1239	YK 4-279			RNA helicase A	targetted
+1241	CHIR-99021 (rescreen)	CT 99021		GSK3B	targetted
+1242	(5Z)-7-Oxozeaenol			MAP3K7 (TAK1)	targetted
+1243	piperlongumine			Increases ROS levels	not defined
+1248	FK866	APO866		NAMPT	targetted
+1259	BMN-673			PARP1	targetted
+1261	rTRAIL			TR10A (DR4),  TR10B (DR5)	targetted
+1262	UNC1215			LMBL3	targetted
+1264	SGC0946			Q8TEK3 (DOT1L)	targetted
+1268	XAV 939	NVP-XAV 939		TNKS1 (tankyrase-1)	targetted
+1371	PLX4720 (rescreen)	Vemurafenib (derivative)	Zelboraf	BRAF	targetted
+1372	Trametinib	GSK1120212	Mekinist	MAP2K1 (MEK1), MAP2K2 (MEK2)	targetted
+1373	Dabrafenib	GSK2118436	Tafinlar	BRAF	targetted
+1375	Temozolomide	Temodar		DNA akylating agent	cytotoxic
+1377	Afatinib (rescreen)	Tovok, BIBW2992	Gilotrif	ERBB2, EGFR	targetted
+1378	Bleomycin (50 uM)			DNA damage	cytotoxic
+1494	SN-38	7-ETHYL-10-HYDROXY-CAMPTOTHECIN		TOP1	cytotoxic
+1495	AZD-2281	Olaparib		PARP1, PARP2	targetted
+1498	AZD6244 (rescreen)			MAP2K1 (MEK1), MAP2K2 (MEK2)	targetted
+1502	Bicalutamide (rescreen)	ICI-176334	Casodex	ANDR (androgen receptor)	targetted
+1526	RDEA119 (rescreen)			MAP2K1 (MEK1), MAP2K2 (MEK2)	targetted
+1527	GDC0941 (rescreen)			PI3K	targetted
+1529	MLN4924			NEDD8-activating enzyme	targetted
