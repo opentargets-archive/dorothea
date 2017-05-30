@@ -20,10 +20,6 @@
         Show Labels
       </label>
       <label>
-        <q-checkbox v-model="showRegression"></q-checkbox>
-        Show Regression
-      </label>
-      <label>
         <q-checkbox v-model="showLegend"></q-checkbox>
         Show Legend
       </label>
@@ -86,7 +82,6 @@ export default {
   data () {
     return {
       showLabels: true,
-      showRegression: true,
       showLegend: true
     }
   },
@@ -103,7 +98,6 @@ export default {
   updated () {
     this.plot.data(store.getters.samplePlotData(this.drug, this.tf))
              .showCircleLabels(this.showLabels)
-             .showRegression(this.showRegression)
              .showLegend(this.showLegend)
              .yLabel('IC50')
              .render()
@@ -125,6 +119,7 @@ export default {
                     .legendTitle('GDSC Description 1')
                     .xLabel('Activity')
                     .yLabel('IC50')
+                    .showRegression(false)
       this.plot.render()
     },
     handlerResize () {
