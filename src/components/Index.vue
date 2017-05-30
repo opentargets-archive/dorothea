@@ -12,7 +12,7 @@
         <q-tooltip>Go to the paper</q-tooltip>
         <icon name="file-text-o"></icon>
       </button>
-      <button onclick="window.open('../statics/data.zip')">
+      <button onclick="window.open('../statics/dorothea-data.zip')">
         <q-tooltip>Download the all the data used in the website</q-tooltip>
         <icon name="download"></icon>
       </button>

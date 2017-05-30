@@ -9,7 +9,6 @@ export default new Vuex.Store({
     aSamples: null,
     aDrugs: null,
     mDrugIc50Gdsc: null,
-    mDrugIc50CorrectedGdsc: null,
     mTfActivitiesGdsc: null,
     rTfDrugAssoGdsc: [],
     loaded: false
@@ -69,9 +68,9 @@ export default new Vuex.Store({
       }, ...pairs]
       return pairs
     },
-    sampleCount: (state) => (drugId, tfId, correctedIc50) => {
+    sampleCount: (state) => (drugId, tfId) => {
       if (drugId === 'all' || tfId === 'all') return 0
-      let ic50sForDrug = correctedIc50 ? state.mDrugIc50CorrectedGdsc[drugId] : state.mDrugIc50Gdsc[drugId]
+      let ic50sForDrug = state.mDrugIc50Gdsc[drugId]
       let activitiesForTf = state.mTfActivitiesGdsc[tfId]
       let sampleIdsForDrug = Object.keys(ic50sForDrug) // .map(d => +d)
       let sampleIdsForTf = Object.keys(activitiesForTf) // .map(d => +d)
@@ -100,10 +99,10 @@ export default new Vuex.Store({
       })
       return associationsWithSampleCounts
     },
-    samplePlotData: (state) => (drugId, tfId, correctedIc50) => {
+    samplePlotData: (state) => (drugId, tfId) => {
       if (drugId === 'all' || tfId === 'all') return []
       if (!state.mDrugIc50Gdsc || !state.mTfActivitiesGdsc) return []
-      let ic50sForDrug = correctedIc50 ? state.mDrugIc50CorrectedGdsc[drugId] : state.mDrugIc50Gdsc[drugId]
+      let ic50sForDrug = state.mDrugIc50Gdsc[drugId]
       let ActivitiesForTf = state.mTfActivitiesGdsc[tfId]
       let sampleIdsForDrug = Object.keys(ic50sForDrug).map(d => +d)
       let sampleIdsForTf = Object.keys(ActivitiesForTf).map(d => +d)
@@ -125,7 +124,7 @@ export default new Vuex.Store({
   actions: {
     loadADrugs ({ commit }) {
       return new Promise((resolve, reject) => {
-        d3.tsv('./statics/data/a_drugs.txt')
+        d3.tsv('./statics/dorothea-data/a_drugs.txt')
           .row(function (r, i) {
             return {
               drugId: +r.DRUG_ID,
@@ -156,7 +155,7 @@ export default new Vuex.Store({
     },
     loadASamples ({ commit }) {
       return new Promise((resolve, reject) => {
-        d3.tsv('./statics/data/a_samples.txt')
+        d3.tsv('./statics/dorothea-data/a_samples.txt')
           .row(function (r, i) {
             return {
               cosmicId: +r.CosmicID,
@@ -189,7 +188,7 @@ export default new Vuex.Store({
     },
     loadRTfDrugAssoGdsc ({ commit }) {
       return new Promise((resolve, reject) => {
-        d3.tsv('./statics/data/r_tf_drug_asso_gdsc.txt')
+        d3.tsv('./statics/dorothea-data/r_tf_drug_asso_gdsc.txt')
           .row(function (r) {
             return {
               drugId: +r.Drug_id,
@@ -212,7 +211,7 @@ export default new Vuex.Store({
     },
     loadMDrugIc50Gdsc ({ commit }) {
       return new Promise((resolve, reject) => {
-        d3.tsv('./statics/data/m_drug_ic50_gdsc.txt')
+        d3.tsv('./statics/dorothea-data/m_drug_ic50_gdsc.txt')
           .row(function (r, i) {
             // extract drug id
             const drugId = +r.drug_id
@@ -249,48 +248,9 @@ export default new Vuex.Store({
           })
       })
     },
-    loadMDrugIc50CorrectedGdsc ({ commit }) {
-      return new Promise((resolve, reject) => {
-        d3.tsv('./statics/data/m_drug_ic50corrected_gdsc.txt')
-          .row(function (r, i) {
-            // extract drug id
-            const drugId = +r.drug_id
-
-            // filter each row to remove NA values
-            const responses = {}
-            for (let key in r) {
-              if (r[key] !== 'NA' && key !== 'drug_id') {
-                responses[key] = +r[key]
-              }
-            }
-
-            return {
-              drugId,
-              responses
-            }
-          })
-          .get(function (data) {
-            // require data
-            if (!data) return
-
-            // convert list to object (where drug id is the key)
-            let converted = {}
-            data.map(el => {
-              converted[el.drugId] = el.responses
-            })
-
-            // save to store
-            commit('setData', {
-              name: 'mDrugIc50CorrectedGdsc',
-              data: converted
-            })
-            resolve()
-          })
-      })
-    },
     loadMTfActivitiesGdsc ({ commit }) {
       return new Promise((resolve, reject) => {
-        d3.tsv('./statics/data/m_tf_activities_gdsc.txt')
+        d3.tsv('./statics/dorothea-data/m_tf_activities_gdsc.txt')
           .row(function (r, i) {
             // extract transcription factor id
             const tfId = r.TF

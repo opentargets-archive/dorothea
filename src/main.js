@@ -1,9 +1,9 @@
 // === DEFAULT / CUSTOM STYLE ===
 // WARNING! always comment out ONE of the two require() calls below.
 // 1. use next line to activate CUSTOM STYLE (./src/themes)
-// require(`./themes/app.${__THEME}.styl`)
+require(`./themes/app.${__THEME}.styl`)
 // 2. or, use next line to activate DEFAULT QUASAR STYLE
-require(`quasar/dist/quasar.${__THEME}.css`)
+// require(`quasar/dist/quasar.${__THEME}.css`)
 // ==============================
 // Custom charts
 require(`../node_modules/volcano-plot/index.scss`)
@@ -38,7 +38,6 @@ Quasar.start(() => {
           store.dispatch('loadASamples'),
           store.dispatch('loadRTfDrugAssoGdsc'),
           store.dispatch('loadMDrugIc50Gdsc'),
-          store.dispatch('loadMDrugIc50CorrectedGdsc'),
           store.dispatch('loadMTfActivitiesGdsc')
         ]).then(() => {
           store.commit('setLoaded', {

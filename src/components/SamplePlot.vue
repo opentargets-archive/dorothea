@@ -24,10 +24,6 @@
         Show Regression
       </label>
       <label>
-        <q-checkbox v-model="useCorrectedIc50"></q-checkbox>
-        Use Corrected IC50
-      </label>
-      <label>
         <q-checkbox v-model="showLegend"></q-checkbox>
         Show Legend
       </label>
@@ -91,7 +87,6 @@ export default {
     return {
       showLabels: true,
       showRegression: true,
-      useCorrectedIc50: true,
       showLegend: true
     }
   },
@@ -106,11 +101,11 @@ export default {
     this.createPlot()
   },
   updated () {
-    this.plot.data(store.getters.samplePlotData(this.drug, this.tf, this.useCorrectedIc50))
+    this.plot.data(store.getters.samplePlotData(this.drug, this.tf))
              .showCircleLabels(this.showLabels)
              .showRegression(this.showRegression)
              .showLegend(this.showLegend)
-             .yLabel(this.useCorrectedIc50 ? 'Corrected IC50' : 'IC50')
+             .yLabel('IC50')
              .render()
   },
   beforeDestroy () {
@@ -121,7 +116,7 @@ export default {
   methods: {
     createPlot () {
       this.plot = samplePlot('.sample-plot')
-                    .data(store.getters.samplePlotData(this.drug, this.tf, this.useCorrectedIc50))
+                    .data(store.getters.samplePlotData(this.drug, this.tf))
                     .xAccessor(d => d.tfActivity)
                     .yAccessor(d => d.ic50)
                     .textAccessor(d => d.sample.analysisSetName)
@@ -129,7 +124,7 @@ export default {
                     .legendFieldAccessor(d => d.sample.gdscDesc1)
                     .legendTitle('GDSC Description 1')
                     .xLabel('Activity')
-                    .yLabel(this.useCorrectedIc50 ? 'Corrected IC50' : 'IC50')
+                    .yLabel('IC50')
       this.plot.render()
     },
     handlerResize () {
@@ -145,7 +140,7 @@ export default {
       return 'samples_' + this.drug + '-' + this.tf
     },
     csvDownload () {
-      let data = store.getters.samplePlotData(this.drug, this.tf, this.useCorrectedIc50)
+      let data = store.getters.samplePlotData(this.drug, this.tf)
       let sampleFields = [
         'analysisSetName',
         'cosmicId',
