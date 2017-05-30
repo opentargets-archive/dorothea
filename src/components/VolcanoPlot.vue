@@ -174,9 +174,49 @@ export default {
     },
     pngDownload () {
       // TODO: Combine svg and canvas
+      let filename = this.filename() + '.png'
+      let width = this.plot.width()
+      let height = this.plot.height()
       let pngExporter = tntUtils.png()
-                                .filename(this.filename() + '.png')
+                                .filename(filename)
                                 .scale_factor(1)
+                                .callback(function (originalPng) {
+                                  // Need to add the points (from canvas element)
+                                  // since pngExporter only handles the svg element
+
+                                  // get the volcano plot canvas and convert to png
+                                  let canvas = d3.select('.volcano-plot canvas').node()
+                                  let pointsPng = canvas.toDataURL('image/png')
+
+                                  // create points image
+                                  let pointsImg = new Image()
+                                  pointsImg.width = width
+                                  pointsImg.height = height
+                                  pointsImg.src = pointsPng
+
+                                  // create original image (svg of axes)
+                                  let originalImg = new Image()
+                                  originalImg.width = width
+                                  originalImg.height = height
+                                  originalImg.src = originalPng
+
+                                  // combine the images
+                                  let combinedCanvas = document.createElement('canvas')
+                                  combinedCanvas.width = width
+                                  combinedCanvas.height = height
+                                  let context = combinedCanvas.getContext('2d')
+                                  context.drawImage(originalImg, 0, 0)
+                                  context.drawImage(pointsImg, 0, 0)
+                                  let combinedPng = combinedCanvas.toDataURL('image/png')
+
+                                  // add download behaviour
+                                  var a = document.createElement('a')
+                                  a.download = filename
+                                  a.href = combinedPng
+                                  document.body.appendChild(a)
+                                  a.click()
+                                  document.body.removeChild(a)
+                                })
                                 // TODO: Fix the stylesheet to be just the needed (not all)
                                 //  .stylesheets(['components-OpenTargetsWebapp.min.css'])
                                 .limit({
