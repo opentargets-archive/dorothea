@@ -36,7 +36,7 @@
                 <div class="card-title bg-primary text-white">Drug Selection</div>
                 <div class="card-content">
                   <span>Please select a drug.</span>
-                  <q-select type="list" v-model="selectedDrug" :options="drugs"></q-select>
+                  <q-select type="list" @input="changeSelectedDrug" v-model="selectedDrug" :options="drugs"></q-select>
                 </div>
               </div>
             </div>
@@ -45,7 +45,7 @@
                 <div class="card-title bg-primary text-white">Transcription Factor Selection</div>
                 <div class="card-content">
                   <span>Please select a transcription factor.</span>
-                  <q-select type="list" v-model="selectedTf" :options="tfs"></q-select>
+                  <q-select type="list" @input="changeSelectedTf" v-model="selectedTf" :options="tfs"></q-select>
                 </div>
               </div>
             </div>
@@ -83,6 +83,7 @@
 
 <script>
 import store from '../store'
+import router from '../router'
 
 export default {
   props: ['passedSelectedDrug', 'passedSelectedTf'],
@@ -107,6 +108,22 @@ export default {
     clickAssociationHandler (d) {
       this.selectedDrug = d.drugId
       this.selectedTf = d.transcriptionFactor
+    },
+    changeSelectedDrug (newDrugId) {
+      let newQuery = {...this.$route.query}
+      newQuery.drug = newDrugId
+      router.push({
+        path: '/',
+        query: newQuery
+      })
+    },
+    changeSelectedTf (newTfId) {
+      let newQuery = {...this.$route.query}
+      newQuery.tf = newTfId
+      router.push({
+        path: '/',
+        query: newQuery
+      })
     }
   }
 }
