@@ -15,6 +15,7 @@ import Quasar from 'quasar'
 import router from './router'
 import VolcanoPlot from './components/VolcanoPlot.vue'
 import SamplePlot from './components/SamplePlot.vue'
+import Header from './components/Header.vue'
 import 'vue-awesome/icons'
 import Icon from 'vue-awesome/components/Icon'
 import store from './store'
@@ -23,6 +24,7 @@ Vue.use(Quasar) // Install Quasar Framework
 
 Vue.component('volcano-plot', VolcanoPlot)
 Vue.component('sample-plot', SamplePlot)
+Vue.component('dorothea-header', Header)
 Vue.component('icon', Icon)
 
 Quasar.start(() => {
