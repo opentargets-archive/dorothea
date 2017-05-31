@@ -33,8 +33,25 @@ export default new VueRouter({
           passedSelectedDrug: drug,
           passedSelectedTf: tf
         }
-      }
+      },
+      children: [
+        {
+          path: '',
+          component: load('Home')
+        },
+        {
+          path: 'investigation/1',
+          component: load('Flow1')
+        },
+        {
+          path: 'investigation/2',
+          component: load('Flow2')
+        }
+      ]
     }, // Default with query
-    { path: '*', component: load('Error404') } // Not found
+    {
+      path: '*',
+      component: load('Error404')
+    } // Not found
   ]
 })
