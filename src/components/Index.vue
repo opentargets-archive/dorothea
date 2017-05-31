@@ -1,6 +1,7 @@
 <template>
   <q-layout>
     <dorothea-header slot="header"></dorothea-header>
+    <dorothea-navigation slot="navigation"></dorothea-navigation>
 
     <!--
       Replace following "div" with
