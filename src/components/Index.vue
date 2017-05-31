@@ -5,7 +5,7 @@
       <img src="../assets/dorothea-logo.svg" alt="DoRothEA" width="55px" height="54px">
 
       <q-toolbar-title :padding="0">
-        DoRothEA <span>Discriminant Regulon Enrichment Analysis</span>
+        DoRothEA <span class="text-secondary">Discriminant Regulon Enrichment Analysis</span>
       </q-toolbar-title>
 
       <button onclick="window.open('http://biorxiv.org/content/early/2017/04/21/129478', '_blank')">
@@ -28,13 +28,13 @@
       if using subRoutes
     -->
     <div class="layout-view">
-      <div class="layout-padding">
+      <div class="layout-padding bg-light">
         <div class="column lg-width-4of5 bg-width-4of5">
           <div class="row lt-bg-column justify-center gutter">
             <div class="gt-md-width-1of2">
               <div class="card">
-                <div class="card-title bg-primary text-white">Drug Selection</div>
-                <div class="card-content">
+                <div class="card-title text-primary bg-white">Drug Selection</div>
+                <div class="card-content bg-white">
                   <span>Please select a drug.</span>
                   <q-select type="list" @input="changeSelectedDrug" v-model="selectedDrug" :options="drugs"></q-select>
                 </div>
@@ -42,8 +42,8 @@
             </div>
             <div class="gt-md-width-1of2">
               <div class="card">
-                <div class="card-title bg-primary text-white">Transcription Factor Selection</div>
-                <div class="card-content">
+                <div class="card-title text-primary bg-white">Transcription Factor Selection</div>
+                <div class="card-content bg-white">
                   <span>Please select a transcription factor.</span>
                   <q-select type="list" @input="changeSelectedTf" v-model="selectedTf" :options="tfs"></q-select>
                 </div>
