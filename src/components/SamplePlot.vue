@@ -1,8 +1,7 @@
 <template>
   <div class="card" v-resize="handlerResize">
-    <div class="card-title bg-primary text-white toolbar">Drug: {{ drugSummary.drugName }}, Transcription Factor: {{ tf }}
+    <div class="card-title text-primary inverted toolbar">Drug: {{ drugSummary.drugName }}, Transcription Factor: {{ tf }}
       <button>
-        <!--<q-tooltip>Download chart image/data [Not currently implemented]</q-tooltip>-->
         <q-popover ref="samplePlotDownloadPopover">
           <div class="list item-delimiter hightlight">
             <button class="item item-link" style="text-transform:none;min-width:300px;" @click="pngDownload(), $refs.samplePlotDownloadPopover.close()">Download chart as PNG</button>
@@ -13,7 +12,17 @@
       </button>
     </div>
 
-    <div class="card-content">
+    <q-tabs class="inverted primary" :refs="$refs" default-tab="plot-tab">
+      <q-tab name="plot-tab">Plot</q-tab>
+      <q-tab name="table-tab">Table</q-tab>
+    </q-tabs>
+
+    <div ref="table-tab" class="card-content bg-white">
+      <q-data-table :data="sampleData" :config="tableConfig" :columns="tableCols">
+      </q-data-table>
+    </div>
+
+    <div ref="plot-tab" class="card-content bg-white">
       <div class="sample-plot"></div>
       <label>
         <q-checkbox v-model="showLabels"></q-checkbox>
@@ -82,7 +91,82 @@ export default {
   data () {
     return {
       showLabels: true,
-      showLegend: true
+      showLegend: true,
+      tableConfig: {
+        rowHeight: '20px',
+        pagination: {
+          rowsPerPage: 10,
+          options: [10, 25]
+        }
+      },
+      tableCols: [
+        {
+          label: 'Sample',
+          field: 'analysisSetName',
+          width: '80px',
+          sort: true
+        },
+        {
+          label: 'COSMIC',
+          field: 'cosmicId',
+          width: '60px',
+          sort: true
+        },
+        {
+          label: 'Activity',
+          field: 'tfActivity',
+          width: '50px',
+          sort: true,
+          format (value) {
+            return d3.format('.3g')(value)
+          }
+        },
+        {
+          label: 'IC50',
+          field: 'ic50',
+          width: '50px',
+          sort: true,
+          format (value) {
+            return d3.format('.3g')(value)
+          }
+        },
+        {
+          label: 'GDSC Desc 1',
+          field: 'gdscDesc1',
+          width: '80px',
+          sort: true
+        },
+        {
+          label: 'GDSC Desc 2',
+          field: 'gdscDesc2',
+          width: '100px',
+          sort: true
+        },
+        {
+          label: 'Study',
+          field: 'studyAbbreviation',
+          width: '100px',
+          sort: true
+        },
+        {
+          label: 'Comment',
+          field: 'comment',
+          width: '100px',
+          sort: true
+        },
+        {
+          label: 'MMR',
+          field: 'mmr',
+          width: '80px',
+          sort: true
+        },
+        {
+          label: 'Medium',
+          field: 'screenMedium',
+          width: '60px',
+          sort: true
+        }
+      ]
     }
   },
   computed: {
@@ -90,6 +174,15 @@ export default {
       let summary = store.getters.drugSummary(this.drug)
       if (!summary) summary = {}
       return summary
+    },
+    sampleData: function () {
+      return store.getters.samplePlotData(this.drug, this.tf).map(row => {
+        return {
+          ...row.sample,
+          tfActivity: row.tfActivity,
+          ic50: row.ic50
+        }
+      })
     }
   },
   mounted () {

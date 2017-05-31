@@ -1,6 +1,6 @@
 <template>
   <div class="card" v-resize="handleResize">
-    <div class="card-title bg-primary text-white toolbar">{{ title }}
+    <div class="card-title text-primary inverted toolbar">{{ title }}
       <button>
         <!--<q-tooltip>Download chart image/data [Not currently implemented]</q-tooltip>-->
         <q-popover ref="volcanoPlotDownloadPopover">
@@ -13,7 +13,7 @@
       </button>
     </div>
     
-    <div class="card-content">
+    <div class="card-content bg-white">
       <!--<spinner v-if="!dataLoaded" name="rings"></spinner>-->
       <div class="volcano-plot"></div>
       <label>
