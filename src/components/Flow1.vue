@@ -3,32 +3,39 @@
     <div class="layout-padding bg-light">
       <div class="column lg-width-4of5 bg-width-4of5">
 
-        <div class="row justify-center gutter">
-          <button class="bordered" :class="{ 'bg-primary': selectedRoute === 0 }" @click="selectAllDrugsAndAllTfs">All drugs and all transcription factors</button>
-          <button class="bordered" :class="{ 'bg-primary': selectedRoute === 1 }" @click="selectFixADrug">Fix a drug</button>
-          <button class="bordered" :class="{ 'bg-primary': selectedRoute === 2 }" @click="selectFixATf">Fix a transcription factor</button>
-        </div>
-
-        <div class="row lt-bg-column justify-center gutter">
-          <div class="gt-md-width-1of2">
-            <div v-if="showSelectDrug" class="card">
-              <div class="card-title text-primary bg-white">Drug Selection</div>
-              <div class="card-content bg-white">
-                <span>Please select a drug.</span>
-                <q-select type="list" @input="changeSelectedDrug" v-model="selectedDrug" :options="drugs"></q-select>
+        <div class="card">
+          <div class="card-title text-primary bg-white">Query</div>
+          <div class="card-content bg-white row">
+            <div class="width-1of2">
+              <p class="caption">Filter the associations by:</p>
+              <div class="column group">
+                <label>
+                  <q-radio v-model="selectedRoute" val="0" @input="selectAllDrugsAndAllTfs"></q-radio>
+                  No filtering
+                </label>
+                <label>
+                  <q-radio v-model="selectedRoute" val="1" @input="selectFixADrug"></q-radio>
+                  Drug
+                </label>
+                <label>
+                  <q-radio v-model="selectedRoute" val="2" @input="selectFixATf"></q-radio>
+                  Transcription factor
+                </label>
               </div>
             </div>
-          </div>
-          <div class="gt-md-width-1of2">
-            <div v-if="showSelectTf" class="card">
-              <div class="card-title text-primary bg-white">Transcription Factor Selection</div>
-              <div class="card-content bg-white">
-                <span>Please select a transcription factor.</span>
+            <div class="width-1of2">
+              <div v-if="showSelectDrug">
+                <p class="caption">Select a drug:</p>
+                <q-select type="list" @input="changeSelectedDrug" v-model="selectedDrug" :options="drugs"></q-select>
+              </div>
+              <div v-if="showSelectTf">
+                <p class="caption">Select a transcription factor:</p>
                 <q-select type="list" @input="changeSelectedTf" v-model="selectedTf" :options="tfs"></q-select>
               </div>
             </div>
           </div>
         </div>
+
         <div class="column justify-center gutter">
           <div class="lg-width-4of5">
             <div class="auto">
