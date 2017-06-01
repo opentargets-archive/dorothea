@@ -1,6 +1,9 @@
 <template>
   <div class="card" v-resize="handleResize">
     <div class="card-title text-primary inverted toolbar">{{ title }}
+      <!--<button class="pull-right">
+        <icon name="info"></icon>
+      </button>-->
       <button>
         <!--<q-tooltip>Download chart image/data [Not currently implemented]</q-tooltip>-->
         <q-popover ref="volcanoPlotDownloadPopover">
@@ -12,7 +15,9 @@
         <icon name="download"></icon>
       </button>
     </div>
-    
+    <!--<div class="card-content collapsable">
+      Hello, some card content
+    </div>-->
     <div class="card-content bg-white">
       <!--<spinner v-if="!dataLoaded" name="rings"></spinner>-->
       <div class="volcano-plot"></div>
@@ -74,8 +79,7 @@ export default {
   },
   data () {
     return {
-      showLabels: true
-      // lastChanged: null
+      showLabels: false
     }
   },
   computed: {
