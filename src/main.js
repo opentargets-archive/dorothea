@@ -16,17 +16,23 @@ import router from './router'
 import VolcanoPlot from './components/VolcanoPlot.vue'
 import SamplePlot from './components/SamplePlot.vue'
 import Header from './components/Header.vue'
+import Footer from './components/Footer.vue'
 import Navigation from './components/Navigation.vue'
+import AssociationTable from './components/AssociationTable.vue'
 import 'vue-awesome/icons'
 import Icon from 'vue-awesome/components/Icon'
 import store from './store'
+import VueScrollTo from 'vue-scrollto'
 
 Vue.use(Quasar) // Install Quasar Framework
+Vue.use(VueScrollTo)
 
 Vue.component('volcano-plot', VolcanoPlot)
 Vue.component('sample-plot', SamplePlot)
 Vue.component('dorothea-header', Header)
+Vue.component('dorothea-footer', Footer)
 Vue.component('dorothea-navigation', Navigation)
+Vue.component('dorothea-association-table', AssociationTable)
 Vue.component('icon', Icon)
 
 Quasar.start(() => {
