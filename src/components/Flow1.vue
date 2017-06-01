@@ -1,5 +1,5 @@
 <template>
-  <div class="layout-view">
+  <div id="flow-1-container" class="layout-view">
     <div class="layout-padding bg-light">
       <div class="column lg-width-4of5 bg-width-4of5">
 
@@ -39,7 +39,7 @@
         <div class="column justify-center gutter">
           <div class="lg-width-4of5">
             <div class="auto">
-              <volcano-plot :selectedDrug="selectedDrug" :selectedTf="selectedTf" :click-association-handler="clickAssociationHandler"></volcano-plot>
+              <volcano-plot :route="route" :selectedDrug="selectedDrug" :selectedTf="selectedTf" :click-association-handler="clickAssociationHandler"></volcano-plot>
             </div>
           </div>
           <div v-if="showSamplePlot" class="lg-width-4of5">
@@ -69,6 +69,7 @@
 <script>
 import store from '../store'
 import router from '../router'
+// import VueScrollTo from 'vue-scrollto'
 
 export default {
   props: ['route', 'selected', 'click'],
@@ -115,6 +116,11 @@ export default {
         path: '/investigation/1',
         query: newQuery
       })
+
+      // // scroll to the sample
+      // VueScrollTo.scrollTo('#sampleplot', 3000, {
+      //   container: '#flow-1-container'
+      // })
     },
     changeSelectedDrug (newDrugId) {
       // (route 1 only)

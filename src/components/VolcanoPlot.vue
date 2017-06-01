@@ -68,7 +68,7 @@ function tooltipAccessor (d) {
 }
 
 export default {
-  props: ['selectedDrug', 'selectedTf', 'clickAssociationHandler'],
+  props: ['route', 'selectedDrug', 'selectedTf', 'clickAssociationHandler'],
   directives: {
     resize
   },
@@ -78,12 +78,12 @@ export default {
     }
   },
   computed: {
-    drugSummary: function () {
+    drugSummary () {
       let summary = store.getters.drugSummary(this.selectedDrug)
       if (!summary) summary = {}
       return summary
     },
-    title: function () {
+    title () {
       const allDrugs = (this.selectedDrug === 'all')
       const allTfs = (this.selectedTf === 'all')
 
@@ -102,7 +102,17 @@ export default {
       }
       return title
     },
-    dataLoaded: function () {
+    labelAccessor () {
+      switch (this.route) {
+        case 0:
+          return d => d.drugName + ':' + d.transcriptionFactor
+        case 1:
+          return d => d.transcriptionFactor
+        case 2:
+          return d => d.drugName
+      }
+    },
+    dataLoaded () {
       return store.state.loaded
     }
   },
@@ -118,6 +128,7 @@ export default {
     let data = store.getters.volcanoPlotData(this.selectedDrug, this.selectedTf)
     this.plot.data(data)
              .showCircleLabels(this.showLabels)
+             .textAccessor(this.labelAccessor)
              .render()
   },
   beforeDestroy () {
@@ -132,7 +143,8 @@ export default {
                     .data(data)
                     .xAccessor(d => d.effectSize)
                     .yAccessor(d => d.fdr)
-                    .textAccessor(d => d.drugName + ':' + d.transcriptionFactor)
+                    // .textAccessor(d => d.drugName + ':' + d.transcriptionFactor)
+                    .textAccessor(this.labelAccessor)
                     // .rAccessor(d => d.sampleCount)
                     .rAccessor(d => 1)
                     .handleCircleClick(this.clickAssociationHandler)
