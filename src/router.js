@@ -24,16 +24,6 @@ export default new VueRouter({
     {
       path: '/',
       component: load('Index'),
-      props: (route) => {
-        let drug = 'all'
-        let tf = 'all'
-        if (route.query.drug) drug = parseInt(route.query.drug)
-        if (route.query.tf) tf = route.query.tf
-        return {
-          passedSelectedDrug: drug,
-          passedSelectedTf: tf
-        }
-      },
       children: [
         {
           path: '',
@@ -41,7 +31,32 @@ export default new VueRouter({
         },
         {
           path: 'investigation/1',
-          component: load('Flow1')
+          component: load('Flow1'),
+          props: (route) => {
+            // default
+            let r = 0
+            let selected = {
+              drug: 'all',
+              tf: 'all'
+            }
+            let clicked = {
+              drug: null,
+              tf: null
+            }
+
+            // override from route params
+            if (route.query.route) r = route.query.route
+            if (route.query.selectedDrug) selected.drug = parseInt(route.query.selectedDrug)
+            if (route.query.selectedTf) selected.tf = route.query.selectedTf
+            if (route.query.clickedDrug) clicked.drug = parseInt(route.query.clickedDrug)
+            if (route.query.clickedTf) clicked.tf = route.query.clickedTf
+
+            return {
+              route: r,
+              selected,
+              click: clicked
+            }
+          }
         },
         {
           path: 'investigation/2',

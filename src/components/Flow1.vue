@@ -2,9 +2,16 @@
   <div class="layout-view">
     <div class="layout-padding bg-light">
       <div class="column lg-width-4of5 bg-width-4of5">
+
+        <div class="row justify-center gutter">
+          <button class="bordered" :class="{ 'bg-primary': selectedRoute === 0 }" @click="selectAllDrugsAndAllTfs">All drugs and all transcription factors</button>
+          <button class="bordered" :class="{ 'bg-primary': selectedRoute === 1 }" @click="selectFixADrug">Fix a drug</button>
+          <button class="bordered" :class="{ 'bg-primary': selectedRoute === 2 }" @click="selectFixATf">Fix a transcription factor</button>
+        </div>
+
         <div class="row lt-bg-column justify-center gutter">
           <div class="gt-md-width-1of2">
-            <div class="card">
+            <div v-if="showSelectDrug" class="card">
               <div class="card-title text-primary bg-white">Drug Selection</div>
               <div class="card-content bg-white">
                 <span>Please select a drug.</span>
@@ -13,7 +20,7 @@
             </div>
           </div>
           <div class="gt-md-width-1of2">
-            <div class="card">
+            <div v-if="showSelectTf" class="card">
               <div class="card-title text-primary bg-white">Transcription Factor Selection</div>
               <div class="card-content bg-white">
                 <span>Please select a transcription factor.</span>
@@ -30,7 +37,7 @@
           </div>
           <div v-if="showSamplePlot" class="lg-width-4of5">
             <div class="auto">
-              <sample-plot :drug="selectedDrug" :tf="selectedTf"></sample-plot>
+              <sample-plot :drug="clicked.drug" :tf="clicked.tf"></sample-plot>
             </div>
           </div>
         </div>
@@ -57,11 +64,17 @@ import store from '../store'
 import router from '../router'
 
 export default {
-  props: ['passedSelectedDrug', 'passedSelectedTf'],
+  props: ['route', 'selected', 'click'],
   data () {
     return {
-      selectedDrug: this.passedSelectedDrug ? this.passedSelectedDrug : 'all',
-      selectedTf: this.passedSelectedTf ? this.passedSelectedTf : 'all'
+      // load defaults from the route params
+      selectedDrug: this.selected.drug,
+      selectedTf: this.selected.tf,
+      selectedRoute: this.route,
+      clicked: {
+        drug: this.click.drug,
+        tf: this.click.tf
+      }
     }
   },
   computed: {
@@ -72,29 +85,112 @@ export default {
       return store.getters.tfIndexNamePairs()
     },
     showSamplePlot () {
-      return (this.selectedDrug !== 'all') && (this.selectedTf !== 'all')
+      return (this.clicked.drug) && (this.clicked.tf)
+    },
+    showSelectDrug () {
+      return (this.selectedRoute === 1)
+    },
+    showSelectTf () {
+      return (this.selectedRoute === 2)
     }
   },
   methods: {
     clickAssociationHandler (d) {
-      this.selectedDrug = d.drugId
-      this.selectedTf = d.transcriptionFactor
-    },
-    changeSelectedDrug (newDrugId) {
+      // update the clicked drug, tf pair
+      this.clicked.drug = d.drugId
+      this.clicked.tf = d.transcriptionFactor
+
+      // * update the query params
       let newQuery = {...this.$route.query}
-      newQuery.drug = newDrugId
+      newQuery.clickedDrug = d.drugId
+      newQuery.clickedTf = d.transcriptionFactor
       router.push({
         path: '/investigation/1',
         query: newQuery
+      })
+    },
+    changeSelectedDrug (newDrugId) {
+      // (route 1 only)
+      // on changing the selected drug:
+      // * any clicked association should be forgotten
+      // * the query params should be updated
+      this.resetClicked()
+      router.push({
+        path: '/investigation/1',
+        query: {
+          route: this.$route.query.route,
+          selectedDrug: newDrugId
+        }
       })
     },
     changeSelectedTf (newTfId) {
-      let newQuery = {...this.$route.query}
-      newQuery.tf = newTfId
+      // (route 2 only)
+      // on changing the selected tf:
+      // * any clicked association should be forgotten
+      // * the query params should be updated
+      this.resetClicked()
       router.push({
         path: '/investigation/1',
-        query: newQuery
+        query: {
+          route: this.$route.query.route,
+          selectedTf: newTfId
+        }
       })
+    },
+    selectAllDrugsAndAllTfs () {
+      // switch to route 0:
+      // * any clicked association should be forgotten
+      // * selectedDrug, selectedTf should be reset to all
+      // * the query params should be updated
+      this.resetClicked()
+      this.selectedRoute = 0
+      this.selectedDrug = 'all'
+      this.selectedTf = 'all'
+      router.push({
+        path: '/investigation/1',
+        query: {
+          route: 0
+        }
+      })
+    },
+    selectFixADrug () {
+      // switch to route 1:
+      // * any clicked association should be forgotten
+      // * selectedDrug should be the first in the dropdown
+      // * selectedTf should be reset to all
+      // * the query params should be updated
+      this.resetClicked()
+      this.selectedRoute = 1
+      this.selectedDrug = this.drugs[0].value
+      this.selectedTf = 'all'
+      router.push({
+        path: '/investigation/1',
+        query: {
+          route: 1
+        }
+      })
+    },
+    selectFixATf () {
+      // switch to route 2:
+      // * any clicked association should be forgotten
+      // * selectedDrug should be reset to all
+      // * selectedTf should be the first in the dropdown
+      // * the query params should be updated
+      this.resetClicked()
+      this.selectedRoute = 2
+      this.selectedDrug = 'all'
+      this.selectedTf = this.tfs[0].value
+      router.push({
+        path: '/investigation/1',
+        query: {
+          route: 2
+        }
+      })
+    },
+    resetClicked () {
+      // forget what was clicked
+      this.clicked.drug = null
+      this.clicked.tf = null
     }
   }
 }

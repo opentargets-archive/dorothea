@@ -45,10 +45,6 @@ export default new Vuex.Store({
         if (a.label > b.label) return 1
         return 0
       })
-      pairs = [{
-        label: 'All',
-        value: 'all'
-      }, ...pairs]
       return pairs
     },
     tfIndexNamePairs: (state) => () => {
@@ -62,10 +58,6 @@ export default new Vuex.Store({
           value: tfId
         }
       })
-      pairs = [{
-        label: 'All',
-        value: 'all'
-      }, ...pairs]
       return pairs
     },
     sampleCount: (state) => (drugId, tfId) => {
