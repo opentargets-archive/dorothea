@@ -3,11 +3,13 @@
     <dorothea-header slot="header"></dorothea-header>
     <dorothea-navigation slot="navigation"></dorothea-navigation>
 
-    <!--
-      Replace following "div" with
-      "<router-view class="layout-view">" component
-      if using subRoutes
-    -->
-    <router-view></router-view>
+    <div id="main-container" class="layout-view">
+      <div class="layout-padding bg-light">
+        <div class="column lg-width-4of5 bg-width-4of5">
+          <router-view></router-view>
+        </div>
+      </div>
+    </div>
+    <!--<dorothea-footer></dorothea-footer>-->
   </q-layout>
 </template>
