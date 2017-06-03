@@ -1,4 +1,5 @@
 CosmicID	Cell.line.name	Primary_Site_GDSC1	Primary_Site_GDSC2	TCGA_label	Comment	MMR	Screen_Medium
+906794	A253	aero_dig_tract	head and neck		submandibular gland carcinoma	MSS/MSI-L	
 753531	BB30-HNC	aero_dig_tract	head and neck	HNSC		MSS/MSI-L	D/F12
 753532	BB49-HNC	aero_dig_tract	head and neck	HNSC		MSS/MSI-L	D/F12
 753535	BHY	aero_dig_tract	head and neck	HNSC		MSS/MSI-L	D/F12

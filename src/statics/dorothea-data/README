@@ -1,14 +1,20 @@
 
 
-# Files description
+## Files description
 
+# Features annotation files
 - a_drugs.txt: annotation table for the drugs. Contains metadata for the drugs in the study. First column represents the drug id matching rownames in 'm_drug_ic50_gdsc.txt' matrix and 'r_tf_drug_asso_gdsc.txt' association results files.
 - a_samples.txt: annotation table for the samples. Contains metadata for the samples in the study. First column represents the sample id (cosmic_id) matching colnames in 'm_drug_ic50_gdsc.txt' and 'm_tf_activities_gdsc.txt' files.
-- m_drug_ic50_gdsc.txt: numeric matrix. Contains drug response values. Columns represent the samples and rows the drugs. Ids in the columns and raws match the ids in the 1rst columns in the annotation files.
-- m_drug_ic50corrected_gdsc.txt: same as m_drug_ic50_gdsc.txt but c50 values have been corrected according the “primary tissue site GDSC2”.
-- m_tf_activities_gdsc.txt: numeric matrix. Contains TF activity values. Columns represent the samples and rows the TFs. Ids in the columns and raws match the ids in the 1rst columns in the annotation files.
-- r_tf_drug_asso_gdsc.txt: table containing the results from the association tests. First column represents the studied TF. Third column represents the drug id. For the volcano plot: x axis represents the 5th column (effect_size_(reg_coeff)); y axis represents the negative 10 logarithm of the 7th column (fdr).
+
+# Data matrixes
+- m_drug_ic50_gdsc.txt: numeric matrix. Contains drug response values. Columns represent the samples and rows the drugs. Ids in the columns and rows match the ids in the 1rst columns in the annotation files.
+- m_tf_activities_gdsc.txt: numeric matrix. Contains TF activity values. Columns represent the samples and rows the TFs. Ids in the columns and rows match the ids in the 1rst columns in the annotation files.
+- m_GM.txt: binary matrix. Contains the Genomic Markers (GM) observed in each sample. Columns represent the samples and rows the GMs. Ids in the columns match the ids in the 1rst column in the annotation files.
+
+# Analysis results
+- r_tf_drug_asso_gdsc.txt: table containing the results from the TF-drug association tests. Each row represents an independent test. First column represents the studied TF. Third column represents the drug id. For the volcano plot: x axis represents the 5th column (effect_size_(reg_coeff)); y axis represents the negative 10 logarithm of the 7th column (fdr).
+- r_tf_drugGM_asso_gdsc.txt: table containing the results from the TF-drug+GenomicMarker association tests. Each row represents an independent test. 1-6 first columns are self explanatory. Columns ending with “_coefficient” contain the coefficient for the corresponding regressors in the linear model. Columns ending with “_LRtest_pval” indicate the p-value derived from a Likelihood Ratio test comparing 2 regression models. “TF” and “Int” prefix represent the TF and TF*GM (interaction term) regressors. This table should be ranked according ‘Int_LRtest_pval’ or ’Int_LRtest_fdr’ columns. This table can be linked to the rows in m_GM.txt file using the column “GenomicMarker_id”. This table can be linked to the a_samples.txt file using the column “cancer_type”.
 
 
 Luz Garcia-Alonso
-02/05/2017
+31/05/2017
