@@ -1,5 +1,5 @@
 <template>
-  <div class="card" v-resize="handlerResize">
+  <div id="sampleplot" class="card" v-resize="handlerResize">
     <div class="card-title text-primary inverted toolbar">Drug: {{ drugSummary.drugName }}, Transcription Factor: {{ tf }}
       <button>
         <q-popover ref="samplePlotDownloadPopover">
@@ -11,6 +11,10 @@
         <icon name="download"></icon>
       </button>
     </div>
+
+    <!--<div class="card-content bg-white">
+      <dorothea-association-table :association="associationSummary"></dorothea-association-table>
+    </div>-->
 
     <q-tabs class="inverted primary" :refs="$refs" default-tab="plot-tab">
       <q-tab name="plot-tab">Plot</q-tab>
@@ -175,6 +179,9 @@ export default {
       if (!summary) summary = {}
       return summary
     },
+    // associationSummary: function () {
+    //   return store.getters.volcanoPlotData(this.drug, this.tf)[0]
+    // },
     sampleData: function () {
       return store.getters.samplePlotData(this.drug, this.tf).map(row => {
         return {
