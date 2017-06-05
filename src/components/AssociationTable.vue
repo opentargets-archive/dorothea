@@ -1,40 +1,45 @@
 <template>
-  <table class="q-table horizontal-delimiter compact">
-    <thead>
-      <tr>
-        <th>Drug</th>
-        <th>
-          <a class="drug-link" target="_blank" :href="this.drugUrl">{{ association.drugName }}</a>
-        </th>
-      </tr>
-      <tr>
-        <th>Transcription Factor</th>
-        <th>{{ association.transcriptionFactor }}</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr>
-        <td>Effect Size</td>
-        <td>{{ this.effectSize }}</td>
-      </tr>
-      <tr>
-        <td>FDR</td>
-        <td>{{ this.fdr }}</td>
-      </tr>
-      <!--<tr>
-        <td>Sample Count</td>
-        <td>{{ association.sampleCount }}</td>
-      </tr>-->
-      <tr>
-        <td>P Value</td>
-        <td>{{ this.pval }}</td>
-      </tr>
-      <tr>
-        <td>Drug Targets</td>
-        <td>{{ association.drugTargets }}</td>
-      </tr>
-    </tbody>
-  </table>
+  <div class="card">
+    <div class="card-title text-primary inverted toolbar">Interaction Summary</div>
+    <div class="card-content bg-white">
+      <table class="q-table horizontal-delimiter compact">
+        <thead>
+          <tr>
+            <th>Drug</th>
+            <th>
+              <a class="drug-link" target="_blank" :href="this.drugUrl">{{ association.drugName }}</a>
+            </th>
+          </tr>
+          <tr>
+            <th>Transcription Factor</th>
+            <th>{{ association.transcriptionFactor }}</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Effect Size</td>
+            <td>{{ this.effectSize }}</td>
+          </tr>
+          <tr>
+            <td>FDR</td>
+            <td>{{ this.fdr }}</td>
+          </tr>
+          <!--<tr>
+            <td>Sample Count</td>
+            <td>{{ association.sampleCount }}</td>
+          </tr>-->
+          <tr>
+            <td>P Value</td>
+            <td>{{ this.pval }}</td>
+          </tr>
+          <tr>
+            <td>Drug Targets</td>
+            <td>{{ association.drugTargets }}</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
 </template>
 
 <script>
