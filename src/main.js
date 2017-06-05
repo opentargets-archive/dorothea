@@ -19,6 +19,7 @@ import Header from './components/Header.vue'
 import Footer from './components/Footer.vue'
 import Navigation from './components/Navigation.vue'
 import AssociationTable from './components/AssociationTable.vue'
+import SampleTable from './components/SampleTable.vue'
 import 'vue-awesome/icons'
 import Icon from 'vue-awesome/components/Icon'
 import store from './store'
@@ -33,6 +34,7 @@ Vue.component('dorothea-header', Header)
 Vue.component('dorothea-footer', Footer)
 Vue.component('dorothea-navigation', Navigation)
 Vue.component('dorothea-association-table', AssociationTable)
+Vue.component('dorothea-sample-table', SampleTable)
 Vue.component('icon', Icon)
 
 Quasar.start(() => {
@@ -46,9 +48,11 @@ Quasar.start(() => {
         Promise.all([
           store.dispatch('loadADrugs'),
           store.dispatch('loadASamples'),
+          store.dispatch('loadRTfDrugGmAssoGdsc'),
           store.dispatch('loadRTfDrugAssoGdsc'),
           store.dispatch('loadMDrugIc50Gdsc'),
-          store.dispatch('loadMTfActivitiesGdsc')
+          store.dispatch('loadMTfActivitiesGdsc'),
+          store.dispatch('loadMGM')
         ]).then(() => {
           store.commit('setLoaded', {
             value: true
