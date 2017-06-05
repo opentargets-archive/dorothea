@@ -9,8 +9,10 @@ export default new Vuex.Store({
     aSamples: null,
     aDrugs: null,
     mDrugIc50Gdsc: null,
+    mGM: null,
     mTfActivitiesGdsc: null,
     rTfDrugAssoGdsc: [],
+    rTfDrugGmAssoGdsc: [],
     loaded: false
   },
   mutations: {
@@ -22,6 +24,7 @@ export default new Vuex.Store({
     }
   },
   getters: {
+    // FLOW 1
     resultsForDrug: (state) => (drugId) => {
       return state.rTfDrugAssoGdsc.filter((item) => item.drugId === drugId)
     },
@@ -111,6 +114,11 @@ export default new Vuex.Store({
           sample: state.aSamples[sampleId]
         }
       })
+    },
+    // FLOW 2
+    drugGMPairData: (state) => (tf) => {
+      // get the unique drug-gm pairs (optionally filtered for a given tf)
+      return state.rTfDrugGmAssoGdsc.filter(r => (!tf || r.transcriptionFactor === tf))
     }
   },
   actions: {
@@ -196,6 +204,75 @@ export default new Vuex.Store({
             commit('setData', {
               name: 'rTfDrugAssoGdsc',
               data: data
+            })
+            resolve()
+          })
+      })
+    },
+    loadRTfDrugGmAssoGdsc ({ commit }) {
+      return new Promise((resolve, reject) => {
+        d3.tsv('./statics/dorothea-data/r_tf_drugGM_asso_gdsc.txt')
+          .row(function (r, i) {
+            return {
+              drugId: +r.Drug_id,
+              drugName: r.Drug_name,
+              drugTargets: r.Drug_targets,
+              gm: r.GenomicMarker,
+              gmCoeff: +r.GenomicMarker_coefficient,
+              gmId: r.GenomicMarker_id,
+              gmTTestPval: +r.GenomicMarker_tTest_pval,
+              intLRTestFdr: +r.Int_LRtest_fdr,
+              intLRTestPval: +r.Int_LRtest_pval,
+              intAic: r.Int_aic === 'TRUE',
+              intCoeff: +r.Int_coefficient,
+              tfLRTestFdr: +r.TF_LRtest_fdr,
+              tfLRTestPval: +r.TF_LRtest_pval,
+              tfCoeff: +r.TF_coefficient,
+              tfAic: r.TF_aic === 'TRUE',
+              transcriptionFactor: r.TF,
+              cancerType: r.cancer_type
+            }
+          })
+          .get(function (data) {
+            commit('setData', {
+              name: 'rTfDrugGmAssoGdsc',
+              data: data
+            })
+            resolve()
+          })
+      })
+    },
+    loadMGM ({ commit }) {
+      return new Promise((resolve, reject) => {
+        d3.tsv('./statics/dorothea-data/m_GM.txt')
+          .row(function (r, i) {
+            // extract genomic marker id (gmId)
+            const gmId = r.GenomicMarker_id
+
+            // filter each row to remove gmId
+            const samples = []
+            for (let key in r) {
+              if (key !== 'GenomicMarker_id' && r[key] === '1') {
+                samples.push(key)
+              }
+            }
+
+            return {
+              gmId,
+              samples
+            }
+          })
+          .get(function (data) {
+            // // convert list to object (where gmId is the key)
+            let converted = {}
+            data.map(el => {
+              converted[el.gmId] = el.samples
+            })
+
+            // save to store
+            commit('setData', {
+              name: 'mGM',
+              data: converted
             })
             resolve()
           })
