@@ -8,6 +8,7 @@ require(`./themes/app.${__THEME}.styl`)
 // Custom charts
 require(`../node_modules/volcano-plot/index.scss`)
 require(`../node_modules/sample-plot/index.scss`)
+require(`../node_modules/comparison-box-plot/index.scss`)
 // ==============================
 
 import Vue from 'vue'
@@ -15,6 +16,8 @@ import Quasar from 'quasar'
 import router from './router'
 import VolcanoPlot from './components/VolcanoPlot.vue'
 import SamplePlot from './components/SamplePlot.vue'
+import BoxPlot from './components/BoxPlot.vue'
+import NestedBoxPlot from './components/NestedBoxPlot.vue'
 import Header from './components/Header.vue'
 import Footer from './components/Footer.vue'
 import Navigation from './components/Navigation.vue'
@@ -30,6 +33,8 @@ Vue.use(VueScrollTo)
 
 Vue.component('volcano-plot', VolcanoPlot)
 Vue.component('sample-plot', SamplePlot)
+Vue.component('box-plot', BoxPlot)
+Vue.component('nested-box-plot', NestedBoxPlot)
 Vue.component('dorothea-header', Header)
 Vue.component('dorothea-footer', Footer)
 Vue.component('dorothea-navigation', Navigation)
@@ -48,9 +53,9 @@ Quasar.start(() => {
         Promise.all([
           store.dispatch('loadADrugs'),
           store.dispatch('loadASamples'),
+          store.dispatch('loadMDrugIc50Gdsc'),
           store.dispatch('loadRTfDrugGmAssoGdsc'),
           store.dispatch('loadRTfDrugAssoGdsc'),
-          store.dispatch('loadMDrugIc50Gdsc'),
           store.dispatch('loadMTfActivitiesGdsc'),
           store.dispatch('loadMGM')
         ]).then(() => {

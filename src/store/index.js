@@ -117,8 +117,108 @@ export default new Vuex.Store({
     },
     // FLOW 2
     drugGMPairData: (state) => (tf) => {
-      // get the unique drug-gm pairs (optionally filtered for a given tf)
+      // // // get the unique drug-gm pairs (optionally filtered for a given tf)
+      // // return state.rTfDrugGmAssoGdsc.filter(r => (!tf || r.transcriptionFactor === tf))
+
+      // // get all unique drug-tf-gm triplets
+      // const setAssociations = new Set(state.rTfDrugGmAssoGdsc.map(r => {
+      //   // return {
+      //   //   tf: r.transcriptionFactor,
+      //   //   drug: r.drugId,
+      //   //   gm: r.gm
+      //   // }
+      //   return r.transcriptionFactor + ':' + r.drugId + ':' + r.gm
+      // }))
+      // console.log(Array.from(setAssociations).map(str => {
+      //   const a = str.split(':')
+      //   return {
+      //     tf: r.transcriptionFactor,
+      //     drug: r.drugId,
+      //     gm: r.gm
+      //   }
+      // })
+      // console.log(state.rTfDrugGmAssoGdsc.filter(r => (!tf || r.transcriptionFactor === tf)))
+      // // return new Array(setAssociations)
+
       return state.rTfDrugGmAssoGdsc.filter(r => (!tf || r.transcriptionFactor === tf))
+    },
+    boxPlotData: (state) => (drugId, gmId, tfId, nested = false) => {
+      if (!state.rTfDrugGmAssoGdsc) {
+        console.log('no rTfDrugGmAssoGdsc')
+        return {}
+      }
+      if (!state.mDrugIc50Gdsc) {
+        console.log('no mDrugIc50Gdsc')
+        return {}
+      }
+      if (!state.mTfActivitiesGdsc) {
+        console.log('no mTfActivitiesGdsc')
+        return {}
+      }
+      if (!state.mGM) {
+        console.log('no mGM')
+        return {}
+      }
+
+      // get samples for drug, tf pair (as in flow 1)
+      const ic50sForDrug = state.mDrugIc50Gdsc ? state.mDrugIc50Gdsc['' + drugId] : {}
+      const activitiesForTf = state.mTfActivitiesGdsc ? state.mTfActivitiesGdsc[tfId] : {}
+
+      let drugKeys = Object.keys(ic50sForDrug)
+      let tfKeys = Object.keys(activitiesForTf)
+      let sampleIdsForDrug = (drugKeys.length > 0) ? drugKeys.map(d => +d) : []
+      let sampleIdsForTf = (tfKeys.length > 0) ? tfKeys.map(d => +d) : []
+
+      // get the samples for the gmId
+      let sampleIdsForGm = state.mGM[gmId]
+
+      let tfSet = new Set(sampleIdsForTf)
+      let sampleIds = []
+      sampleIdsForDrug.map(sampleId => {
+        if (tfSet.has(sampleId)) sampleIds.push(sampleId)
+      })
+
+      // filter for mutation
+      const wtSampleIds = sampleIds.filter(x => (sampleIdsForGm.indexOf(x) < 0))
+      const mutSampleIds = sampleIds.filter(x => (sampleIdsForGm.indexOf(x) >= 0))
+      let wt = wtSampleIds.map(sampleId => {
+        return {
+          sampleId: sampleId,
+          ic50: ic50sForDrug[sampleId],
+          tfActivity: state.mTfActivitiesGdsc[tfId][sampleId],
+          sample: state.aSamples[sampleId]
+        }
+      })
+      let mut = mutSampleIds.map(sampleId => {
+        return {
+          sampleId: sampleId,
+          ic50: ic50sForDrug[sampleId],
+          tfActivity: state.mTfActivitiesGdsc[tfId][sampleId],
+          sample: state.aSamples[sampleId]
+        }
+      })
+
+      if (nested) {
+        // nested box plots should show three adjacent sub-boxplots for each
+        // of wt and mut categories, split at 1, -1 values of tfActivity
+        let wtGroups = []
+        wtGroups.push(wt.filter(r => r.tfActivity < -1))
+        wtGroups.push(wt.filter(r => (r.tfActivity >= -1) && r.tfActivity < 1))
+        wtGroups.push(wt.filter(r => r.tfActivity >= 1))
+        let mutGroups = []
+        mutGroups.push(mut.filter(r => r.tfActivity < -1))
+        mutGroups.push(mut.filter(r => (r.tfActivity >= -1) && r.tfActivity < 1))
+        mutGroups.push(mut.filter(r => r.tfActivity >= 1))
+
+        // console.log(wtGroups)
+        wt = wtGroups
+        mut = mutGroups
+      }
+
+      return {
+        wt,
+        mut
+      }
     }
   },
   actions: {
@@ -253,7 +353,7 @@ export default new Vuex.Store({
             const samples = []
             for (let key in r) {
               if (key !== 'GenomicMarker_id' && r[key] === '1') {
-                samples.push(key)
+                samples.push(+key)
               }
             }
 
