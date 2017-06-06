@@ -1,6 +1,7 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
 import * as d3 from 'd3'
+import * as _ from 'lodash'
 
 Vue.use(Vuex)
 
@@ -210,7 +211,6 @@ export default new Vuex.Store({
         mutGroups.push(mut.filter(r => (r.tfActivity >= -1) && r.tfActivity < 1))
         mutGroups.push(mut.filter(r => r.tfActivity >= 1))
 
-        // console.log(wtGroups)
         wt = wtGroups
         mut = mutGroups
       }
@@ -219,6 +219,60 @@ export default new Vuex.Store({
         wt,
         mut
       }
+    },
+    flow2TableData: (state) => (drugId, gmId, tfId) => {
+      return state.rTfDrugGmAssoGdsc.filter(r => (!drugId || r.drugId === drugId))
+                                    .filter(r => (!gmId || r.gmId === gmId))
+                                    .filter(r => (!tfId || r.transcriptionFactor === tfId))
+    },
+    flow2DrugPairs: (state) => (gmId) => {
+      // get all drug options, as label-value pairs, possibly given a fixed GM
+      const filtered = state.rTfDrugGmAssoGdsc.filter(r => (!gmId || r.gmId === gmId))
+      const pairs = filtered.map(r => {
+        return {
+          label: r.drugName,
+          value: r.drugId
+        }
+      })
+      const uniquePairs = _.uniqBy(pairs, r => r.value)
+      return uniquePairs.sort((a, b) => {
+        if (a.label < b.label) return -1
+        if (a.label > b.label) return 1
+        return 0
+      })
+    },
+    flow2GMPairs: (state) => (drugId) => {
+      // get all GM options, as label-value pairs, possibly given a fixed drug
+      const filtered = state.rTfDrugGmAssoGdsc.filter(r => (!drugId || r.drugId === drugId))
+      const pairs = filtered.map(r => {
+        return {
+          label: r.gm,
+          value: r.gmId
+        }
+      })
+      const uniquePairs = _.uniqBy(pairs, r => r.value)
+      return uniquePairs.sort((a, b) => {
+        if (a.label < b.label) return -1
+        if (a.label > b.label) return 1
+        return 0
+      })
+    },
+    flow2TFPairs: (state) => (drugId, gmId) => {
+      // get all TF options, as label-value pairs, given a fixed drug and GM
+      const filtered = state.rTfDrugGmAssoGdsc.filter(r => (!drugId || r.drugId === drugId))
+                                              .filter(r => (!gmId || r.gmId === gmId))
+      const pairs = filtered.map(r => {
+        return {
+          label: r.transcriptionFactor,
+          value: r.transcriptionFactor
+        }
+      })
+      const uniquePairs = _.uniqBy(pairs, r => r.value)
+      return uniquePairs.sort((a, b) => {
+        if (a.label < b.label) return -1
+        if (a.label > b.label) return 1
+        return 0
+      })
     }
   },
   actions: {

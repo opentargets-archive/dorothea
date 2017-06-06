@@ -3,37 +3,37 @@
 
     <div class="width-1of4">
 
-          <div class="card">
-            <div class="card-title text-primary bg-white">Query</div>
-            <div class="card-content bg-white row">
-              <div class="width-1of2">
-                <div class="column group">
-                  <label>
-                    <q-radio v-model="selectedRoute" val="0" @input="selectAllDrugsAndAllTfs"></q-radio>
-                    No filtering
-                  </label>
-                  <label>
-                    <q-radio v-model="selectedRoute" val="1" @input="selectFixADrug"></q-radio>
-                    Filter by drug
-                  </label>
-                  <label>
-                    <q-radio v-model="selectedRoute" val="2" @input="selectFixATf"></q-radio>
-                    Filter by transcription factor
-                  </label>
-                </div>
+      <div class="card">
+        <div class="card-title text-primary bg-white">Query</div>
+          <div class="card-content bg-white row">
+            <div class="width-1of2">
+              <div class="column group">
+                <label>
+                  <q-radio v-model="selectedRoute" val="0" @input="selectAllDrugsAndAllTfs"></q-radio>
+                  No filtering
+                </label>
+                <label>
+                  <q-radio v-model="selectedRoute" val="1" @input="selectFixADrug"></q-radio>
+                  Filter by drug
+                </label>
+                <label>
+                  <q-radio v-model="selectedRoute" val="2" @input="selectFixATf"></q-radio>
+                  Filter by transcription factor
+                </label>
               </div>
-              <div class="width-1of2">
-                <div v-if="showSelectDrug">
-                  <p class="caption">Select a drug:</p>
-                  <q-select type="list" @input="changeSelectedDrug" v-model="selectedDrug" :options="drugs"></q-select>
-                </div>
-                <div v-if="showSelectTf">
-                  <p class="caption">Select a transcription factor:</p>
-                  <q-select type="list" @input="changeSelectedTf" v-model="selectedTf" :options="tfs"></q-select>
-                </div>
+            </div>
+            <div class="width-1of2">
+              <div v-if="showSelectDrug">
+                <p class="caption">Select a drug:</p>
+                <q-select type="list" @input="changeSelectedDrug" v-model="selectedDrug" :options="drugs"></q-select>
+              </div>
+              <div v-if="showSelectTf">
+                <p class="caption">Select a transcription factor:</p>
+                <q-select type="list" @input="changeSelectedTf" v-model="selectedTf" :options="tfs"></q-select>
               </div>
             </div>
           </div>
+        </div>
   
       </div>
 
