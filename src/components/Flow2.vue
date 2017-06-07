@@ -13,7 +13,7 @@
             <span class="caption">Drug:</span>
             <q-select v-if="!selectedDrug" type="list" @input="changeSelectedDrug" v-model="selectedDrug" :options="drugs"></q-select>
             <button v-else class="primary" @click="deselectDrug()">
-              {{ selectedDrug }}<i class="on-right">close</i>
+              {{ drugSummary.drugName }}<i class="on-right">close</i>
             </button>
           </div>
 
@@ -123,6 +123,9 @@ export default {
     },
     tableData () {
       return store.getters.flow2TableData(this.selectedDrug, this.selectedGM, this.selectedTF)
+    },
+    drugSummary () {
+      return store.getters.drugSummary(this.selectedDrug)
     }
   },
   methods: {
