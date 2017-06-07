@@ -33,40 +33,6 @@ import json2csv from 'json2csv'
 import FileSaver from 'file-saver'
 import tntUtils from 'tnt.utils'
 
-function tooltipAccessor (d) {
-  const cancerRxGeneUrl = 'http://www.cancerrxgene.org/translation/Drug/' + d.drugId
-  return '<table>' +
-    '<tr class="emphasis-row">' +
-      '<td>Transcription Factor</td>' +
-      '<td>' + d.transcriptionFactor + '</td>' +
-    '</tr>' +
-    '<tr class="emphasis-row">' +
-      '<td>Drug</td>' +
-      '<td><a class="drug-link" target="_blank" href="' + cancerRxGeneUrl + '">' + d.drugName + '</a></td>' +
-    '</tr>' +
-    '<tr>' +
-      '<td>Effect Size</td>' +
-      '<td>' + d3.format('.3g')(d.effectSize) + '</td>' +
-    '</tr>' +
-    '<tr>' +
-      '<td>FDR</td>' +
-      '<td>' + d3.format('.3g')(d.fdr) + '</td>' +
-    '</tr>' +
-    '<tr>' +
-      '<td>Sample Count</td>' +
-      '<td>' + d.sampleCount + '</td>' +
-    '</tr>' +
-    '<tr>' +
-      '<td>P Value</td>' +
-      '<td>' + d3.format('.3g')(d.pval) + '</td>' +
-    '</tr>' +
-    '<tr>' +
-      '<td>Drug Targets</td>' +
-      '<td>' + d.drugTargets + '</td>' +
-    '</tr>' +
-  '</table>'
-}
-
 export default {
   props: ['route', 'selectedDrug', 'selectedTf', 'clickAssociationHandler'],
   directives: {
@@ -143,13 +109,11 @@ export default {
                     .data(data)
                     .xAccessor(d => d.effectSize)
                     .yAccessor(d => d.fdr)
-                    // .textAccessor(d => d.drugName + ':' + d.transcriptionFactor)
                     .textAccessor(this.labelAccessor)
                     // .rAccessor(d => d.sampleCount)
                     .rAccessor(d => 1)
                     .handleCircleClick(this.clickAssociationHandler)
                     .showCircleLabels(this.showLabels)
-                    .tooltipAccessor(tooltipAccessor)
                     .xLabel('Effect Size')
                     .yLabel('-log (FDR)')
       this.plot.render()
