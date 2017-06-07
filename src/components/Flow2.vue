@@ -4,37 +4,37 @@
     <div class="width-1of4">
       <div class="card">
         <div class="card-title text-primary bg-white">Filter</div>
+
         <div class="card-content bg-white">
-          <div v-if="!selectedDrug">
-            <p class="caption">Select a drug:</p>
-            <q-select type="list" @input="changeSelectedDrug" v-model="selectedDrug" :options="drugs"></q-select>
-          </div>
-          <div v-else>            
-            <button class="primary" @click="deselectDrug()">
+
+          <p class="caption">Select a drug-GM pair</p>
+
+          <div class="item">
+            <span class="caption">Drug:</span>
+            <q-select v-if="!selectedDrug" type="list" @input="changeSelectedDrug" v-model="selectedDrug" :options="drugs"></q-select>
+            <button v-else class="primary" @click="deselectDrug()">
               {{ selectedDrug }}<i class="on-right">close</i>
             </button>
           </div>
 
-          <div v-if="!selectedGM">
-            <p class="caption">Select a GM:</p>
-            <q-select type="list" @input="changeSelectedGM" v-model="selectedGM" :options="gms"></q-select>
-          </div>
-          <div v-else>
-            <button class="primary" @click="deselectGM()">
+          <div class="item">
+            <span class="caption">GM:</span>
+            <q-select v-if="!selectedGM" type="list" @input="changeSelectedGM" v-model="selectedGM" :options="gms"></q-select>
+            <button v-else class="primary" @click="deselectGM()">
               {{ selectedGM }}<i class="on-right">close</i>
             </button>
           </div>
 
-          <div v-if="selectedDrug && selectedGM && !selectedTF">
-            <p class="caption">Select a TF:</p>
-            <q-select type="list" @input="changeSelectedTF" v-model="selectedTF" :options="tfs"></q-select>
-          </div>
-          <div v-else-if="selectedDrug && selectedGM && selectedTF">
-            <button class="primary" @click="deselectTF()">
-              {{ selectedTF }}<i class="on-right">close</i>
-            </button>
-          </div>
+        </div>
 
+        <div v-if="selectedDrug && selectedGM" class="card-content bg-white">
+          <p class="caption">Select a TF</p>
+
+          <span class="caption">TF:</span>
+          <q-select v-if="!selectedTF" type="list" @input="changeSelectedTF" v-model="selectedTF" :options="tfs"></q-select>
+          <button v-else class="primary" @click="deselectTF()">
+            {{ selectedTF }}<i class="on-right">close</i>
+          </button>
         </div>
       </div>
     </div>
@@ -43,7 +43,7 @@
       <div class="column">
         <div class="row">
           <div class="card">
-            <div class="card-title text-primary bg-white">Filter</div>
+            <div class="card-title text-primary bg-white">Interactions Table</div>
             <div class="card-content bg-white">
               <q-data-table :data="tableData" :config="tableConfig" :columns="tableCols"></q-data-table>
             </div>
