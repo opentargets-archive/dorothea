@@ -1,8 +1,9 @@
 <template>
-  <div class="column gutter">
+  <div class="row gutter">
 
-    <div class="row">
+    <div class="width-1of4">
       <div class="card">
+        <div class="card-title text-primary bg-white">Filter</div>
         <div class="card-content bg-white">
           <div v-if="!selectedDrug">
             <p class="caption">Select a drug:</p>
@@ -35,21 +36,31 @@
           </div>
 
         </div>
-        <div class="card-content bg-white">
-          <q-data-table :data="tableData" :config="tableConfig" :columns="tableCols"></q-data-table>
+      </div>
+    </div>
+
+    <div class="width-3of4">
+      <div class="column">
+        <div class="row">
+          <div class="card">
+            <div class="card-title text-primary bg-white">Filter</div>
+            <div class="card-content bg-white">
+              <q-data-table :data="tableData" :config="tableConfig" :columns="tableCols"></q-data-table>
+            </div>
+          </div>
         </div>
+
+        <div v-if="selectedDrug && selectedGM && selectedTF" class="row gutter">
+          <div class="width-1of2">
+            <box-plot v-if="loaded" :drug="selectedDrug" :tf="selectedTF" :gm="selectedGM"></box-plot>
+          </div>
+          <div class="width-1of2">
+            <nested-box-plot v-if="loaded" :drug="selectedDrug" :tf="selectedTF" :gm="selectedGM"></nested-box-plot>
+          </div>
+        </div>
+
       </div>
     </div>
-
-    <div v-if="selectedDrug && selectedGM && selectedTF" class="row gutter">
-      <div class="width-1of2">
-        <box-plot v-if="loaded" :drug="selectedDrug" :tf="selectedTF" :gm="selectedGM"></box-plot>
-      </div>
-      <div class="width-1of2">
-        <nested-box-plot v-if="loaded" :drug="selectedDrug" :tf="selectedTF" :gm="selectedGM"></nested-box-plot>
-      </div>
-    </div>
-
   </div>
 </template>
 
