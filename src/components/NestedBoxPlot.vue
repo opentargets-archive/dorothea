@@ -51,7 +51,7 @@ export default {
                     .data(store.getters.boxPlotData(+this.drug, this.gm, this.tf, true))
                     .xAccessor(d => d.tfActivity)
                     .yAccessor(d => d.ic50)
-                    .xLabel('Activity')
+                    .xLabel('Genomic Marker')
                     .yLabel('IC50')
                     .nested(true)
       this.plot.render()
