@@ -116,6 +116,10 @@ export default new Vuex.Store({
         }
       })
     },
+    sampleSummary: (state, getters) => (drugId, tfId, sampleId) => {
+      // return state.aSamples[sampleId]
+      return getters.samplePlotData(drugId, tfId).filter(r => r.sampleId === sampleId)[0]
+    },
     // FLOW 2
     drugGMPairData: (state) => (tf) => {
       // // // get the unique drug-gm pairs (optionally filtered for a given tf)

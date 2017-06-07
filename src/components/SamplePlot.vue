@@ -12,10 +12,6 @@
       </button>
     </div>
 
-    <!--<div class="card-content bg-white">
-      <dorothea-association-table :association="associationSummary"></dorothea-association-table>
-    </div>-->
-
     <q-tabs class="inverted primary" :refs="$refs" default-tab="plot-tab">
       <q-tab name="plot-tab">Plot</q-tab>
       <q-tab name="table-tab">Table</q-tab>
@@ -49,46 +45,8 @@ import json2csv from 'json2csv'
 import FileSaver from 'file-saver'
 import tntUtils from 'tnt.utils'
 
-function tooltipAccessor (d) {
-  const cosmicUrl = 'http://cancer.sanger.ac.uk/cosmic/mutation/overview?id=' + d.sampleId
-  return '<table>' +
-    '<tr class="emphasis-row">' +
-      '<td>Sample Name</td>' +
-      '<td>' + d.sample.analysisSetName + '</td>' +
-    '</tr>' +
-    '<tr>' +
-      '<td>COSMIC ID</td>' +
-      '<td><a class="cosmic-link" target="_blank" href="' + cosmicUrl + '">' + d.sampleId + '</a></td>' +
-    '</tr>' +
-    '<tr>' +
-      '<td>Activity</td>' +
-      '<td>' + d3.format('.3g')(d.tfActivity) + '</td>' +
-    '</tr>' +
-    '<tr>' +
-      '<td>IC50</td>' +
-      '<td>' + d3.format('.3g')(d.ic50) + '</td>' +
-    '</tr>' +
-    '<tr>' +
-      '<td>MMR</td>' +
-      '<td>' + d.sample.mmr + '</td>' +
-    '</tr>' +
-    '<tr>' +
-      '<td>GDSC Description 1</td>' +
-      '<td>' + d.sample.gdscDesc1 + '</td>' +
-    '</tr>' +
-    '<tr>' +
-      '<td>GDSC Description 2</td>' +
-      '<td>' + d.sample.gdscDesc2 + '</td>' +
-    '</tr>' +
-    '<tr>' +
-      '<td>Screen Medium</td>' +
-      '<td>' + d.sample.screenMedium + '</td>' +
-    '</tr>' +
-  '</table>'
-}
-
 export default {
-  props: ['drug', 'tf'],
+  props: ['drug', 'tf', 'clickSampleHandler'],
   directives: {
     resize
   },
@@ -179,9 +137,6 @@ export default {
       if (!summary) summary = {}
       return summary
     },
-    // associationSummary: function () {
-    //   return store.getters.volcanoPlotData(this.drug, this.tf)[0]
-    // },
     sampleData: function () {
       return store.getters.samplePlotData(this.drug, this.tf).map(row => {
         return {
@@ -214,8 +169,8 @@ export default {
                     .xAccessor(d => d.tfActivity)
                     .yAccessor(d => d.ic50)
                     .textAccessor(d => d.sample.analysisSetName)
-                    .tooltipAccessor(tooltipAccessor)
                     .legendFieldAccessor(d => d.sample.gdscDesc1)
+                    .handleCircleClick(this.clickSampleHandler)
                     .legendTitle('GDSC Description 1')
                     .xLabel('Activity')
                     .yLabel('IC50')

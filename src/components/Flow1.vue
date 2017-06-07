@@ -50,11 +50,11 @@
 
           <div class="row gutter">
             <div class="width-2of3">
-              <sample-plot v-if="showSamplePlot" :drug="clicked.drug" :tf="clicked.tf"></sample-plot>
+              <sample-plot v-if="showSamplePlot" :drug="clicked.drug" :tf="clicked.tf" :click-sample-handler="clickSampleHandler"></sample-plot>
             </div>
-            <!--<div class="width-1of3">
-              <dorothea-sample-table :sample="sampleSummary"></dorothea-sample-table>
-            </div>-->
+            <div class="width-1of3">
+              <dorothea-sample-table v-if="clickedSample" :sample="sampleSummary"></dorothea-sample-table>
+            </div>
           </div>
         </div>
       </div>
@@ -77,7 +77,8 @@ export default {
       clicked: {
         drug: this.click.drug,
         tf: this.click.tf
-      }
+      },
+      clickedSample: null
     }
   },
   computed: {
@@ -96,8 +97,11 @@ export default {
     showSelectTf () {
       return (this.selectedRoute === 2)
     },
-    associationSummary: function () {
+    associationSummary () {
       return store.getters.volcanoPlotData(this.clicked.drug, this.clicked.tf)[0]
+    },
+    sampleSummary () {
+      return store.getters.sampleSummary(this.clicked.drug, this.clicked.tf, this.clickedSample)
     }
   },
   methods: {
@@ -119,6 +123,9 @@ export default {
       // VueScrollTo.scrollTo('#sampleplot', 3000, {
       //   container: '#main-container'
       // })
+    },
+    clickSampleHandler (d) {
+      this.clickedSample = d.sampleId
     },
     changeSelectedDrug (newDrugId) {
       // (route 1 only)
