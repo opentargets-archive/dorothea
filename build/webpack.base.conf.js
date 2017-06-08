@@ -99,7 +99,8 @@ module.exports = {
       'process.env': config[env.prod ? 'build' : 'dev'].env,
       'DEV': env.dev,
       'PROD': env.prod,
-      '__THEME': '"' + env.platform.theme + '"'
+      '__THEME': '"' + env.platform.theme + '"',
+      'VERSION': JSON.stringify(require('../package.json').version)
     }),
     new webpack.LoaderOptionsPlugin({
       minimize: env.prod,
