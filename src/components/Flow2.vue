@@ -1,5 +1,13 @@
 <template>
-  <div class="row gutter">
+  <div class="row gutter wrap">
+
+    <div class="width-1of1">
+      <div class="card">
+        <div class="card-content bg-white text-center">
+          Statistical interactions between 127 TFs and 160 <a href="http://www.cell.com/fulltext/S0092-8674(16)30746-2" target="_blank">strong effect pharmacogenomic markers</a>.
+        </div>
+      </div>
+    </div>
 
     <div class="width-1of4">
       <div class="card">

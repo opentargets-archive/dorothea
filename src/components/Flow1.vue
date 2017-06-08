@@ -1,5 +1,13 @@
 <template>
-  <div class="row gutter">
+  <div class="row gutter wrap">
+
+    <div class="width-1of1">
+      <div class="card">
+        <div class="card-content bg-white text-center">
+          Single TF-drug statistical interactions between 127 TFs and 265 compound across ~1,000 cancer cell lines.
+        </div>
+      </div>
+    </div>
 
     <div class="width-1of4">
 
