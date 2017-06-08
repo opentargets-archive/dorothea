@@ -1,4 +1,12 @@
 <template>
+  <div>
+  <div class="card">
+    <div class="card-content bg-warning">
+      <icon name="warning"></icon>
+      Please note that this site is currently under active development.
+    </div>
+  </div>
+
   <div class="card">
     <div class="card-content bg-white">
 <p>DoRothEA (Discriminant Regulon Expression Analysis) is a research resource that can be used to search candidate TF-drug interactions in cancer.</p>
@@ -16,6 +24,7 @@
    for an explanation of the approach.</p>
 
     </div>
+  </div>
   </div>
 </template>
 
