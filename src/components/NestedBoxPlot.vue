@@ -29,7 +29,7 @@ import FileSaver from 'file-saver'
 import tntUtils from 'tnt.utils'
 
 export default {
-  props: ['drug', 'tf', 'gm'],
+  props: ['drug', 'tf', 'gm', 'pval', 'coeff'],
   directives: {
     resize
   },
@@ -43,12 +43,16 @@ export default {
   },
   updated () {
     this.plot.data(store.getters.boxPlotData(+this.drug, this.gm, this.tf, true))
+             .coeff(this.coeff)
+             .pval(this.pval)
              .render()
   },
   methods: {
     createPlot () {
       this.plot = boxPlot('.nested-box-plot')
                     .data(store.getters.boxPlotData(+this.drug, this.gm, this.tf, true))
+                    .coeff(this.coeff)
+                    .pval(this.pval)
                     .xAccessor(d => d.tfActivity)
                     .yAccessor(d => d.ic50)
                     .xLabel('Genomic Marker')

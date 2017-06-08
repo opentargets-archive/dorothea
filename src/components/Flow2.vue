@@ -60,10 +60,10 @@
 
         <div v-if="selectedDrug && selectedGM && selectedTF" class="row gutter">
           <div class="width-1of2">
-            <box-plot v-if="loaded" :drug="selectedDrug" :tf="selectedTF" :gm="selectedGM"></box-plot>
+            <box-plot v-if="loaded" :drug="selectedDrug" :tf="selectedTF" :gm="selectedGM" :pval="plot1Pval" :coeff="plot1Coeff"></box-plot>
           </div>
           <div class="width-1of2">
-            <nested-box-plot v-if="loaded" :drug="selectedDrug" :tf="selectedTF" :gm="selectedGM"></nested-box-plot>
+            <nested-box-plot v-if="loaded" :drug="selectedDrug" :tf="selectedTF" :gm="selectedGM" :pval="plot3Pval" :coeff="plot3Coeff"></nested-box-plot>
           </div>
         </div>
 
@@ -130,10 +130,24 @@ export default {
       return store.getters.flow2TFPairs(this.selectedDrug, this.selectedGM)
     },
     tableData () {
+      // TODO: Need to add cancer-type filter
       return store.getters.flow2TableData(this.selectedDrug, this.selectedGM, this.selectedTF)
     },
     drugSummary () {
       return store.getters.drugSummary(this.selectedDrug)
+    },
+    plot1Pval () {
+      // TODO: Ensure there is only one row / write specific getter
+      return this.tableData[0].gmTTestPval
+    },
+    plot1Coeff () {
+      return this.tableData[0].gmCoeff
+    },
+    plot3Pval () {
+      return this.tableData[0].intLRTestPval
+    },
+    plot3Coeff () {
+      return this.tableData[0].intCoeff
     }
   },
   methods: {
