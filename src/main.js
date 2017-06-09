@@ -24,6 +24,8 @@ import Card from './components/Card.vue'
 import Navigation from './components/Navigation.vue'
 import AssociationTable from './components/AssociationTable.vue'
 import SampleTable from './components/SampleTable.vue'
+import Flow2Filter from './components/flow-2/Filter.vue'
+
 import 'vue-awesome/icons'
 import Icon from 'vue-awesome/components/Icon'
 import store from './store'
@@ -43,6 +45,8 @@ Vue.component('dorothea-card', Card)
 Vue.component('dorothea-navigation', Navigation)
 Vue.component('dorothea-association-table', AssociationTable)
 Vue.component('dorothea-sample-table', SampleTable)
+Vue.component('dorothea-flow-2-filter', Flow2Filter)
+
 Vue.component('icon', Icon)
 
 // vuex-router-sync
