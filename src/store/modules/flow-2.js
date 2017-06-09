@@ -3,7 +3,8 @@ import Vue from 'vue'
 export default {
   state: {
     drugOptions: [],
-    gmOptions: []
+    gmOptions: [],
+    tfOptions: []
   },
   mutations: {
     mUpdateDrugOptions (state, payload) {
@@ -11,6 +12,9 @@ export default {
     },
     mUpdateGMOptions (state, payload) {
       state.gmOptions = payload
+    },
+    mUpdateTFOptions (state, payload) {
+      state.tfOptions = payload
     }
   },
   actions: {
@@ -24,6 +28,12 @@ export default {
       Vue.http.get('http://localhost:9009/api/gm-options', {params: params})
         .then(function (response) {
           commit('mUpdateGMOptions', response.body)
+        })
+    },
+    updateTFOptions ({ state, commit }, params) {
+      Vue.http.get('http://localhost:9009/api/tf-options', {params: params})
+        .then(function (response) {
+          commit('mUpdateTFOptions', response.body)
         })
     }
   }
