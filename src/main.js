@@ -20,12 +20,14 @@ import BoxPlot from './components/BoxPlot.vue'
 import NestedBoxPlot from './components/NestedBoxPlot.vue'
 import Header from './components/Header.vue'
 import Footer from './components/Footer.vue'
+import Card from './components/Card.vue'
 import Navigation from './components/Navigation.vue'
 import AssociationTable from './components/AssociationTable.vue'
 import SampleTable from './components/SampleTable.vue'
 import 'vue-awesome/icons'
 import Icon from 'vue-awesome/components/Icon'
 import store from './store'
+import { sync } from 'vuex-router-sync'
 import VueScrollTo from 'vue-scrollto'
 
 Vue.use(Quasar) // Install Quasar Framework
@@ -37,10 +39,14 @@ Vue.component('box-plot', BoxPlot)
 Vue.component('nested-box-plot', NestedBoxPlot)
 Vue.component('dorothea-header', Header)
 Vue.component('dorothea-footer', Footer)
+Vue.component('dorothea-card', Card)
 Vue.component('dorothea-navigation', Navigation)
 Vue.component('dorothea-association-table', AssociationTable)
 Vue.component('dorothea-sample-table', SampleTable)
 Vue.component('icon', Icon)
+
+// vuex-router-sync
+sync(store, router)
 
 Quasar.start(() => {
   /* eslint-disable no-new */
