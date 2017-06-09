@@ -14,6 +14,14 @@
         </button>
       </div>
 
+      <div class="item">
+        <span class="caption">GM:</span>
+        <q-select v-if="!gmId" type="list" @input="selectGM" v-model="gmIdModel" :options="gmOptions"></q-select>
+        <button v-else class="primary" @click="deselectGM()">
+          {{ gmId }}<i class="on-right">close</i>
+        </button>
+      </div>
+
     </div>
 
   </div>
@@ -25,37 +33,95 @@ import router from '../../router'
 export default {
   data () {
     return {
-      drugIdModel: null // note this is not used, merely prevents vue errors
+      drugIdModel: null, // note this is not used, merely prevents vue errors
+      gmIdModel: null // note this is not used, merely prevents vue errors
     }
   },
   computed: {
-    drugId () {
-      return store.state.route.query.filterOnDrug
+    dataLoaded () {
+      return store.state.data.loaded
     },
-    // drugName () {
-    //   // TODO: show the drug name in the chip (not the id)
-    //   if (this.drugId)
-    // }
+    drugId () {
+      return +store.state.route.query.filterOnDrug
+    },
+    gmId () {
+      return store.state.route.query.filterOnGM
+    },
+    ctId () {
+      return store.state.route.query.filterOnCT
+    },
     drugOptions () {
-      return store.getters.flow2DrugPairs(this.selectedGM)
+      return store.state.flow2.drugOptions
+    },
+    gmOptions () {
+      return store.state.flow2.gmOptions
+    }
+  },
+  watch: {
+    drugId: function () {
+      this.updateGMOptions()
+    },
+    gmId: function () {
+      this.updateDrugOptions()
+    },
+    dataLoaded: function () {
+      this.updateDrugOptions()
+      this.updateGMOptions()
     }
   },
   methods: {
     selectDrug (drugId) {
-      console.log(drugId)
+      let query = {
+        filterOnDrug: drugId
+      }
+      if (this.gmId) query.filterOnGM = this.gmId
       router.push({
         path: '/investigation/2',
-        query: {
-          filterOnDrug: drugId
-        }
+        query
       })
     },
     deselectDrug () {
+      let query = {}
+      if (this.gmId) query.filterOnGM = this.gmId
       router.push({
         path: '/investigation/2',
-        query: {}
+        query
+      })
+    },
+    selectGM (gmId) {
+      let query = {
+        filterOnGM: gmId
+      }
+      if (this.drugId) query.filterOnDrug = this.drugId
+      router.push({
+        path: '/investigation/2',
+        query
+      })
+    },
+    deselectGM () {
+      let query = {}
+      if (this.drugId) query.filterOnDrug = this.drugId
+      router.push({
+        path: '/investigation/2',
+        query
+      })
+    },
+    updateDrugOptions () {
+      store.dispatch('updateDrugOptions', {
+        gmId: this.gmId,
+        ctId: this.ctId
+      })
+    },
+    updateGMOptions () {
+      store.dispatch('updateGMOptions', {
+        drugId: this.drugId,
+        ctId: this.ctId
       })
     }
+  },
+  created () {
+    this.updateDrugOptions()
+    this.updateGMOptions()
   }
 }
 </script>

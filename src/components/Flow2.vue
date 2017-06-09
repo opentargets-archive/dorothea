@@ -10,6 +10,10 @@
     </div>
 
     <div class="width-1of4">
+      <dorothea-flow-2-filter></dorothea-flow-2-filter>
+    </div>
+
+    <!--<div class="width-1of4">
       <div class="card">
         <div class="card-title text-primary bg-white">Filter</div>
 
@@ -68,7 +72,7 @@
         </div>
 
       </div>
-    </div>
+    </div>-->
   </div>
 </template>
 

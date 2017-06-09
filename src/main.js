@@ -13,6 +13,7 @@ require(`../node_modules/comparison-box-plot/index.scss`)
 
 import Vue from 'vue'
 import Quasar from 'quasar'
+import VueResource from 'vue-resource'
 import router from './router'
 import VolcanoPlot from './components/VolcanoPlot.vue'
 import SamplePlot from './components/SamplePlot.vue'
@@ -29,11 +30,15 @@ import Flow2Filter from './components/flow-2/Filter.vue'
 import 'vue-awesome/icons'
 import Icon from 'vue-awesome/components/Icon'
 import store from './store'
+import useMockBackend from './server'
 import { sync } from 'vuex-router-sync'
 import VueScrollTo from 'vue-scrollto'
 
 Vue.use(Quasar) // Install Quasar Framework
 Vue.use(VueScrollTo)
+Vue.use(VueResource)
+
+useMockBackend(Vue)
 
 Vue.component('volcano-plot', VolcanoPlot)
 Vue.component('sample-plot', SamplePlot)
