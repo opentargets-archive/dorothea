@@ -5,7 +5,8 @@ export default {
     drugOptions: [],
     gmOptions: [],
     tfOptions: [],
-    boxPlotData: {}
+    boxPlotData: {},
+    nestedBoxPlotData: {}
   },
   mutations: {
     mUpdateDrugOptions (state, payload) {
@@ -19,6 +20,9 @@ export default {
     },
     mUpdateBoxPlotData (state, payload) {
       state.boxPlotData = payload
+    },
+    mUpdateNestedBoxPlotData (state, payload) {
+      state.nestedBoxPlotData = payload
     }
   },
   actions: {
@@ -41,10 +45,15 @@ export default {
         })
     },
     updateBoxPlotData ({state, commit}, params) {
-      console.log('updateBoxPlotData called')
       Vue.http.get('http://localhost:9009/api/box-plot', {params: params})
         .then(function (response) {
           commit('mUpdateBoxPlotData', response.body)
+        })
+    },
+    updateNestedBoxPlotData ({state, commit}, params) {
+      Vue.http.get('http://localhost:9009/api/nested-box-plot', {params: params})
+        .then(function (response) {
+          commit('mUpdateNestedBoxPlotData', response.body)
         })
     }
   }

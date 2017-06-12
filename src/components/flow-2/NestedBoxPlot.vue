@@ -10,11 +10,28 @@
 
 <script>
 import boxPlot from 'comparison-box-plot'
-import store from '../../store'
 
 export default {
   props: ['drug', 'tf', 'gm', 'pval', 'coeff'],
   computed: {
+    dataLoaded () {
+      return this.$store.state.data.loaded
+    },
+    drugId () {
+      return +this.$store.state.route.query.filterOnDrug
+    },
+    gmId () {
+      return this.$store.state.route.query.filterOnGM
+    },
+    ctId () {
+      return this.$store.state.route.query.filterOnCT
+    },
+    tfId () {
+      return this.$store.state.route.query.filterOnTF
+    },
+    plotData () {
+      return this.$store.state.flow2.nestedBoxPlotData
+    },
     csvFields () {
       return ['a', 'b']
     },
@@ -25,19 +42,48 @@ export default {
       return 'nested-box-plot'
     }
   },
+  watch: {
+    drugId () {
+      this.updateData()
+    },
+    gmId () {
+      this.updateData()
+    },
+    ctId () {
+      this.updateData()
+    },
+    tfId () {
+      this.updateData()
+    },
+    dataLoaded () {
+      this.updateData()
+    },
+    plotData () {
+      this.plot.data(this.plotData)
+               .render()
+    }
+  },
   mounted () {
     this.createPlot()
   },
   updated () {
-    this.plot.data(store.getters.boxPlotData(+this.drug, this.gm, this.tf, true))
+    this.plot.data(this.plotData)
              .coeff(this.coeff)
              .pval(this.pval)
              .render()
   },
   methods: {
+    updateData () {
+      this.$store.dispatch('updateNestedBoxPlotData', {
+        drugId: this.drugId,
+        gmId: this.gmId,
+        ctId: this.ctId,
+        tfId: this.tfId
+      })
+    },
     createPlot () {
       this.plot = boxPlot('.nested-box-plot')
-                    .data(store.getters.boxPlotData(+this.drug, this.gm, this.tf, true))
+                    .data(this.plotData)
                     .coeff(this.coeff)
                     .pval(this.pval)
                     .xAccessor(d => d.tfActivity)

@@ -58,16 +58,14 @@ export default {
       this.updateData()
     },
     plotData () {
-      this.plot.render()
+      this.plot.data(this.plotData)
+               .render()
     }
   },
   mounted () {
-    console.log('box-plot mounted')
     this.createPlot()
   },
   updated () {
-    console.log('box-plot updated')
-    // this.plot.data(store.getters.boxPlotData(+this.drug, this.gm, this.tf))
     this.plot.data(this.plotData)
             //  .coeff(this.coeff)
             //  .pval(this.pval)
@@ -94,7 +92,6 @@ export default {
       this.plot.render()
     },
     handlerResize () {
-      console.log('handle resize')
       let aspectRatio = 5.0 / 3
       let element = this.$el.querySelector('div.box-plot')
       let width = element.offsetWidth

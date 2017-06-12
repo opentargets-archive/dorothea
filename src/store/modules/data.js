@@ -148,7 +148,7 @@ export default {
 
       return state.rTfDrugGmAssoGdsc.filter(r => (!tf || r.transcriptionFactor === tf))
     },
-    boxPlotData: (state) => (drugId, gmId, tfId, nested = false) => {
+    boxPlotData: (state) => (drugId, gmId, ctId, tfId, nested = false) => {
       if (!state.rTfDrugGmAssoGdsc) {
         console.log('no rTfDrugGmAssoGdsc')
         return {}

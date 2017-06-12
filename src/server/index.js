@@ -21,16 +21,14 @@ export default function (Vue) {
         body = store.getters.flow2TFPairs(params.drugId, params.gmId)
         break
       case 'box-plot':
-        body = store.getters.boxPlotData(params.drugId, params.gmId, params.tfId)
-        console.log('box-plot body')
-        console.log(body)
+        body = store.getters.boxPlotData(params.drugId, params.gmId, params.ctId, params.tfId)
+        break
+      case 'nested-box-plot':
+        body = store.getters.boxPlotData(params.drugId, params.gmId, params.ctId, params.tfId, true)
         break
       default:
         body = []
     }
-
-    console.log(request.url)
-    console.log(body)
 
     next(request.respondWith(body, {
       status: 200,
