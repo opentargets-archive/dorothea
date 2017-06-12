@@ -72,6 +72,7 @@ Quasar.start(() => {
     el: '#q-app',
     router,
     render: h => h(require('./App')),
+    store,
     methods: {
       loadAll () {
         Promise.all([

@@ -10,27 +10,26 @@
 
 <script>
 import boxPlot from 'comparison-box-plot'
-import store from '../../store'
 
 export default {
   computed: {
     dataLoaded () {
-      return store.state.data.loaded
+      return this.$store.state.data.loaded
     },
     drugId () {
-      return +store.state.route.query.filterOnDrug
+      return +this.$store.state.route.query.filterOnDrug
     },
     gmId () {
-      return store.state.route.query.filterOnGM
+      return this.$store.state.route.query.filterOnGM
     },
     ctId () {
-      return store.state.route.query.filterOnCT
+      return this.$store.state.route.query.filterOnCT
     },
     tfId () {
-      return store.state.route.query.filterOnTF
+      return this.$store.state.route.query.filterOnTF
     },
     plotData () {
-      return store.state.flow2.boxPlotData
+      return this.$store.state.flow2.boxPlotData
     },
     csvFields () {
       return ['a', 'b']
@@ -76,7 +75,7 @@ export default {
   },
   methods: {
     updateData () {
-      store.dispatch('updateBoxPlotData', {
+      this.$store.dispatch('updateBoxPlotData', {
         drugId: this.drugId,
         gmId: this.gmId,
         ctId: this.ctId,
