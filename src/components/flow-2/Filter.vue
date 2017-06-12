@@ -1,40 +1,40 @@
 <template>
-  <div class="card">
-    <div class="card-title text-primary bg-white">Filter</div>
+  <dorothea-base-card :title="'Filter'"
+                      :description="'Filter the interactions to view'">
 
-    <div class="card-content bg-white">
+    <div slot="card-internals" class="card-content bg-white">
 
-      <p class="caption">Select a drug-GM pair</p>
+      <small>
+        You can filter by selecting a drug, GM, TF and CT.
+      </small>
 
-      <div class="item">
-        <span class="caption">Drug:</span>
-        <q-select v-if="!drugId" type="list" @input="selectDrug" v-model="drugIdModel" :options="drugOptions"></q-select>
-        <button v-else class="primary" @click="deselectDrug()">
-          {{ drugId }}<i class="on-right">close</i>
-        </button>
+      <div class="row justify-center items-center item">
+        <small class="width-1of3">Drug:</small>
+        <div class="width-2of3">
+          <q-select v-if="!drugId" type="list" @input="selectDrug" v-model="drugIdModel" :options="drugOptions"></q-select>
+          <small class="token" v-else>{{ drugId }}<i @click="deselectDrug()">close</i></small>
+        </div>
       </div>
 
-      <div class="item">
-        <span class="caption">GM:</span>
-        <q-select v-if="!gmId" type="list" @input="selectGM" v-model="gmIdModel" :options="gmOptions"></q-select>
-        <button v-else class="primary" @click="deselectGM()">
-          {{ gmId }}<i class="on-right">close</i>
-        </button>
+      <div class="row justify-center items-center item">
+        <small class="width-1of3">GM:</small>
+        <div class="width-2of3">
+          <q-select v-if="!gmId" type="list" @input="selectGM" v-model="gmIdModel" :options="gmOptions"></q-select>
+          <small class="token" v-else>{{ gmId }}<i @click="deselectGM()">close</i></small>
+        </div>
+      </div>
+
+      <div v-if="drugId && gmId" class="row justify-center items-center item">
+        <small class="width-1of3">TF:</small>
+        <div class="width-2of3">
+          <q-select v-if="!tfId" type="list" @input="selectTF" v-model="tfIdModel" :options="tfOptions"></q-select>
+          <small class="token" v-else>{{ tfId }}<i @click="deselectTF()">close</i></small>
+        </div>
       </div>
 
     </div>
 
-    <div v-if="drugId && gmId" class="card-content bg-white">
-      <p class="caption">Select a TF</p>
-
-      <span class="caption">TF:</span>
-      <q-select v-if="!tfId" type="list" @input="selectTF" v-model="tfIdModel" :options="tfOptions"></q-select>
-      <button v-else class="primary" @click="deselectTF()">
-        {{ tfId }}<i class="on-right">close</i>
-      </button>
-    </div>
-
-  </div>
+  </dorothea-base-card>
 </template>
 
 <script>

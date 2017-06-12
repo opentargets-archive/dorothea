@@ -1,11 +1,11 @@
 <template>
-  <div id="nestedboxplot" class="card" v-resize="handlerResize">
+  <div id="boxplot" class="card" v-resize="handlerResize">
     <div class="card-title text-primary inverted toolbar">Box plot
       <button>
         <q-popover ref="boxPlotDownloadPopover">
           <div class="list item-delimiter hightlight">
-            <button class="item item-link" style="text-transform:none;min-width:300px;" @click="pngDownload(), $refs.nestedBoxPlotDownloadPopover.close()">Download chart as PNG</button>
-            <button class="item item-link" style="text-transform:none;min-width:300px" @click="csvDownload(), $refs.nestedBoxPlotDownloadPopover.close()">Download data as CSV</button>
+            <button class="item item-link" style="text-transform:none;min-width:300px;" @click="pngDownload(), $refs.boxPlotDownloadPopover.close()">Download chart as PNG</button>
+            <button class="item item-link" style="text-transform:none;min-width:300px" @click="csvDownload(), $refs.boxPlotDownloadPopover.close()">Download data as CSV</button>
           </div>
         </q-popover>
         <icon name="download"></icon>
@@ -13,7 +13,7 @@
     </div>
 
     <div class="card-content bg-white">
-      <div class="nested-box-plot"></div>
+      <div class="box-plot"></div>
     </div>
 
   </div>
@@ -22,47 +22,91 @@
 <script>
 import resize from 'vue-resize-directive'
 import boxPlot from 'comparison-box-plot'
-import store from '../store'
+import store from '../../store'
 import * as d3 from 'd3'
 import json2csv from 'json2csv'
 import FileSaver from 'file-saver'
 import tntUtils from 'tnt.utils'
 
 export default {
-  props: ['drug', 'tf', 'gm', 'pval', 'coeff'],
   directives: {
     resize
   },
   computed: {
-    // plotData: function () {
-    //   return store.getters.boxPlotData(+this.drug, this.gm, this.tf)
-    // }
+    dataLoaded () {
+      return store.state.data.loaded
+    },
+    drugId () {
+      return +store.state.route.query.filterOnDrug
+    },
+    gmId () {
+      return store.state.route.query.filterOnGM
+    },
+    ctId () {
+      return store.state.route.query.filterOnCT
+    },
+    tfId () {
+      return store.state.route.query.filterOnTF
+    },
+    plotData () {
+      return store.state.flow2.boxPlotData
+    }
+  },
+  watch: {
+    drugId () {
+      this.updateData()
+    },
+    gmId () {
+      this.updateData()
+    },
+    ctId () {
+      this.updateData()
+    },
+    tfId () {
+      this.updateData()
+    },
+    dataLoaded () {
+      this.updateData()
+    },
+    plotData () {
+      this.plot.render()
+    }
   },
   mounted () {
+    console.log('box-plot mounted')
     this.createPlot()
   },
   updated () {
-    this.plot.data(store.getters.boxPlotData(+this.drug, this.gm, this.tf, true))
-             .coeff(this.coeff)
-             .pval(this.pval)
+    console.log('box-plot updated')
+    // this.plot.data(store.getters.boxPlotData(+this.drug, this.gm, this.tf))
+    this.plot.data(this.plotData)
+            //  .coeff(this.coeff)
+            //  .pval(this.pval)
              .render()
   },
   methods: {
+    updateData () {
+      store.dispatch('updateBoxPlotData', {
+        drugId: this.drugId,
+        gmId: this.gmId,
+        ctId: this.ctId,
+        tfId: this.tfId
+      })
+    },
     createPlot () {
-      this.plot = boxPlot('.nested-box-plot')
-                    .data(store.getters.boxPlotData(+this.drug, this.gm, this.tf, true))
-                    .coeff(this.coeff)
-                    .pval(this.pval)
+      this.plot = boxPlot('.box-plot')
+                    .data(this.plotData)
+                    // .coeff(this.coeff)
+                    // .pval(this.pval)
                     .xAccessor(d => d.tfActivity)
                     .yAccessor(d => d.ic50)
                     .xLabel('Genomic Marker')
                     .yLabel('IC50')
-                    .nested(true)
       this.plot.render()
     },
     handlerResize () {
       let aspectRatio = 5.0 / 3
-      let element = this.$el.querySelector('div.nested-box-plot')
+      let element = this.$el.querySelector('div.box-plot')
       let width = element.offsetWidth
       let height = width / aspectRatio
       this.plot.width(width)
@@ -118,6 +162,6 @@ export default {
 
 <style>
 .cosmic-link:before {
-  content: url(../assets/logo_cosmic_14x14.png)
+  content: url(../../assets/logo_cosmic_14x14.png)
 }
 </style>

@@ -17,11 +17,16 @@ import VueResource from 'vue-resource'
 import router from './router'
 import VolcanoPlot from './components/VolcanoPlot.vue'
 import SamplePlot from './components/SamplePlot.vue'
-import BoxPlot from './components/BoxPlot.vue'
-import NestedBoxPlot from './components/NestedBoxPlot.vue'
+import BoxPlot from './components/flow-2/BoxPlot.vue'
+import NestedBoxPlot from './components/flow-2/NestedBoxPlot.vue'
 import Header from './components/Header.vue'
 import Footer from './components/Footer.vue'
 import Card from './components/Card.vue'
+
+import BaseCard from './components/layout/BaseCard.vue'
+import FilterCard from './components/layout/FilterCard.vue'
+import PlotCard from './components/layout/PlotCard.vue'
+
 import Navigation from './components/Navigation.vue'
 import AssociationTable from './components/AssociationTable.vue'
 import SampleTable from './components/SampleTable.vue'
@@ -42,7 +47,7 @@ useMockBackend(Vue)
 
 Vue.component('volcano-plot', VolcanoPlot)
 Vue.component('sample-plot', SamplePlot)
-Vue.component('box-plot', BoxPlot)
+Vue.component('dorothea-box-plot', BoxPlot)
 Vue.component('nested-box-plot', NestedBoxPlot)
 Vue.component('dorothea-header', Header)
 Vue.component('dorothea-footer', Footer)
@@ -51,6 +56,10 @@ Vue.component('dorothea-navigation', Navigation)
 Vue.component('dorothea-association-table', AssociationTable)
 Vue.component('dorothea-sample-table', SampleTable)
 Vue.component('dorothea-flow-2-filter', Flow2Filter)
+
+Vue.component('dorothea-base-card', BaseCard)
+Vue.component('dorothea-filter-card', FilterCard)
+Vue.component('dorothea-plot-card', PlotCard)
 
 Vue.component('icon', Icon)
 

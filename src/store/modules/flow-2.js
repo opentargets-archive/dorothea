@@ -4,7 +4,8 @@ export default {
   state: {
     drugOptions: [],
     gmOptions: [],
-    tfOptions: []
+    tfOptions: [],
+    boxPlotData: {}
   },
   mutations: {
     mUpdateDrugOptions (state, payload) {
@@ -15,6 +16,9 @@ export default {
     },
     mUpdateTFOptions (state, payload) {
       state.tfOptions = payload
+    },
+    mUpdateBoxPlotData (state, payload) {
+      state.boxPlotData = payload
     }
   },
   actions: {
@@ -34,6 +38,13 @@ export default {
       Vue.http.get('http://localhost:9009/api/tf-options', {params: params})
         .then(function (response) {
           commit('mUpdateTFOptions', response.body)
+        })
+    },
+    updateBoxPlotData ({state, commit}, params) {
+      console.log('updateBoxPlotData called')
+      Vue.http.get('http://localhost:9009/api/box-plot', {params: params})
+        .then(function (response) {
+          commit('mUpdateBoxPlotData', response.body)
         })
     }
   }

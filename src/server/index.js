@@ -10,8 +10,6 @@ export default function (Vue) {
     const params = request.params
     let body
 
-    console.log(request)
-
     switch (path) {
       case 'drug-options':
         body = store.getters.flow2DrugPairs(params.gmId)
@@ -22,9 +20,17 @@ export default function (Vue) {
       case 'tf-options':
         body = store.getters.flow2TFPairs(params.drugId, params.gmId)
         break
+      case 'box-plot':
+        body = store.getters.boxPlotData(params.drugId, params.gmId, params.tfId)
+        console.log('box-plot body')
+        console.log(body)
+        break
       default:
         body = []
     }
+
+    console.log(request.url)
+    console.log(body)
 
     next(request.respondWith(body, {
       status: 200,
