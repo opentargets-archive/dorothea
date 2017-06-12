@@ -12,7 +12,7 @@
         <small class="width-1of3">Drug:</small>
         <div class="width-2of3">
           <q-select v-if="!drugId" type="list" @input="selectDrug" v-model="drugIdModel" :options="drugOptions"></q-select>
-          <small class="token" v-else>{{ drugId }}<i @click="deselectDrug()">close</i></small>
+          <small class="token" v-else>{{ drugId }}<i class="cursor-pointer" @click="deselectDrug()">close</i></small>
         </div>
       </div>
 
@@ -20,7 +20,7 @@
         <small class="width-1of3">GM:</small>
         <div class="width-2of3">
           <q-select v-if="!gmId" type="list" @input="selectGM" v-model="gmIdModel" :options="gmOptions"></q-select>
-          <small class="token" v-else>{{ gmId }}<i @click="deselectGM()">close</i></small>
+          <small class="token" v-else>{{ gmId }}<i class="cursor-pointer" @click="deselectGM()">close</i></small>
         </div>
       </div>
 
@@ -28,7 +28,7 @@
         <small class="width-1of3">TF:</small>
         <div class="width-2of3">
           <q-select v-if="!tfId" type="list" @input="selectTF" v-model="tfIdModel" :options="tfOptions"></q-select>
-          <small class="token" v-else>{{ tfId }}<i @click="deselectTF()">close</i></small>
+          <small class="token" v-else>{{ tfId }}<i class="cursor-pointer" @click="deselectTF()">close</i></small>
         </div>
       </div>
 
