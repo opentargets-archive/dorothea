@@ -166,11 +166,6 @@ export default {
         ctId: this.ctId
       })
     }
-  },
-  created () {
-    this.updateDrugOptions()
-    this.updateGMOptions()
-    this.updateTFOptions()
   }
 }
 </script>
