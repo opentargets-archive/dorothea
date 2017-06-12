@@ -15,6 +15,7 @@
 
     <div class="width-3of4">
       <dorothea-box-plot></dorothea-box-plot>
+      <dorothea-nested-box-plot></dorothea-nested-box-plot>
     </div>
 
     <!--<div class="width-3of4">
