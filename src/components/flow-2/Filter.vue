@@ -1,12 +1,8 @@
 <template>
   <dorothea-base-card :title="'Filter'"
-                      :description="'Filter the interactions to view'">
+                      :description="'Interactions can be filtered by drug, genomic marker, cancer type and transcription factor.'">
 
     <div slot="card-internals" class="card-content bg-white">
-
-      <small>
-        You can filter by selecting a drug, GM, TF and CT.
-      </small>
 
       <div class="row justify-center items-center item">
         <small class="width-1of3">Drug:</small>
@@ -17,7 +13,7 @@
       </div>
 
       <div class="row justify-center items-center item">
-        <small class="width-1of3">GM:</small>
+        <small class="width-1of3">Genomic Marker:</small>
         <div class="width-2of3">
           <q-select v-if="!gmId" type="list" @input="selectGM" v-model="gmIdModel" :options="gmOptions"></q-select>
           <small class="token" v-else>{{ gmId }}<i class="cursor-pointer" @click="deselectGM()">close</i></small>
@@ -25,7 +21,7 @@
       </div>
 
       <div v-if="drugId && gmId" class="row justify-center items-center item">
-        <small class="width-1of3">TF:</small>
+        <small class="width-1of3">Transcription Factor:</small>
         <div class="width-2of3">
           <q-select v-if="!tfId" type="list" @input="selectTF" v-model="tfIdModel" :options="tfOptions"></q-select>
           <small class="token" v-else>{{ tfId }}<i class="cursor-pointer" @click="deselectTF()">close</i></small>
@@ -46,7 +42,6 @@ export default {
       drugIdModel: null, // note this is not used, merely prevents vue errors
       gmIdModel: null, // note this is not used, merely prevents vue errors
       tfIdModel: null // note this is not used, merely prevents vue errors
-
     }
   },
   computed: {
