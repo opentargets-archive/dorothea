@@ -7,7 +7,8 @@ export default {
     tfOptions: [],
     boxPlotData: {},
     nestedBoxPlotData: {},
-    simpleSamplePlotData: []
+    simpleSamplePlotData: [],
+    gmTableData: {}
   },
   mutations: {
     mUpdateDrugOptions (state, payload) {
@@ -27,6 +28,9 @@ export default {
     },
     mUpdateSimpleSamplePlotData (state, payload) {
       state.simpleSamplePlotData = payload
+    },
+    mUpdateGMTableData (state, payload) {
+      state.gmTableData = payload
     }
   },
   actions: {
@@ -64,6 +68,12 @@ export default {
       Vue.http.get('http://localhost:9009/api/simple-sample-plot', {params: params})
         .then(function (response) {
           commit('mUpdateSimpleSamplePlotData', response.body)
+        })
+    },
+    updateGMTableData ({state, commit}, params) {
+      Vue.http.get('http://localhost:9009/api/gm-table', {params: params})
+        .then(function (response) {
+          commit('mUpdateGMTableData', response.body)
         })
     }
   }

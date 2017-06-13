@@ -5,6 +5,7 @@ export default {
   state: {
     aSamples: null,
     aDrugs: null,
+    aGM: null,
     mDrugIc50Gdsc: null,
     mGM: null,
     mTfActivitiesGdsc: null,
@@ -284,6 +285,9 @@ export default {
         if (a.label > b.label) return 1
         return 0
       })
+    },
+    gmTableData: (state) => (gmId) => {
+      return state.aGM[gmId]
     }
   },
   actions: {
@@ -345,6 +349,40 @@ export default {
 
             commit('setData', {
               name: 'aSamples',
+              data: converted
+            })
+            resolve()
+          })
+      })
+    },
+    loadAGM ({ commit }) {
+      return new Promise((resolve, reject) => {
+        d3.tsv('./statics/dorothea-data/a_GM.txt')
+          .row(function (r, i) {
+            if (i === 0) console.log(r)
+            return {
+              gm: r.GenomicMarker,
+              gmId: r.GenomicMarker_id,
+              alterationType: r.alteration_type,
+              chromosome: r.chr,
+              end: +r.end,
+              start: +r.start,
+              numGenes: +r.num_genes,
+              locus: r.locus
+            }
+          })
+          .get(function (data) {
+            // require data
+            if (!data) return
+
+            // convert list to object (where gm id is the key)
+            let converted = {}
+            data.map(el => {
+              converted[el.gmId] = el
+            })
+
+            commit('setData', {
+              name: 'aGM',
               data: converted
             })
             resolve()

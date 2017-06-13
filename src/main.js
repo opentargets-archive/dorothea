@@ -31,6 +31,7 @@ import PlotCard from './components/layout/PlotCard.vue'
 import Navigation from './components/Navigation.vue'
 import AssociationTable from './components/AssociationTable.vue'
 import SampleTable from './components/SampleTable.vue'
+import GMTable from './components/flow-2/GMTable.vue'
 import Flow2Filter from './components/flow-2/Filter.vue'
 
 import 'vue-awesome/icons'
@@ -57,6 +58,7 @@ Vue.component('dorothea-card', Card)
 Vue.component('dorothea-navigation', Navigation)
 Vue.component('dorothea-association-table', AssociationTable)
 Vue.component('dorothea-sample-table', SampleTable)
+Vue.component('dorothea-gm-table', GMTable)
 Vue.component('dorothea-flow-2-filter', Flow2Filter)
 
 Vue.component('dorothea-base-card', BaseCard)
@@ -80,6 +82,7 @@ Quasar.start(() => {
         Promise.all([
           store.dispatch('loadADrugs'),
           store.dispatch('loadASamples'),
+          store.dispatch('loadAGM'),
           store.dispatch('loadMDrugIc50Gdsc'),
           store.dispatch('loadRTfDrugGmAssoGdsc'),
           store.dispatch('loadRTfDrugAssoGdsc'),

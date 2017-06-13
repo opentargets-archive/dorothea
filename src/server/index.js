@@ -31,6 +31,9 @@ export default function (Vue) {
         // ie. will need a store.getters.simpleSamplePlotData method
         body = store.getters.samplePlotData(params.drugId, params.tfId)
         break
+      case 'gm-table':
+        body = store.getters.gmTableData(params.gmId)
+        break
       default:
         body = []
     }

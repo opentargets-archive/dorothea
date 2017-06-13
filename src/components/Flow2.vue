@@ -26,6 +26,9 @@
         <div class="width-1of2">
           <dorothea-simple-sample-plot></dorothea-simple-sample-plot>
         </div>
+        <div class="width-1of2">
+          <dorothea-gm-table></dorothea-gm-table>
+        </div>
       </div>
     </div>
 
