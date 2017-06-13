@@ -2,6 +2,7 @@
   <dorothea-plot-card v-if="drugId && gmId && tfId"
                       name="box-plot"
                       title="A box plot"
+                      :description="description"
                       :resize-handler="handlerResize"
                       :filename="filename"
                       :csv-data="csvData"
@@ -40,6 +41,10 @@ export default {
     },
     filename () {
       return 'comparison-box-plot'
+    },
+    description () {
+      return 'Showing IC50 (y) of individual cell lines in mutant ' +
+             '(blue) and wild type (red).'
     }
   },
   watch: {
@@ -68,8 +73,6 @@ export default {
   },
   updated () {
     this.plot.data(this.plotData)
-            //  .coeff(this.coeff)
-            //  .pval(this.pval)
              .render()
   },
   methods: {
@@ -79,6 +82,9 @@ export default {
         gmId: this.gmId,
         ctId: this.ctId,
         tfId: this.tfId
+      }).then(response => {
+        this.plot.data(this.plotData)
+             .render()
       })
     },
     createPlot () {

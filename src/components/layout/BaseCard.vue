@@ -4,6 +4,10 @@
       <div class="column toolbar-content">
         <small>{{ title }}</small>
         <small class="text-grey-6">{{ description }}</small>
+        <!--<small>{{ title }} <button @click="toggleShowHelp"><icon name="info-circle"></icon></button></small>
+        <small v-if="showHelp" class="text-grey-6">
+          {{ description }}
+        </small>-->
       </div>
       <slot name="toolbar-button"></slot>
     </div>
@@ -14,5 +18,16 @@
 <script>
 export default {
   props: ['title', 'description']
+  // data () {
+  //   return {
+  //     showHelp: false
+  //   }
+  // },
+  // methods: {
+  //   toggleShowHelp () {
+  //     console.log('toggle')
+  //     this.showHelp = !this.showHelp
+  //   }
+  // }
 }
 </script>
