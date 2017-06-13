@@ -26,6 +26,11 @@ export default function (Vue) {
       case 'nested-box-plot':
         body = store.getters.boxPlotData(params.drugId, params.gmId, params.ctId, params.tfId, true)
         break
+      case 'simple-sample-plot':
+        // TODO: this should take into account the gmId and ctId too
+        // ie. will need a store.getters.simpleSamplePlotData method
+        body = store.getters.samplePlotData(params.drugId, params.tfId)
+        break
       default:
         body = []
     }

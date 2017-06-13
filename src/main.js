@@ -19,6 +19,7 @@ import VolcanoPlot from './components/VolcanoPlot.vue'
 import SamplePlot from './components/SamplePlot.vue'
 import BoxPlot from './components/flow-2/BoxPlot.vue'
 import NestedBoxPlot from './components/flow-2/NestedBoxPlot.vue'
+import SimpleSamplePlot from './components/flow-2/SimpleSamplePlot.vue'
 import Header from './components/Header.vue'
 import Footer from './components/Footer.vue'
 import Card from './components/Card.vue'
@@ -47,6 +48,7 @@ useMockBackend(Vue)
 
 Vue.component('volcano-plot', VolcanoPlot)
 Vue.component('sample-plot', SamplePlot)
+Vue.component('dorothea-simple-sample-plot', SimpleSamplePlot)
 Vue.component('dorothea-box-plot', BoxPlot)
 Vue.component('dorothea-nested-box-plot', NestedBoxPlot)
 Vue.component('dorothea-header', Header)

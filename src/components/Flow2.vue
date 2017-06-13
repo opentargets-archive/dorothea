@@ -22,6 +22,11 @@
           <dorothea-nested-box-plot></dorothea-nested-box-plot>
         </div>
       </div>
+      <div class="row gutter">
+        <div class="width-1of2">
+          <dorothea-simple-sample-plot></dorothea-simple-sample-plot>
+        </div>
+      </div>
     </div>
 
     <!--<div class="width-3of4">
