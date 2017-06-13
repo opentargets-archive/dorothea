@@ -1,7 +1,7 @@
 <template>
   <dorothea-base-card v-if="gmId"
                       :title="'GM Summary'"
-                      :description="'Displaying some data'">
+                      :description="description">
 
     <div slot="card-internals" class="card-content">
     <table class="q-table horizontal-delimiter compact">
@@ -54,6 +54,9 @@ export default {
     },
     tableData () {
       return this.$store.state.flow2.gmTableData
+    },
+    description () {
+      return 'Showing a summary of the genomic marker "' + this.tableData.gm + '".'
     }
   },
   watch: {
