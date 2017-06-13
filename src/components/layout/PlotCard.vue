@@ -1,6 +1,6 @@
 <template>
   <dorothea-base-card :title="title"
-                      :description="'Displaying some data'"
+                      :description="description"
                       v-resize="resizeHandler">
     <button slot="toolbar-button">
       <q-popover ref="downloadPopover">
@@ -25,7 +25,7 @@ import FileSaver from 'file-saver'
 import tntUtils from 'tnt.utils'
 
 export default {
-  props: ['name', 'title', 'resizeHandler', 'filename', 'csvFields', 'csvData'],
+  props: ['name', 'title', 'description', 'resizeHandler', 'filename', 'csvFields', 'csvData'],
   directives: {
     resize
   },
