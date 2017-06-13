@@ -29,6 +29,7 @@ import FilterCard from './components/layout/FilterCard.vue'
 import PlotCard from './components/layout/PlotCard.vue'
 
 import Navigation from './components/Navigation.vue'
+import InteractionsTable from './components/flow-2/InteractionsTable.vue'
 import AssociationTable from './components/AssociationTable.vue'
 import SampleTable from './components/SampleTable.vue'
 import GMTable from './components/flow-2/GMTable.vue'
@@ -59,6 +60,7 @@ Vue.component('dorothea-footer', Footer)
 Vue.component('dorothea-card', Card)
 Vue.component('dorothea-navigation', Navigation)
 Vue.component('dorothea-association-table', AssociationTable)
+Vue.component('dorothea-interactions-table', InteractionsTable)
 Vue.component('dorothea-sample-table', SampleTable)
 Vue.component('dorothea-gm-table', GMTable)
 Vue.component('dorothea-flow-2-filter', Flow2Filter)
