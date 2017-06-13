@@ -1,5 +1,6 @@
 <template>
-  <dorothea-plot-card name="box-plot"
+  <dorothea-plot-card v-if="drugId && gmId && tfId"
+                      name="box-plot"
                       title="A box plot"
                       :resize-handler="handlerResize"
                       :filename="filename"

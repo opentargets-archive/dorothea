@@ -13,9 +13,15 @@
       <dorothea-flow-2-filter></dorothea-flow-2-filter>
     </div>
 
-    <div class="width-3of4">
-      <dorothea-box-plot></dorothea-box-plot>
-      <dorothea-nested-box-plot></dorothea-nested-box-plot>
+    <div class="width-3of4 column">
+      <div class="row gutter">
+        <div class="width-1of2">
+          <dorothea-box-plot></dorothea-box-plot>
+        </div>
+        <div class="width-1of2">
+          <dorothea-nested-box-plot></dorothea-nested-box-plot>
+        </div>
+      </div>
     </div>
 
     <!--<div class="width-3of4">

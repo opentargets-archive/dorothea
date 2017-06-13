@@ -1,5 +1,6 @@
 <template>
-  <dorothea-plot-card name="nested-box-plot"
+  <dorothea-plot-card v-if="drugId && gmId && tfId"
+                      name="nested-box-plot"
                       title="A nested box plot"
                       :resize-handler="handlerResize"
                       :filename="filename"
