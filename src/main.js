@@ -34,6 +34,8 @@ import SampleTable from './components/SampleTable.vue'
 import GMTable from './components/flow-2/GMTable.vue'
 import Flow2Filter from './components/flow-2/Filter.vue'
 
+import Glossary from './components/Glossary.vue'
+
 import 'vue-awesome/icons'
 import Icon from 'vue-awesome/components/Icon'
 import store from './store'
@@ -60,6 +62,8 @@ Vue.component('dorothea-association-table', AssociationTable)
 Vue.component('dorothea-sample-table', SampleTable)
 Vue.component('dorothea-gm-table', GMTable)
 Vue.component('dorothea-flow-2-filter', Flow2Filter)
+
+Vue.component('dorothea-glossary', Glossary)
 
 Vue.component('dorothea-base-card', BaseCard)
 Vue.component('dorothea-filter-card', FilterCard)
