@@ -1,0 +1,65 @@
+GenomicMarker_id	GenomicMarker	alteration_type	chr	start	end	locus	num_genes
+cnaPANCAN2	loss STK11 (cnaPANCAN2)	Deletion	19	284018	2429804	19p13.3	86
+cnaPANCAN59	gain CCND1, CTTN (cnaPANCAN59)	Amplification	11	68363609	71461583	11q13.2	27
+cnaPANCAN91	gain MYC (cnaPANCAN91)	Amplification	8	127610978	130096530	8q24.21	2
+cnaPANCAN117	loss CHD9, CNOT1, CYLD, MMP2, NUP93 (cnaPANCAN117)	Deletion	16	48488696	61699095	16q12.1	89
+cnaPANCAN124	gain EGFR (cnaPANCAN124)	Amplification	7	52476751	57930455	7p12.1	19
+cnaPANCAN129	gain MET (cnaPANCAN129)	Amplification	7	111064230	123536458	7q31.1	47
+cnaPANCAN144	loss BNC2, CDKN2A, JAK2, PSIP1 (cnaPANCAN144)	Deletion	9	789932	31512397	9p24.3	98
+cnaPANCAN176	gain CCT5, TERT, TRIO (cnaPANCAN176)	Amplification	5	914233	26062208	5p15.33	54
+cnaPANCAN246	gain SOX2 (cnaPANCAN246)	Amplification	3	180839625	183511755	3q26.33	10
+cnaPANCAN281	loss RPL22 (cnaPANCAN281)	Deletion	1	3747240	10987811	1p36.32	58
+cnaPANCAN301	gain CDK12, ERBB2, MED24 (cnaPANCAN301)	Amplification	17	36916673	38481198	17q12	41
+cnaPANCAN302	gain CLTC, PPM1D (cnaPANCAN302)	Amplification	17	57598146	59113326	17q22	16
+cnaPANCAN326	loss SOX9 (cnaPANCAN326)	Deletion	17	70068506	70532966	17q24.3	1
+cnaPANCAN362	gain CRNKL1, FOXA2 (cnaPANCAN362)	Amplification	20	16036126	26197899	20p12.1	63
+cnaPANCAN363	gain ASXL1 (cnaPANCAN363)	Amplification	20	29843973	35573430	20q11.21	99
+cnaPANCAN382	gain FLT3, WASF3 (cnaPANCAN382)	Amplification	13	26893617	29601545	13q12.13	21
+cnaPANCAN385	loss PABPC3, SACS, ZMYM2 (cnaPANCAN385)	Deletion	13	19450806	26513279	13q11	39
+cnaPANCAN393	gain FOXA1, NKX2-1, PSMA6 (cnaPANCAN393)	Amplification	14	30448088	38635454	14q12	42
+TP53_mut	TP53	somatic mutation	NA	NA	NA	NA	1
+BRAF_mut	BRAF	somatic mutation	NA	NA	NA	NA	1
+IDH1_mut	IDH1	somatic mutation	NA	NA	NA	NA	1
+WNK1_mut	WNK1	somatic mutation	NA	NA	NA	NA	1
+HRAS_mut	HRAS	somatic mutation	NA	NA	NA	NA	1
+XRN1_mut	XRN1	somatic mutation	NA	NA	NA	NA	1
+ATRX_mut	ATRX	somatic mutation	NA	NA	NA	NA	1
+RPGR_mut	RPGR	somatic mutation	NA	NA	NA	NA	1
+CHEK2_mut	CHEK2	somatic mutation	NA	NA	NA	NA	1
+ARFGEF2_mut	ARFGEF2	somatic mutation	NA	NA	NA	NA	1
+HGF_mut	HGF	somatic mutation	NA	NA	NA	NA	1
+KDR_mut	KDR	somatic mutation	NA	NA	NA	NA	1
+CDK12_mut	CDK12	somatic mutation	NA	NA	NA	NA	1
+PIK3CA_mut	PIK3CA	somatic mutation	NA	NA	NA	NA	1
+MYC_mut	MYC	somatic mutation	NA	NA	NA	NA	1
+GNAS_mut	GNAS	somatic mutation	NA	NA	NA	NA	1
+RB1_mut	RB1	somatic mutation	NA	NA	NA	NA	1
+EGFR_mut	EGFR	somatic mutation	NA	NA	NA	NA	1
+CNOT1_mut	CNOT1	somatic mutation	NA	NA	NA	NA	1
+CDKN1B_mut	CDKN1B	somatic mutation	NA	NA	NA	NA	1
+CLSPN_mut	CLSPN	somatic mutation	NA	NA	NA	NA	1
+ASXL2_mut	ASXL2	somatic mutation	NA	NA	NA	NA	1
+BCOR_mut	BCOR	somatic mutation	NA	NA	NA	NA	1
+POLR2B_mut	POLR2B	somatic mutation	NA	NA	NA	NA	1
+NRAS_mut	NRAS	somatic mutation	NA	NA	NA	NA	1
+SRGAP1_mut	SRGAP1	somatic mutation	NA	NA	NA	NA	1
+MAP3K4_mut	MAP3K4	somatic mutation	NA	NA	NA	NA	1
+ARID2_mut	ARID2	somatic mutation	NA	NA	NA	NA	1
+TBX3_mut	TBX3	somatic mutation	NA	NA	NA	NA	1
+ASXL1_mut	ASXL1	somatic mutation	NA	NA	NA	NA	1
+CDH1_mut	CDH1	somatic mutation	NA	NA	NA	NA	1
+ASH1L_mut	ASH1L	somatic mutation	NA	NA	NA	NA	1
+PTEN_mut	PTEN	somatic mutation	NA	NA	NA	NA	1
+MAP2K4_mut	MAP2K4	somatic mutation	NA	NA	NA	NA	1
+BRCA1_mut	BRCA1	somatic mutation	NA	NA	NA	NA	1
+DHX15_mut	DHX15	somatic mutation	NA	NA	NA	NA	1
+ARID1A_mut	ARID1A	somatic mutation	NA	NA	NA	NA	1
+KRAS_mut	KRAS	somatic mutation	NA	NA	NA	NA	1
+NF2_mut	NF2	somatic mutation	NA	NA	NA	NA	1
+VHL_mut	VHL	somatic mutation	NA	NA	NA	NA	1
+BAP1_mut	BAP1	somatic mutation	NA	NA	NA	NA	1
+BRWD1_mut	BRWD1	somatic mutation	NA	NA	NA	NA	1
+LPHN2_mut	LPHN2	somatic mutation	NA	NA	NA	NA	1
+MLL2_mut	MLL2	somatic mutation	NA	NA	NA	NA	1
+FAT1_mut	FAT1	somatic mutation	NA	NA	NA	NA	1
+NOTCH1_mut	NOTCH1	somatic mutation	NA	NA	NA	NA	1
