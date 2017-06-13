@@ -2,6 +2,7 @@
   <dorothea-plot-card v-if="drugId && gmId && tfId"
                       name="simple-sample-plot"
                       title="A simple sample plot"
+                      :description="description"
                       :resize-handler="handlerResize"
                       :filename="filename"
                       :csv-data="csvData"
@@ -156,6 +157,11 @@ export default {
     },
     filename () {
       return 'simple-sample-plot'
+    },
+    description () {
+      return 'Showing the relationship between IC50 (y) ' +
+             'and predicted TF activity (x) of individual cell ' +
+             'lines.'
     }
   },
   watch: {
