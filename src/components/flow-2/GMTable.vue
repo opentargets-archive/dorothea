@@ -1,5 +1,6 @@
 <template>
-  <dorothea-base-card :title="'GM Summary'"
+  <dorothea-base-card v-if="gmId"
+                      :title="'GM Summary'"
                       :description="'Displaying some data'">
 
     <div slot="card-internals" class="card-content">
