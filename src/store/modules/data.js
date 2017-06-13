@@ -287,6 +287,7 @@ export default {
       })
     },
     gmTableData: (state) => (gmId) => {
+      if (!gmId) return {}
       return state.aGM[gmId]
     }
   },
