@@ -2,6 +2,7 @@
   <dorothea-plot-card v-if="drugId && gmId && tfId"
                       name="nested-box-plot"
                       title="A nested box plot"
+                      :description="description"
                       :resize-handler="handlerResize"
                       :filename="filename"
                       :csv-data="csvData"
@@ -41,6 +42,12 @@ export default {
     },
     filename () {
       return 'nested-box-plot'
+    },
+    description () {
+      return 'Showing the relationship between IC50 (y)' +
+             ' and predicted TF activity (x) of individual cell ' +
+             'lines in mutant (blue) and wild type (red). ' +
+             'TF activity is partitioned about -1 and 1.'
     }
   },
   watch: {
