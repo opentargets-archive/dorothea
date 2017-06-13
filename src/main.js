@@ -27,6 +27,7 @@ import Card from './components/Card.vue'
 import BaseCard from './components/layout/BaseCard.vue'
 import FilterCard from './components/layout/FilterCard.vue'
 import PlotCard from './components/layout/PlotCard.vue'
+import TableCard from './components/layout/TableCard.vue'
 
 import Navigation from './components/Navigation.vue'
 import InteractionsTable from './components/flow-2/InteractionsTable.vue'
@@ -70,6 +71,7 @@ Vue.component('dorothea-glossary', Glossary)
 Vue.component('dorothea-base-card', BaseCard)
 Vue.component('dorothea-filter-card', FilterCard)
 Vue.component('dorothea-plot-card', PlotCard)
+Vue.component('dorothea-table-card', TableCard)
 
 Vue.component('icon', Icon)
 
