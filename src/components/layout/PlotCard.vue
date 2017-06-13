@@ -1,22 +1,20 @@
 <template>
-  <div :id="name" class="card" v-resize="resizeHandler">
-    <div class="card-title text-primary inverted toolbar">{{ title }}
-      <button>
-        <q-popover ref="downloadPopover">
-          <div class="list item-delimiter hightlight">
-            <button class="item item-link" style="text-transform:none;min-width:300px;" @click="pngDownload(), $refs.downloadPopover.close()">Download chart as PNG</button>
-            <button class="item item-link" style="text-transform:none;min-width:300px" @click="csvDownload(), $refs.downloadPopover.close()">Download data as CSV</button>
-          </div>
-        </q-popover>
-        <icon name="download"></icon>
-      </button>
-    </div>
-
-    <div class="card-content bg-white">
+  <dorothea-base-card :title="title"
+                      :description="'Displaying some data'"
+                      v-resize="resizeHandler">
+    <button slot="toolbar-button">
+      <q-popover ref="downloadPopover">
+        <div class="list item-delimiter hightlight">
+          <button class="item item-link" style="text-transform:none;min-width:300px;" @click="pngDownload(), $refs.downloadPopover.close()">Download chart as PNG</button>
+          <button class="item item-link" style="text-transform:none;min-width:300px" @click="csvDownload(), $refs.downloadPopover.close()">Download data as CSV</button>
+        </div>
+      </q-popover>
+      <icon name="download"></icon>
+    </button>
+    <div slot="card-internals" class="card-content bg-white">
       <div :class="name"></div>
     </div>
-
-  </div>
+  </dorothea-base-card>
 </template>
 
 <script>
@@ -32,15 +30,6 @@ export default {
     resize
   },
   methods: {
-    handlerResize () {
-      let aspectRatio = 5.0 / 3
-      let element = this.$el.querySelector('div.' + this.name)
-      let width = element.offsetWidth
-      let height = width / aspectRatio
-      this.plot.width(width)
-               .height(height)
-               .render()
-    },
     csvDownload () {
       let csv = json2csv({
         data: this.csvData,
