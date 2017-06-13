@@ -169,3 +169,16 @@ export default {
   }
 }
 </script>
+
+<style>
+.item {
+  height: 32px;
+}
+.item > .item-content {
+  padding: 8px 0;
+  font-size: 80%;
+}
+.token {
+  font-size: 80%;
+}
+</style>
