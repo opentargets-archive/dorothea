@@ -360,7 +360,6 @@ export default {
       return new Promise((resolve, reject) => {
         d3.tsv('./statics/dorothea-data/a_GM.txt')
           .row(function (r, i) {
-            if (i === 0) console.log(r)
             return {
               gm: r.GenomicMarker,
               gmId: r.GenomicMarker_id,
