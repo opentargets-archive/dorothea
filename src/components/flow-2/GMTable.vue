@@ -14,19 +14,19 @@
         <td>Alteration Type</td>
         <td>{{ tableData.alterationType }}</td>
       </tr>
-      <tr>
+      <tr v-if="tableData.chromosome !== 'NA'">
         <td>Chromosome</td>
         <td>{{ tableData.chromosome }}</td>
       </tr>
-      <tr>
+      <tr v-if="tableData.locus !== 'NA'">
         <td>Locus</td>
         <td>{{ tableData.locus }}</td>
       </tr>
-      <tr>
+      <tr v-if="!isNaN(tableData.start)">
         <td>Start</td>
         <td>{{ tableData.start }}</td>
       </tr>
-      <tr>
+      <tr v-if="!isNaN(tableData.end)">
         <td>End</td>
         <td>{{ tableData.end }}</td>
       </tr>
