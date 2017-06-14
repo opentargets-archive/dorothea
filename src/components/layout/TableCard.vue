@@ -3,18 +3,8 @@
                       :description="description">
     <div slot="card-internals" class="card-content">
       <table class="q-table horizontal-delimiter compact">
-        <thead>
-          <tr v-for="key in headerKeys">
-            <th><small>{{ key }}</small></th>
-            <th class="text-right"><small>{{ tableData[key] }}</small></th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr v-for="key in tableKeys">
-            <td><small>{{ key }}</small></td>
-            <td class="text-right"><small>{{ tableData[key] }}</small></td>
-          </tr>
-        </tbody>
+        <slot name="thead"></slot>
+        <slot name="tbody"></slot>
       </table>
     </div>
   </dorothea-base-card>
@@ -22,7 +12,7 @@
 
 <script>
 export default {
-  props: ['title', 'description', 'tableData', 'tableKeys', 'headerKeys']
+  props: ['title', 'description']
 }
 </script>
 
@@ -30,5 +20,6 @@ export default {
 table {
   width: 100%;
   height: 100%;
+  font-size: 80%;
 }
 </style>
