@@ -1,46 +1,42 @@
 <template>
-  <dorothea-base-card v-if="gmId"
-                      :title="'GM Summary'"
-                      :description="description">
+  <dorothea-table-card v-if="gmId"
+                       :title="'Genomic Marker Summary'"
+                       :description="description">
 
-    <div slot="card-internals" class="card-content">
-    <table class="q-table horizontal-delimiter compact">
-      <thead>
-        <tr>
-          <th><small>GM</small></th>
-          <th class="text-right"><small>{{ tableData.gm }}</small></th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr>
-          <td><small>Alteration Type</small></td>
-          <td class="text-right"><small>{{ tableData.alterationType }}</small></td>
-        </tr>
-        <tr>
-          <td><small>Chromosome</small></td>
-          <td class="text-right"><small>{{ tableData.chromosome }}</small></td>
-        </tr>
-        <tr>
-          <td><small>Locus</small></td>
-          <td class="text-right"><small>{{ tableData.locus }}</small></td>
-        </tr>
-        <tr>
-          <td><small>Start</small></td>
-          <td class="text-right"><small>{{ tableData.start }}</small></td>
-        </tr>
-        <tr>
-          <td><small>End</small></td>
-          <td class="text-right"><small>{{ tableData.end }}</small></td>
-        </tr>
-        <tr>
-          <td><small>No. of Genes</small></td>
-          <td class="text-right"><small>{{ tableData.numGenes }}</small></td>
-        </tr>
-      </tbody>
-    </table>
-    </div>
+    <thead slot="thead">
+      <tr>
+        <th>Genomic Marker</th>
+        <th>{{ tableData.gm }}</th>
+      </tr>
+    </thead>
+    <tbody slot="tbody">
+      <tr>
+        <td>Alteration Type</td>
+        <td>{{ tableData.alterationType }}</td>
+      </tr>
+      <tr>
+        <td>Chromosome</td>
+        <td>{{ tableData.chromosome }}</td>
+      </tr>
+      <tr>
+        <td>Locus</td>
+        <td>{{ tableData.locus }}</td>
+      </tr>
+      <tr>
+        <td>Start</td>
+        <td>{{ tableData.start }}</td>
+      </tr>
+      <tr>
+        <td>End</td>
+        <td>{{ tableData.end }}</td>
+      </tr>
+      <tr>
+        <td>No. of Genes</td>
+        <td>{{ tableData.numGenes }}</td>
+      </tr>
+    </tbody>
 
-  </dorothea-base-card>
+  </dorothea-table-card>
 </template>
 
 <script>
@@ -56,7 +52,7 @@ export default {
       return this.$store.state.flow2.gmTableData
     },
     description () {
-      return 'Showing a summary of the genomic marker "' + this.tableData.gm + '".'
+      return 'Showing details of the genomic marker "' + this.tableData.gm + '".'
     }
   },
   watch: {
@@ -76,10 +72,3 @@ export default {
   }
 }
 </script>
-
-<style>
-table {
-  width: 100%;
-  height: 100%;
-}
-</style>
