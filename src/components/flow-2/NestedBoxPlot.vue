@@ -46,7 +46,7 @@ export default {
     description () {
       return 'Showing the relationship between IC50 (y)' +
              ' and predicted TF activity (x) of individual cell ' +
-             'lines in mutant (blue) and wild type (red). ' +
+             'lines in mutant and wild type. ' +
              'TF activity is partitioned about -1 and 1.'
     }
   },
