@@ -27,7 +27,7 @@
 <script>
 import resize from 'vue-resize-directive'
 import volcanoPlot from 'volcano-plot'
-import store from '../store'
+import store from '../../store'
 import * as d3 from 'd3'
 import json2csv from 'json2csv'
 import FileSaver from 'file-saver'
@@ -205,9 +205,3 @@ export default {
   }
 }
 </script>
-
-<style>
-.drug-link:before {
-  content: url(../assets/cancerrxgene_logo_14x14.png)
-}
-</style>

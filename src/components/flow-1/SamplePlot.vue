@@ -39,7 +39,7 @@
 <script>
 import resize from 'vue-resize-directive'
 import samplePlot from 'sample-plot'
-import store from '../store'
+import store from '../../store'
 import * as d3 from 'd3'
 import json2csv from 'json2csv'
 import FileSaver from 'file-saver'
@@ -232,9 +232,3 @@ export default {
   }
 }
 </script>
-
-<style>
-.cosmic-link:before {
-  content: url(../assets/logo_cosmic_14x14.png)
-}
-</style>
