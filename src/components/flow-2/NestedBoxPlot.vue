@@ -1,7 +1,7 @@
 <template>
   <dorothea-plot-card v-if="drugId && gmId && tfId"
                       name="nested-box-plot"
-                      title="A nested box plot"
+                      title="GM and TF Combined Effect on IC50"
                       :description="description"
                       :resize-handler="handlerResize"
                       :filename="filename"
