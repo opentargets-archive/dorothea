@@ -1,7 +1,7 @@
 <template>
   <dorothea-plot-card v-if="drugId && gmId && tfId"
                       name="simple-sample-plot"
-                      title="A simple sample plot"
+                      title="TF Activity Effect on IC50"
                       :description="description"
                       :resize-handler="handlerResize"
                       :filename="filename"
