@@ -1,12 +1,11 @@
 <template>
+  <dorothea-base-card :title="'Interactions Table'"
+                      :description="'Displaying all filtered interactions.'">
 
-  <div class="card">
-    <div class="card-title text-primary bg-white">Interactions Table</div>
-    <div class="card-content bg-white">
+    <div slot="card-internals" class="card-content">
       <q-data-table :data="tableData" :config="tableConfig" :columns="tableCols"></q-data-table>
     </div>
-  </div>
-
+  </dorothea-base-card>
 </template>
 
 <script>
