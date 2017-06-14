@@ -31,8 +31,8 @@ import TableCard from './components/layout/TableCard.vue'
 
 import Navigation from './components/Navigation.vue'
 import InteractionsTable from './components/flow-2/InteractionsTable.vue'
-import AssociationTable from './components/AssociationTable.vue'
-import SampleTable from './components/SampleTable.vue'
+import AssociationTable from './components/flow-1/InteractionTable.vue'
+import SampleTable from './components/flow-1/SampleTable.vue'
 import GMTable from './components/flow-2/GMTable.vue'
 import Flow2Filter from './components/flow-2/Filter.vue'
 
