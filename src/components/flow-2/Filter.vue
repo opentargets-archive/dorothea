@@ -8,7 +8,7 @@
         <small class="width-1of3">Drug:</small>
         <div class="width-2of3">
           <q-select v-if="!drugId" type="list" @input="selectDrug" v-model="drugIdModel" :options="drugOptions"></q-select>
-          <small class="token" v-else>{{ drugId }}<i class="cursor-pointer" @click="deselectDrug()">close</i></small>
+          <small class="token" v-else>{{ drugLabel }}<i class="cursor-pointer" @click="deselectDrug()">close</i></small>
         </div>
       </div>
 
@@ -16,7 +16,7 @@
         <small class="width-1of3">Genomic Marker:</small>
         <div class="width-2of3">
           <q-select v-if="!gmId" type="list" @input="selectGM" v-model="gmIdModel" :options="gmOptions"></q-select>
-          <small class="token" v-else>{{ gmId }}<i class="cursor-pointer" @click="deselectGM()">close</i></small>
+          <small class="token" v-else>{{ gmLabel }}<i class="cursor-pointer" @click="deselectGM()">close</i></small>
         </div>
       </div>
 
@@ -68,6 +68,22 @@ export default {
     },
     tfOptions () {
       return store.state.flow2.tfOptions
+    },
+    drugLabel () {
+      let label = ''
+      if (this.drugOptions && this.drugId) {
+        const pair = this.drugOptions.filter(r => r.value === this.drugId)[0]
+        label = pair.label
+      }
+      return label
+    },
+    gmLabel () {
+      let label = ''
+      if (this.gmOptions && this.gmId) {
+        const pair = this.gmOptions.filter(r => r.value === this.gmId)[0]
+        label = pair.label
+      }
+      return label
     }
   },
   watch: {
