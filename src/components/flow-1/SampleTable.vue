@@ -1,6 +1,6 @@
 <template>
-  <dorothea-table-card :title="'A sample table'"
-                       :description="'A description'">
+  <dorothea-table-card :title="'Sample Summary'"
+                       :description="'Showing detail of the clicked sample.'">
     <thead slot="thead">
       <tr>
         <th>Sample Name</th>
