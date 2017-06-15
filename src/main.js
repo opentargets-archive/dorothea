@@ -17,6 +17,7 @@ import VueResource from 'vue-resource'
 import router from './router'
 import VolcanoPlot from './components/flow-1/VolcanoPlot.vue'
 import SamplePlot from './components/flow-1/SamplePlot.vue'
+import SamplePlotFilter from './components/flow-1/SamplePlotFilter.vue'
 import BoxPlot from './components/flow-2/BoxPlot.vue'
 import NestedBoxPlot from './components/flow-2/NestedBoxPlot.vue'
 import SimpleSamplePlot from './components/flow-2/SimpleSamplePlot.vue'
@@ -53,6 +54,7 @@ useMockBackend(Vue)
 
 Vue.component('volcano-plot', VolcanoPlot)
 Vue.component('sample-plot', SamplePlot)
+Vue.component('dorothea-sample-plot-filter', SamplePlotFilter)
 Vue.component('dorothea-simple-sample-plot', SimpleSamplePlot)
 Vue.component('dorothea-box-plot', BoxPlot)
 Vue.component('dorothea-nested-box-plot', NestedBoxPlot)
