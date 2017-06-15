@@ -1,6 +1,6 @@
 <template>
-  <dorothea-base-card :title="'Interactions Table'"
-                      :description="'Displaying all filtered interactions.'">
+  <dorothea-base-card title="Results"
+                      description="Displaying all filtered interactions.">
 
     <div slot="card-internals" class="card-content">
       <q-data-table :data="tableData" :config="tableConfig" :columns="tableCols"></q-data-table>
@@ -41,6 +41,18 @@ export default {
         {
           label: 'Cancer Type',
           field: 'cancerType',
+          width: '80px',
+          sort: true
+        },
+        {
+          label: 'P Value',
+          field: 'intLRTestPval',
+          width: '80px',
+          sort: true
+        },
+        {
+          label: 'FDR',
+          field: 'intLRTestFdr',
           width: '80px',
           sort: true
         }
