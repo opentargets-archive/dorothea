@@ -73,7 +73,7 @@ export default {
       let label = ''
       if (this.drugOptions && this.drugId) {
         const pair = this.drugOptions.filter(r => r.value === this.drugId)[0]
-        label = pair.label
+        if (pair && pair.label) label = pair.label
       }
       return label
     },
@@ -81,7 +81,7 @@ export default {
       let label = ''
       if (this.gmOptions && this.gmId) {
         const pair = this.gmOptions.filter(r => r.value === this.gmId)[0]
-        label = pair.label
+        if (pair && pair.label) label = pair.label
       }
       return label
     }
