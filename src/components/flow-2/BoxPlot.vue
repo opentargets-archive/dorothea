@@ -1,7 +1,7 @@
 <template>
   <dorothea-plot-card v-if="drugId && gmId && tfId"
                       name="box-plot"
-                      title="A box plot"
+                      title="Genomic Marker Effect on IC50"
                       :description="description"
                       :resize-handler="handlerResize"
                       :filename="filename"
