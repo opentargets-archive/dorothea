@@ -6,14 +6,14 @@
     <table class="q-table horizontal-delimiter compact">
       <thead>
         <tr>
-          <th class="text-right text-grey-6"><small>Term</small></th>
-          <th class="text-left"><small>Meaning</small></th>
+          <th class="text-right text-grey-6">Term</th>
+          <th class="text-left">Meaning</th>
         </tr>
       </thead>
       <tbody>
         <tr v-for="term in sortedKeys">
-          <td class="text-right text-grey-6"><small>{{ term }}</small></td>
-          <td class="text-left"><small>{{ glossary[term] }}</small></td>
+          <td class="text-right text-grey-6">{{ term }}</td>
+          <td class="text-left">{{ glossary[term] }}</td>
         </tr>
       </tbody>
     </table>
