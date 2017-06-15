@@ -12,6 +12,7 @@
 
       <div class="width-1of4 column">
         <dorothea-flow-2-filter></dorothea-flow-2-filter>
+        <dorothea-drug-table></dorothea-drug-table>
         <dorothea-gm-table></dorothea-gm-table>
       </div>
 

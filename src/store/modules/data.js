@@ -289,6 +289,10 @@ export default {
     gmTableData: (state) => (gmId) => {
       if (!gmId) return {}
       return state.aGM[gmId]
+    },
+    drugTableData: (state) => (drugId) => {
+      if (!drugId) return {}
+      return state.aDrugs[drugId]
     }
   },
   actions: {

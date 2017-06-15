@@ -8,7 +8,8 @@ export default {
     boxPlotData: {},
     nestedBoxPlotData: {},
     simpleSamplePlotData: [],
-    gmTableData: {}
+    gmTableData: {},
+    drugTableData: {}
   },
   mutations: {
     mUpdateDrugOptions (state, payload) {
@@ -31,6 +32,9 @@ export default {
     },
     mUpdateGMTableData (state, payload) {
       state.gmTableData = payload
+    },
+    mUpdateDrugTableData (state, payload) {
+      state.drugTableData = payload
     }
   },
   actions: {
@@ -89,6 +93,12 @@ export default {
       Vue.http.get(apiBase + 'gm-table', {params: params})
         .then(function (response) {
           commit('mUpdateGMTableData', response.body)
+        })
+    },
+    updateDrugTableData ({state, commit}, params) {
+      Vue.http.get(apiBase + 'drug-table', {params: params})
+        .then(function (response) {
+          commit('mUpdateDrugTableData', response.body)
         })
     }
   }

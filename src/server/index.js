@@ -34,6 +34,9 @@ export default function (Vue) {
       case 'gm-table':
         body = store.getters.gmTableData(params.gmId)
         break
+      case 'drug-table':
+        body = store.getters.drugTableData(params.drugId)
+        break
       default:
         body = []
     }
