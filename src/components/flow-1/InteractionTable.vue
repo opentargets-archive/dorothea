@@ -1,6 +1,6 @@
 <template>
-  <dorothea-table-card :title="'An interaction table'"
-                       :description="'A description'">
+  <dorothea-table-card :title="'Interaction Summary'"
+                       :description="'Showing detail of the clicked TF-drug interaction.'">
     <thead slot="thead">
       <tr>
         <th>Drug</th>
