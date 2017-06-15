@@ -117,4 +117,7 @@ export default {
 </script>
 
 <style>
+table {
+  font-size: 80%;
+}
 </style>
