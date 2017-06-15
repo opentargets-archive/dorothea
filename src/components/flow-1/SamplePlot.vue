@@ -1,4 +1,7 @@
 <template>
+  <!--<dorothea-table-card :title="'Sample Summary'"
+                       :description="'Showing detail of the clicked sample.'">-->
+
   <div id="sampleplot" class="card" v-resize="handlerResize">
     <div class="card-title text-primary inverted toolbar">Drug: {{ drugSummary.drugName }}, Transcription Factor: {{ tf }}
       <button>
@@ -53,7 +56,7 @@ export default {
   data () {
     return {
       showLabels: true,
-      showLegend: true,
+      showLegend: false,
       tableConfig: {
         rowHeight: '20px',
         pagination: {
@@ -170,6 +173,9 @@ export default {
                     .yAccessor(d => d.ic50)
                     .textAccessor(d => d.sample.analysisSetName)
                     .legendFieldAccessor(d => d.sample.gdscDesc1)
+                    .showCircleLabels(this.showLabels)
+                    .showLegend(this.showLegend)
+                    .showBoxPlots(true)
                     .handleCircleClick(this.clickSampleHandler)
                     .legendTitle('GDSC Description 1')
                     .xLabel('Activity')
