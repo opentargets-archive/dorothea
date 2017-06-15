@@ -43,7 +43,7 @@ export default {
       return 'comparison-box-plot'
     },
     description () {
-      return 'Showing IC50 (y) of individual cell lines in mutant ' +
+      return 'Showing log IC50 (y) of individual cell lines in mutant ' +
              '(blue) and wild type (red).'
     }
   },
@@ -95,7 +95,7 @@ export default {
                     .xAccessor(d => d.tfActivity)
                     .yAccessor(d => d.ic50)
                     .xLabel('Genomic Marker')
-                    .yLabel('IC50')
+                    .yLabel('log IC50')
       this.plot.render()
     },
     handlerResize () {

@@ -87,7 +87,7 @@ export default {
           }
         },
         {
-          label: 'IC50',
+          label: 'log IC50',
           field: 'ic50',
           width: '50px',
           sort: true,
@@ -157,7 +157,7 @@ export default {
     this.plot.data(store.getters.samplePlotData(this.drug, this.tf))
              .showCircleLabels(this.showLabels)
              .showLegend(this.showLegend)
-             .yLabel('IC50')
+             .yLabel('log IC50')
              .render()
   },
   beforeDestroy () {
@@ -179,7 +179,7 @@ export default {
                     .handleCircleClick(this.clickSampleHandler)
                     .legendTitle('GDSC Description 1')
                     .xLabel('Activity')
-                    .yLabel('IC50')
+                    .yLabel('log IC50')
                     .showRegression(false)
       this.plot.render()
     },

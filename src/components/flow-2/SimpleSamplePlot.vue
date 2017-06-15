@@ -8,128 +8,12 @@
                       :csv-data="csvData"
                       :csv-fields="csvFields">
   </dorothea-plot-card>
-  <!--<div id="sampleplot" class="card" v-resize="handlerResize">
-    <div class="card-title text-primary inverted toolbar">Drug: {{ drugSummary.drugName }}, Transcription Factor: {{ tf }}
-      <button>
-        <q-popover ref="samplePlotDownloadPopover">
-          <div class="list item-delimiter hightlight">
-            <button class="item item-link" style="text-transform:none;min-width:300px;" @click="pngDownload(), $refs.samplePlotDownloadPopover.close()">Download chart as PNG</button>
-            <button class="item item-link" style="text-transform:none;min-width:300px" @click="csvDownload(), $refs.samplePlotDownloadPopover.close()">Download data as CSV</button>
-          </div>
-        </q-popover>
-        <icon name="download"></icon>
-      </button>
-    </div>
-
-    <q-tabs class="inverted primary" :refs="$refs" default-tab="plot-tab">
-      <q-tab name="plot-tab">Plot</q-tab>
-      <q-tab name="table-tab">Table</q-tab>
-    </q-tabs>
-
-    <div ref="table-tab" class="card-content bg-white">
-      <q-data-table :data="sampleData" :config="tableConfig" :columns="tableCols">
-      </q-data-table>
-    </div>
-
-    <div ref="plot-tab" class="card-content bg-white">
-      <div class="sample-plot"></div>
-      <label>
-        <q-checkbox v-model="showLabels"></q-checkbox>
-        Show Labels
-      </label>
-      <label>
-        <q-checkbox v-model="showLegend"></q-checkbox>
-        Show Legend
-      </label>
-    </div>
-  </div>-->
 </template>
 
 <script>
 import samplePlot from 'sample-plot'
 
 export default {
-  // data () {
-  //   return {
-  //     showLabels: true,
-  //     showLegend: true,
-  //     tableConfig: {
-  //       rowHeight: '20px',
-  //       pagination: {
-  //         rowsPerPage: 10,
-  //         options: [10, 25]
-  //       }
-  //     },
-  //     tableCols: [
-  //       {
-  //         label: 'Sample',
-  //         field: 'analysisSetName',
-  //         width: '80px',
-  //         sort: true
-  //       },
-  //       {
-  //         label: 'COSMIC',
-  //         field: 'cosmicId',
-  //         width: '60px',
-  //         sort: true
-  //       },
-  //       {
-  //         label: 'Activity',
-  //         field: 'tfActivity',
-  //         width: '50px',
-  //         sort: true,
-  //         format (value) {
-  //           return d3.format('.3g')(value)
-  //         }
-  //       },
-  //       {
-  //         label: 'IC50',
-  //         field: 'ic50',
-  //         width: '50px',
-  //         sort: true,
-  //         format (value) {
-  //           return d3.format('.3g')(value)
-  //         }
-  //       },
-  //       {
-  //         label: 'GDSC Desc 1',
-  //         field: 'gdscDesc1',
-  //         width: '80px',
-  //         sort: true
-  //       },
-  //       {
-  //         label: 'GDSC Desc 2',
-  //         field: 'gdscDesc2',
-  //         width: '100px',
-  //         sort: true
-  //       },
-  //       {
-  //         label: 'Study',
-  //         field: 'studyAbbreviation',
-  //         width: '100px',
-  //         sort: true
-  //       },
-  //       {
-  //         label: 'Comment',
-  //         field: 'comment',
-  //         width: '100px',
-  //         sort: true
-  //       },
-  //       {
-  //         label: 'MMR',
-  //         field: 'mmr',
-  //         width: '80px',
-  //         sort: true
-  //       },
-  //       {
-  //         label: 'Medium',
-  //         field: 'screenMedium',
-  //         width: '60px',
-  //         sort: true
-  //       }
-  //     ]
-  //   }
-  // },
   computed: {
     dataLoaded () {
       return this.$store.state.data.loaded
@@ -159,7 +43,7 @@ export default {
       return 'simple-sample-plot'
     },
     description () {
-      return 'Showing the relationship between IC50 (y) ' +
+      return 'Showing the relationship between log IC50 (y) ' +
              'and predicted TF activity (x) of individual cell ' +
              'lines.'
     }
@@ -210,7 +94,7 @@ export default {
                     .showCircleLabels(false)
                     .showLegend(false)
                     .xLabel('Activity')
-                    .yLabel('IC50')
+                    .yLabel('log IC50')
                     .showRegression(false)
       this.plot.render()
     },

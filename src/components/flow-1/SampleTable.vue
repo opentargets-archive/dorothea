@@ -19,7 +19,7 @@
         <td>{{ tfActivity }}</td>
       </tr>
       <tr>
-        <td>IC50</td>
+        <td>log IC50</td>
         <td>{{ ic50 }}</td>
       </tr>
       <tr>

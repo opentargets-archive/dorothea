@@ -44,7 +44,7 @@ export default {
       return 'nested-box-plot'
     },
     description () {
-      return 'Showing the relationship between IC50 (y)' +
+      return 'Showing the relationship between log IC50 (y)' +
              ' and predicted TF activity (x) of individual cell ' +
              'lines in mutant and wild type. ' +
              'TF activity is partitioned about -1 and 1.'
@@ -97,7 +97,7 @@ export default {
                     .xAccessor(d => d.tfActivity)
                     .yAccessor(d => d.ic50)
                     .xLabel('Genomic Marker')
-                    .yLabel('IC50')
+                    .yLabel('log IC50')
                     .nested(true)
       this.plot.render()
     },
