@@ -39,53 +39,7 @@
         <td>{{ sample.sample.screenMedium }}</td>
       </tr>
     </tbody>
-  </dorothea-table-card>  
-
-  <!--<div class="card">
-    <div class="card-title text-primary inverted toolbar">Sample Summary</div>
-    <div class="card-content bg-white">
-      <table class="q-table horizontal-delimiter compact">
-        <thead>
-          <tr>
-            <th>Sample Name</th>
-            <th>{{ sample.sample.analysisSetName }}</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr>
-            <td>COSMIC ID</td>
-            <td>
-              <a class="cosmic-link" target="_blank" :href="this.cosmicUrl">{{ sample.sampleId }}</a>
-            </td>
-          </tr>
-          <tr>
-            <td>Activity</td>
-            <td>{{ tfActivity }}</td>
-          </tr>
-          <tr>
-            <td>IC50</td>
-            <td>{{ ic50 }}</td>
-          </tr>
-          <tr>
-            <td>MMR</td>
-            <td>{{ sample.sample.mmr }}</td>
-          </tr>
-          <tr>
-            <td>GDSC Desc 1</td>
-            <td>{{ sample.sample.gdscDesc1 }}</td>
-          </tr>
-          <tr>
-            <td>GDSC Desc 2</td>
-            <td>{{ sample.sample.gdscDesc2 }}</td>
-          </tr>
-          <tr>
-            <td>Screen Medium</td>
-            <td>{{ sample.sample.screenMedium }}</td>
-          </tr>
-        </tbody>
-      </table>
-    </div>
-  </div>-->
+  </dorothea-table-card>
 </template>
 
 <script>
