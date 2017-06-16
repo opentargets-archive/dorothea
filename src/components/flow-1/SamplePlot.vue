@@ -12,9 +12,9 @@
 <script>
 import resize from 'vue-resize-directive'
 import samplePlot from 'sample-plot'
+import router from '../../router'
 
 export default {
-  props: ['clickSampleHandler'],
   directives: {
     resize
   },
@@ -93,6 +93,15 @@ export default {
              .render()
   },
   methods: {
+    clickHandler (d) {
+      router.push({
+        path: '/investigation/1',
+        query: {
+          ...this.$route.query,
+          selectedSample: d.sampleId
+        }
+      })
+    },
     createPlot () {
       this.plot = samplePlot('.sample-plot')
                     .data(this.plotData)
@@ -103,7 +112,7 @@ export default {
                     .showCircleLabels(this.showLabels)
                     .showLegend(this.showLegend)
                     .showBoxPlots(true)
-                    .handleCircleClick(this.clickSampleHandler)
+                    .handleCircleClick(this.clickHandler)
                     .legendTitle('GDSC Description 1')
                     .xLabel(this.tfId + ' Activity')
                     .yLabel('log IC50')

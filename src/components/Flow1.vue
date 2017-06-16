@@ -23,7 +23,7 @@
         <div class="column">
           <div class="row gutter">
             <div class="width-2of3">
-              <volcano-plot :click-association-handler="clickAssociationHandler"></volcano-plot>
+              <volcano-plot></volcano-plot>
             </div>
             <div class="width-1of3">
               <dorothea-association-table v-if="showInteractionDetail"></dorothea-association-table>
@@ -32,7 +32,7 @@
 
           <div class="row gutter">
             <div class="width-2of3">
-              <sample-plot v-if="showInteractionDetail" :click-sample-handler="clickSampleHandler"></sample-plot>
+              <sample-plot v-if="showInteractionDetail"></sample-plot>
             </div>
             <div class="width-1of3">
               <dorothea-sample-table v-if="showSampleDetail"></dorothea-sample-table>
@@ -44,8 +44,6 @@
 </template>
 
 <script>
-import router from '../router'
-
 export default {
   computed: {
     showInteractionDetail () {
@@ -55,27 +53,6 @@ export default {
     showSampleDetail () {
       return (this.showInteractionDetail &&
               this.$store.state.route.query.selectedSample)
-    }
-  },
-  methods: {
-    clickAssociationHandler (d) {
-      router.push({
-        path: '/investigation/1',
-        query: {
-          ...this.$route.query,
-          selectedInteractionDrug: d.drugId,
-          selectedInteractionTF: d.transcriptionFactor
-        }
-      })
-    },
-    clickSampleHandler (d) {
-      router.push({
-        path: '/investigation/1',
-        query: {
-          ...this.$route.query,
-          selectedSample: d.sampleId
-        }
-      })
     }
   }
 }

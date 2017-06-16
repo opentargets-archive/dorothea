@@ -38,11 +38,11 @@
 <script>
 import resize from 'vue-resize-directive'
 import volcanoPlot from 'volcano-plot'
+import router from '../../router'
 // import * as d3 from 'd3'
 // import tntUtils from 'tnt.utils'
 
 export default {
-  props: ['route', 'selectedDrug', 'selectedTf', 'clickAssociationHandler'],
   directives: {
     resize
   },
@@ -134,6 +134,16 @@ export default {
              .render()
   },
   methods: {
+    clickHandler (d) {
+      router.push({
+        path: '/investigation/1',
+        query: {
+          ...this.$route.query,
+          selectedInteractionDrug: d.drugId,
+          selectedInteractionTF: d.transcriptionFactor
+        }
+      })
+    },
     createPlot () {
       this.plot = volcanoPlot('.volcano-plot')
                     .data(this.plotData)
@@ -142,7 +152,7 @@ export default {
                     .textAccessor(this.labelAccessor)
                     // .rAccessor(d => d.sampleCount)
                     .rAccessor(d => 1)
-                    .handleCircleClick(this.clickAssociationHandler)
+                    .handleCircleClick(this.clickHandler)
                     .showCircleLabels(this.showLabels)
                     .xLabel('Effect Size')
                     .yLabel('-log FDR')
