@@ -6,7 +6,7 @@
       <div class="column group">
         <label class="no-margin" v-for="sampleType in sampleTypes">
           <q-radio v-model="sampleModel" :val="sampleType" @input="changeSample"></q-radio>
-          {{ sampleType }}
+          {{ formatter(sampleType) }}
         </label>
       </div>
     </div>
@@ -49,6 +49,11 @@ export default {
           filterSamplesOnType: sampleType
         }
       })
+    },
+    formatter (sampleType) {
+      const split = sampleType.replace(/_/g, ' ')
+      const uppercased = split.charAt(0).toUpperCase() + split.slice(1)
+      return uppercased
     }
   }
 }
