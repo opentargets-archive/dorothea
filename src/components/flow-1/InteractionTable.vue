@@ -1,16 +1,16 @@
 <template>
-  <dorothea-table-card :title="'Interaction Summary'"
-                       :description="'Showing detail of the clicked TF-drug interaction.'">
+  <dorothea-table-card title="Interaction Summary"
+                       description="Showing detail of the clicked TF-drug interaction.">
     <thead slot="thead">
       <tr>
         <th>Drug</th>
         <th>
-          <a class="drug-link" target="_blank" :href="this.drugUrl">{{ association.drugName }}</a>
+          <a class="drug-link" target="_blank" :href="this.drugUrl">{{ tableData.drugName }}</a>
         </th>
       </tr>
       <tr>
         <th>Transcription Factor</th>
-        <th>{{ association.transcriptionFactor }}</th>
+        <th>{{ tableData.transcriptionFactor }}</th>
       </tr>
     </thead>
     <tbody slot="tbody">
@@ -32,7 +32,7 @@
       </tr>
       <tr>
         <td>Drug Targets</td>
-        <td>{{ association.drugTargets }}</td>
+        <td>{{ tableData.drugTargets }}</td>
       </tr>
     </tbody>
   </dorothea-table-card>
@@ -43,20 +43,50 @@
 import * as d3 from 'd3'
 
 export default {
-  props: ['association'],
   computed: {
+    dataLoaded () {
+      return this.$store.state.data.loaded
+    },
+    drugId () {
+      return +this.$store.state.route.query.selectedInteractionDrug
+    },
+    tfId () {
+      return this.$store.state.route.query.selectedInteractionTF
+    },
+    tableData () {
+      return this.$store.state.flow1.interactionTableData
+    },
+
     effectSize () {
-      console.log(this.association)
-      return d3.format('.3g')(this.association.effectSize)
+      return d3.format('.3g')(this.tableData.effectSize)
     },
     fdr () {
-      return d3.format('.3g')(this.association.fdr)
+      return d3.format('.3g')(this.tableData.fdr)
     },
     pval () {
-      return d3.format('.3g')(this.association.pval)
+      return d3.format('.3g')(this.tableData.pval)
     },
     drugUrl () {
-      return 'http://www.cancerrxgene.org/translation/Drug/' + this.association.drugId
+      return 'http://www.cancerrxgene.org/translation/Drug/' + this.drugId
+    }
+  },
+  watch: {
+    drugId () {
+      this.updateData()
+    },
+    tfId () {
+      this.updateData()
+    },
+    dataLoaded () {
+      this.updateData()
+    }
+  },
+  methods: {
+    updateData () {
+      this.$store.dispatch('updateInteractionTableData', {
+        drugId: this.drugId,
+        tfId: this.tfId
+      })
     }
   }
 }

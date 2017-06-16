@@ -1,8 +1,17 @@
 <template>
-  <div class="card" v-resize="handleResize">
+  <dorothea-plot-card
+                      name="volcano-plot"
+                      title="Volcano Plot"
+                      description="Displaying interactions between drugs and transcription factors."
+                      :resize-handler="handlerResize"
+                      :filename="filename"
+                      :csv-data="csvData"
+                      :csv-fields="csvFields">
+  </dorothea-plot-card>  
+
+  <!--<div class="card" v-resize="handleResize">
     <div class="card-title text-primary inverted toolbar">{{ title }}
       <button>
-        <!--<q-tooltip>Download chart image/data [Not currently implemented]</q-tooltip>-->
         <q-popover ref="volcanoPlotDownloadPopover">
           <div class="list item-delimiter hightlight">
             <button class="item item-link" style="text-transform:none;min-width:300px;" @click="pngDownload(), $refs.volcanoPlotDownloadPopover.close()">Download chart as PNG</button>
@@ -14,24 +23,23 @@
     </div>
 
     <div class="card-content bg-white">
-      <!--<spinner v-if="!dataLoaded" name="rings"></spinner>-->
+      
       <div class="volcano-plot"></div>
       <label>
       <q-checkbox v-model="showLabels"></q-checkbox>
       Show Labels
       </label>
     </div>
-  </div>
+  </div>-->
+
+  <!--<spinner v-if="!dataLoaded" name="rings"></spinner>-->
 </template>
 
 <script>
 import resize from 'vue-resize-directive'
 import volcanoPlot from 'volcano-plot'
-import store from '../../store'
-import * as d3 from 'd3'
-import json2csv from 'json2csv'
-import FileSaver from 'file-saver'
-import tntUtils from 'tnt.utils'
+// import * as d3 from 'd3'
+// import tntUtils from 'tnt.utils'
 
 export default {
   props: ['route', 'selectedDrug', 'selectedTf', 'clickAssociationHandler'],
@@ -44,69 +52,91 @@ export default {
     }
   },
   computed: {
-    drugSummary () {
-      let summary = store.getters.drugSummary(this.selectedDrug)
-      if (!summary) summary = {}
-      return summary
+    dataLoaded () {
+      return this.$store.state.data.loaded
     },
-    title () {
-      const allDrugs = (this.selectedDrug === 'all')
-      const allTfs = (this.selectedTf === 'all')
-
-      let title
-      if (allDrugs && allTfs) {
-        title = 'Showing associations between all drugs and all transcription factors'
-      }
-      else if (allDrugs && !allTfs) {
-        title = 'Showing associations between all drugs and the transcription factor ' + this.selectedTf
-      }
-      else if (!allDrugs && allTfs) {
-        title = 'Showing associations between the drug ' + store.getters.drugSummary(this.selectedDrug).drugName + ' and all transcription factors'
+    filterInteractionsBy () {
+      return this.$store.state.route.query.filterInteractionsBy
+    },
+    drugId () {
+      if (this.filterInteractionsBy === 'drug') {
+        const drugId = this.$store.state.route.query.filterInteractionsOnDrug
+        return drugId ? +drugId : 'all'
       }
       else {
-        title = 'Showing the association between the drug ' + store.getters.drugSummary(this.selectedDrug).drugName + ' and the transcription factor ' + this.selectedTf
+        return 'all'
       }
-      return title
+    },
+    tfId () {
+      if (this.filterInteractionsBy === 'tf') {
+        let tfId = this.$store.state.route.query.filterInteractionsOnTF
+        if (!tfId) tfId = 'all'
+        return tfId
+      }
+      else {
+        return 'all'
+      }
+    },
+    csvFields () {
+      return [
+        'drugId',
+        'drugName',
+        'drugTargets',
+        'effectSize',
+        'fdr',
+        'pval',
+        'transcriptionFactor'
+      ]
+    },
+    csvData () {
+      return []
+    },
+    filename () {
+      return 'associations_' + this.drugId + '-' + this.tfId
+    },
+    plotData () {
+      return this.$store.state.flow1.volcanoPlotData
     },
     labelAccessor () {
-      switch (this.route) {
-        case 0:
-          return d => d.drugName + ':' + d.transcriptionFactor
-        case 1:
-          return d => d.transcriptionFactor
-        case 2:
-          return d => d.drugName
+      if (this.filterInteractionsBy === 'drug') {
+        return d => d.transcriptionFactor
       }
-    },
-    dataLoaded () {
-      return store.state.loaded
+      else if (this.filterInteractionsBy === 'tf') {
+        return d => d.drugName
+      }
+      else {
+        return d => d.drugName + ':' + d.transcriptionFactor
+      }
     }
   },
   watch: {
-    dataLoaded: function (val) {
-      this.$forceUpdate()
+    drugId () {
+      this.updateData()
+    },
+    tfId () {
+      this.updateData()
+    },
+    dataLoaded () {
+      this.updateData()
+    },
+    plotData () {
+      this.plot.data(this.plotData)
+               .render()
     }
   },
   mounted () {
     this.createPlot()
   },
   updated () {
-    let data = store.getters.volcanoPlotData(this.selectedDrug, this.selectedTf)
-    this.plot.data(data)
+    this.plot.data(this.plotData)
              .showCircleLabels(this.showLabels)
              .textAccessor(this.labelAccessor)
              .render()
   },
-  beforeDestroy () {
-    // destroy tooltip created by chart constructor
-    d3.select('.d3-tip.volcano-plot')
-        .remove()
-  },
   methods: {
     createPlot () {
-      let data = store.getters.volcanoPlotData(this.selectedDrug, this.selectedTf)
       this.plot = volcanoPlot('.volcano-plot')
-                    .data(data)
+                    .data(this.plotData)
                     .xAccessor(d => d.effectSize)
                     .yAccessor(d => d.fdr)
                     .textAccessor(this.labelAccessor)
@@ -115,10 +145,19 @@ export default {
                     .handleCircleClick(this.clickAssociationHandler)
                     .showCircleLabels(this.showLabels)
                     .xLabel('Effect Size')
-                    .yLabel('-log (FDR)')
+                    .yLabel('-log FDR')
       this.plot.render()
     },
-    handleResize () {
+    updateData () {
+      this.$store.dispatch('updateVolcanoPlotData', {
+        drugId: this.drugId,
+        tfId: this.tfId
+      }).then(response => {
+        this.plot.data(this.plotData)
+                 .render()
+      })
+    },
+    handlerResize () {
       let aspectRatio = 5.0 / 3
       let element = this.$el.querySelector('div.volcano-plot')
       let width = element.offsetWidth
@@ -126,82 +165,62 @@ export default {
       this.plot.width(width)
                .height(height)
                .render()
-    },
-    filename () {
-      return 'associations_' + this.selectedDrug + '-' + this.selectedTf
-    },
-    csvDownload () {
-      let data = store.getters.volcanoPlotData(this.selectedDrug, this.selectedTf)
-      let csv = json2csv({
-        data: data,
-        fields: [
-          'drugId',
-          'drugName',
-          'drugTargets',
-          'effectSize',
-          'fdr',
-          'pval',
-          'transcriptionFactor'
-        ]
-      })
-      let blob = new Blob([csv], {type: 'text/plain;charset=utf-8'})
-      FileSaver.saveAs(blob, this.filename() + '.csv')
-    },
-    pngDownload () {
-      // TODO: Combine svg and canvas
-      let filename = this.filename() + '.png'
-      let width = this.plot.width()
-      let height = this.plot.height()
-      let pngExporter = tntUtils.png()
-                                .filename(filename)
-                                .scale_factor(1)
-                                .callback(function (originalPng) {
-                                  // Need to add the points (from canvas element)
-                                  // since pngExporter only handles the svg element
-
-                                  // get the volcano plot canvas and convert to png
-                                  let canvas = d3.select('.volcano-plot canvas').node()
-                                  let pointsPng = canvas.toDataURL('image/png')
-
-                                  // create points image
-                                  let pointsImg = new Image()
-                                  pointsImg.width = width
-                                  pointsImg.height = height
-                                  pointsImg.src = pointsPng
-
-                                  // create original image (svg of axes)
-                                  let originalImg = new Image()
-                                  originalImg.width = width
-                                  originalImg.height = height
-                                  originalImg.src = originalPng
-
-                                  // combine the images
-                                  let combinedCanvas = document.createElement('canvas')
-                                  combinedCanvas.width = width
-                                  combinedCanvas.height = height
-                                  let context = combinedCanvas.getContext('2d')
-                                  context.drawImage(originalImg, 0, 0)
-                                  context.drawImage(pointsImg, 0, 0)
-                                  let combinedPng = combinedCanvas.toDataURL('image/png')
-
-                                  // add download behaviour
-                                  var a = document.createElement('a')
-                                  a.download = filename
-                                  a.href = combinedPng
-                                  document.body.appendChild(a)
-                                  a.click()
-                                  document.body.removeChild(a)
-                                })
-                                // TODO: Fix the stylesheet to be just the needed (not all)
-                                //  .stylesheets(['components-OpenTargetsWebapp.min.css'])
-                                .limit({
-                                  limit: 2100000,
-                                  onError: function () {
-                                    console.log('Could not create image: too large.')
-                                  }
-                                })
-      pngExporter(d3.select('svg.volcano-plot'))
     }
+    // pngDownload () {
+    //   // TODO: Combine svg and canvas
+    //   let filename = this.filename() + '.png'
+    //   let width = this.plot.width()
+    //   let height = this.plot.height()
+    //   let pngExporter = tntUtils.png()
+    //                             .filename(filename)
+    //                             .scale_factor(1)
+    //                             .callback(function (originalPng) {
+    //                               // Need to add the points (from canvas element)
+    //                               // since pngExporter only handles the svg element
+
+    //                               // get the volcano plot canvas and convert to png
+    //                               let canvas = d3.select('.volcano-plot canvas').node()
+    //                               let pointsPng = canvas.toDataURL('image/png')
+
+    //                               // create points image
+    //                               let pointsImg = new Image()
+    //                               pointsImg.width = width
+    //                               pointsImg.height = height
+    //                               pointsImg.src = pointsPng
+
+    //                               // create original image (svg of axes)
+    //                               let originalImg = new Image()
+    //                               originalImg.width = width
+    //                               originalImg.height = height
+    //                               originalImg.src = originalPng
+
+    //                               // combine the images
+    //                               let combinedCanvas = document.createElement('canvas')
+    //                               combinedCanvas.width = width
+    //                               combinedCanvas.height = height
+    //                               let context = combinedCanvas.getContext('2d')
+    //                               context.drawImage(originalImg, 0, 0)
+    //                               context.drawImage(pointsImg, 0, 0)
+    //                               let combinedPng = combinedCanvas.toDataURL('image/png')
+
+    //                               // add download behaviour
+    //                               var a = document.createElement('a')
+    //                               a.download = filename
+    //                               a.href = combinedPng
+    //                               document.body.appendChild(a)
+    //                               a.click()
+    //                               document.body.removeChild(a)
+    //                             })
+    //                             // TODO: Fix the stylesheet to be just the needed (not all)
+    //                             //  .stylesheets(['components-OpenTargetsWebapp.min.css'])
+    //                             .limit({
+    //                               limit: 2100000,
+    //                               onError: function () {
+    //                                 console.log('Could not create image: too large.')
+    //                               }
+    //                             })
+    //   pngExporter(d3.select('svg.volcano-plot'))
+    // }
   }
 }
 </script>

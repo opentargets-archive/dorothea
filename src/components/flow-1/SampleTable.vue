@@ -1,17 +1,17 @@
 <template>
-  <dorothea-table-card :title="'Sample Summary'"
-                       :description="'Showing detail of the clicked sample.'">
+  <dorothea-table-card title="Sample Summary"
+                       description="Showing detail of the clicked sample.">
     <thead slot="thead">
       <tr>
         <th>Sample Name</th>
-        <th>{{ sample.sample.analysisSetName }}</th>
+        <th>{{ tableData.analysisSetName }}</th>
       </tr>
     </thead>
     <tbody slot="tbody">
       <tr>
         <td>COSMIC ID</td>
         <td>
-          <a class="cosmic-link" target="_blank" :href="this.cosmicUrl">{{ sample.sampleId }}</a>
+          <a class="cosmic-link" target="_blank" :href="this.cosmicUrl">{{ tableData.sampleId }}</a>
         </td>
       </tr>
       <tr>
@@ -24,19 +24,19 @@
       </tr>
       <tr>
         <td>MMR</td>
-        <td>{{ sample.sample.mmr }}</td>
+        <td>{{ tableData.mmr }}</td>
       </tr>
       <tr>
         <td>GDSC Desc 1</td>
-        <td>{{ sample.sample.gdscDesc1 }}</td>
+        <td>{{ tableData.gdscDesc1 }}</td>
       </tr>
       <tr>
         <td>GDSC Desc 2</td>
-        <td>{{ sample.sample.gdscDesc2 }}</td>
+        <td>{{ tableData.gdscDesc2 }}</td>
       </tr>
       <tr>
         <td>Screen Medium</td>
-        <td>{{ sample.sample.screenMedium }}</td>
+        <td>{{ tableData.screenMedium }}</td>
       </tr>
     </tbody>
   </dorothea-table-card>
@@ -46,21 +46,53 @@
 import * as d3 from 'd3'
 
 export default {
-  props: ['sample'],
-  data () {
-    return {
-      headerKeys: []
-    }
-  },
   computed: {
+    dataLoaded () {
+      return this.$store.state.data.loaded
+    },
+    drugId () {
+      return +this.$store.state.route.query.selectedInteractionDrug
+    },
+    tfId () {
+      return this.$store.state.route.query.selectedInteractionTF
+    },
+    sampleId () {
+      return +this.$store.state.route.query.selectedSample
+    },
+    tableData () {
+      return this.$store.state.flow1.sampleTableData
+    },
     tfActivity () {
-      return d3.format('.3g')(this.sample.tfActivity)
+      return d3.format('.3g')(this.tableData.tfActivity)
     },
     ic50 () {
-      return d3.format('.3g')(this.sample.ic50)
+      return d3.format('.3g')(this.tableData.ic50)
     },
     cosmicUrl () {
-      return 'http://cancer.sanger.ac.uk/cosmic/mutation/overview?id=' + this.sample.sampleId
+      return 'http://cancer.sanger.ac.uk/cosmic/mutation/overview?id=' + this.sampleId
+    }
+  },
+  watch: {
+    drugId () {
+      this.updateData()
+    },
+    tfId () {
+      this.updateData()
+    },
+    sampleId () {
+      this.updateData()
+    },
+    dataLoaded () {
+      this.updateData()
+    }
+  },
+  methods: {
+    updateData () {
+      this.$store.dispatch('updateSampleTableData', {
+        drugId: this.drugId,
+        tfId: this.tfId,
+        sampleId: this.sampleId
+      })
     }
   }
 }

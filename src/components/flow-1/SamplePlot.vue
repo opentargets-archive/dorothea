@@ -1,203 +1,49 @@
 <template>
-  <!--<dorothea-table-card :title="'Sample Summary'"
-                       :description="'Showing detail of the clicked sample.'">-->
-
-  <div id="sampleplot" class="card" v-resize="handlerResize">
-    <div class="card-title text-primary inverted toolbar">Drug: {{ drugSummary.drugName }}, Transcription Factor: {{ tf }}
-      <button>
-        <q-popover ref="samplePlotDownloadPopover">
-          <div class="list item-delimiter hightlight">
-            <button class="item item-link" style="text-transform:none;min-width:300px;" @click="pngDownload(), $refs.samplePlotDownloadPopover.close()">Download chart as PNG</button>
-            <button class="item item-link" style="text-transform:none;min-width:300px" @click="csvDownload(), $refs.samplePlotDownloadPopover.close()">Download data as CSV</button>
-          </div>
-        </q-popover>
-        <icon name="download"></icon>
-      </button>
-    </div>
-
-    <q-tabs class="inverted primary" :refs="$refs" default-tab="plot-tab">
-      <q-tab name="plot-tab">Plot</q-tab>
-      <q-tab name="table-tab">Table</q-tab>
-    </q-tabs>
-
-    <div ref="table-tab" class="card-content bg-white">
-      <q-data-table :data="sampleData" :config="tableConfig" :columns="tableCols">
-      </q-data-table>
-    </div>
-
-    <div ref="plot-tab" class="card-content bg-white">
-      <div class="sample-plot"></div>
-      <label>
-        <q-checkbox v-model="showLabels"></q-checkbox>
-        Show Labels
-      </label>
-      <label>
-        <q-checkbox v-model="showLegend"></q-checkbox>
-        Show Legend
-      </label>
-    </div>
-  </div>
+  <dorothea-plot-card name="sample-plot"
+                      title="Sample Plot"
+                      :description="description"
+                      :resize-handler="handlerResize"
+                      :filename="filename"
+                      :csv-data="csvData"
+                      :csv-fields="csvFields">
+  </dorothea-plot-card>
 </template>
 
 <script>
 import resize from 'vue-resize-directive'
 import samplePlot from 'sample-plot'
-import store from '../../store'
-import * as d3 from 'd3'
-import json2csv from 'json2csv'
-import FileSaver from 'file-saver'
-import tntUtils from 'tnt.utils'
 
 export default {
-  props: ['drug', 'tf', 'clickSampleHandler'],
+  props: ['clickSampleHandler'],
   directives: {
     resize
   },
   data () {
     return {
       showLabels: true,
-      showLegend: false,
-      tableConfig: {
-        rowHeight: '20px',
-        pagination: {
-          rowsPerPage: 10,
-          options: [10, 25]
-        }
-      },
-      tableCols: [
-        {
-          label: 'Sample',
-          field: 'analysisSetName',
-          width: '80px',
-          sort: true
-        },
-        {
-          label: 'COSMIC',
-          field: 'cosmicId',
-          width: '60px',
-          sort: true
-        },
-        {
-          label: 'Activity',
-          field: 'tfActivity',
-          width: '50px',
-          sort: true,
-          format (value) {
-            return d3.format('.3g')(value)
-          }
-        },
-        {
-          label: 'log IC50',
-          field: 'ic50',
-          width: '50px',
-          sort: true,
-          format (value) {
-            return d3.format('.3g')(value)
-          }
-        },
-        {
-          label: 'GDSC Desc 1',
-          field: 'gdscDesc1',
-          width: '80px',
-          sort: true
-        },
-        {
-          label: 'GDSC Desc 2',
-          field: 'gdscDesc2',
-          width: '100px',
-          sort: true
-        },
-        {
-          label: 'Study',
-          field: 'studyAbbreviation',
-          width: '100px',
-          sort: true
-        },
-        {
-          label: 'Comment',
-          field: 'comment',
-          width: '100px',
-          sort: true
-        },
-        {
-          label: 'MMR',
-          field: 'mmr',
-          width: '80px',
-          sort: true
-        },
-        {
-          label: 'Medium',
-          field: 'screenMedium',
-          width: '60px',
-          sort: true
-        }
-      ]
+      showLegend: false
     }
   },
   computed: {
+    dataLoaded () {
+      return this.$store.state.data.loaded
+    },
+    drugId () {
+      return this.$store.state.route.query.selectedInteractionDrug
+    },
+    tfId () {
+      return this.$store.state.route.query.selectedInteractionTF
+    },
     drugSummary: function () {
-      let summary = store.getters.drugSummary(this.drug)
+      let summary = this.$store.getters.drugSummary(this.drug)
       if (!summary) summary = {}
       return summary
     },
-    sampleData: function () {
-      return store.getters.samplePlotData(this.drug, this.tf).map(row => {
-        return {
-          ...row.sample,
-          tfActivity: row.tfActivity,
-          ic50: row.ic50
-        }
-      })
-    }
-  },
-  mounted () {
-    this.createPlot()
-  },
-  updated () {
-    this.plot.data(store.getters.samplePlotData(this.drug, this.tf))
-             .showCircleLabels(this.showLabels)
-             .showLegend(this.showLegend)
-             .yLabel('log IC50')
-             .render()
-  },
-  beforeDestroy () {
-    // destroy tooltip created by chart constructor
-    d3.select('.d3-tip.sample-plot')
-        .remove()
-  },
-  methods: {
-    createPlot () {
-      this.plot = samplePlot('.sample-plot')
-                    .data(store.getters.samplePlotData(this.drug, this.tf))
-                    .xAccessor(d => d.tfActivity)
-                    .yAccessor(d => d.ic50)
-                    .textAccessor(d => d.sample.analysisSetName)
-                    .legendFieldAccessor(d => d.sample.gdscDesc1)
-                    .showCircleLabels(this.showLabels)
-                    .showLegend(this.showLegend)
-                    .showBoxPlots(true)
-                    .handleCircleClick(this.clickSampleHandler)
-                    .legendTitle('GDSC Description 1')
-                    .xLabel('Activity')
-                    .yLabel('log IC50')
-                    .showRegression(false)
-      this.plot.render()
+    plotData () {
+      return this.$store.state.flow1.samplePlotData
     },
-    handlerResize () {
-      let aspectRatio = 5.0 / 3
-      let element = this.$el.querySelector('div.sample-plot')
-      let width = element.offsetWidth
-      let height = width / aspectRatio
-      this.plot.width(width)
-               .height(height)
-               .render()
-    },
-    filename () {
-      return 'samples_' + this.drug + '-' + this.tf
-    },
-    csvDownload () {
-      let data = store.getters.samplePlotData(this.drug, this.tf)
-      let sampleFields = [
+    csvFields () {
+      return [
         'analysisSetName',
         'cosmicId',
         'gdscDesc1',
@@ -207,33 +53,80 @@ export default {
         'studyAbbreviation',
         'comment'
       ]
-      let csv = json2csv({
-        data: data,
-        fields: [
-          ...sampleFields.map(x => ({
-            label: x,
-            value: 'sample.' + x
-          })),
-          'ic50',
-          'tfActivity'
-        ]
-      })
-      let blob = new Blob([csv], {type: 'text/plain;charset=utf-8'})
-      FileSaver.saveAs(blob, this.filename() + '.csv')
     },
-    pngDownload () {
-      let pngExporter = tntUtils.png()
-                                .filename(this.filename() + '.png')
-                                .scale_factor(1)
-                                // TODO: Fix the stylesheet to be just the needed (not all)
-                                //  .stylesheets(['components-OpenTargetsWebapp.min.css'])
-                                .limit({
-                                  limit: 2100000,
-                                  onError: function () {
-                                    console.log('Could not create image: too large.')
-                                  }
-                                })
-      pngExporter(d3.select('svg.sample-plot'))
+    csvData () {
+      return this.plotData
+    },
+    filename () {
+      return 'samples_' + this.drug + '-' + this.tf
+    },
+    description () {
+      return 'Showing the relationship between log IC50 (y)' +
+             ' and predicted TF activity (x) of individual cell ' +
+             'lines'
+    }
+  },
+  watch: {
+    drugId () {
+      this.updateData()
+    },
+    tfId () {
+      this.updateData()
+    },
+    dataLoaded () {
+      this.updateData()
+    },
+    plotData () {
+      this.plot.data(this.plotData)
+               .render()
+    }
+  },
+  mounted () {
+    this.createPlot()
+  },
+  updated () {
+    this.plot.data(this.plotData)
+             .showCircleLabels(this.showLabels)
+             .showLegend(this.showLegend)
+             .xLabel(this.tfId + ' Activity')
+             .yLabel('log IC50')
+             .render()
+  },
+  methods: {
+    createPlot () {
+      this.plot = samplePlot('.sample-plot')
+                    .data(this.plotData)
+                    .xAccessor(d => d.tfActivity)
+                    .yAccessor(d => d.ic50)
+                    .textAccessor(d => d.analysisSetName)
+                    .legendFieldAccessor(d => d.gdscDesc1)
+                    .showCircleLabels(this.showLabels)
+                    .showLegend(this.showLegend)
+                    .showBoxPlots(true)
+                    .handleCircleClick(this.clickSampleHandler)
+                    .legendTitle('GDSC Description 1')
+                    .xLabel(this.tfId + ' Activity')
+                    .yLabel('log IC50')
+                    .showRegression(false)
+      this.plot.render()
+    },
+    updateData () {
+      this.$store.dispatch('updateSamplePlotData', {
+        drugId: this.drugId,
+        tfId: this.tfId
+      }).then(response => {
+        this.plot.data(this.plotData)
+                 .render()
+      })
+    },
+    handlerResize () {
+      let aspectRatio = 5.0 / 3
+      let element = this.$el.querySelector('div.sample-plot')
+      let width = element.offsetWidth
+      let height = width / aspectRatio
+      this.plot.width(width)
+               .height(height)
+               .render()
     }
   }
 }
