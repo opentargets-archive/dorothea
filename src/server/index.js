@@ -11,30 +11,52 @@ export default function (Vue) {
     let body
 
     switch (path) {
-      case 'drug-options':
+      case 'flow-1/sample-options':
+        body = store.getters.sampleOptions()
+        break
+      case 'flow-1/drug-options':
+        body = store.getters.flow1DrugOptions()
+        break
+      case 'flow-1/tf-options':
+        body = store.getters.flow1TFOptions()
+        break
+      case 'flow-1/volcano-plot':
+        body = store.getters.volcanoPlotData(params.drugId, params.tfId)
+        break
+      case 'flow-1/sample-plot':
+        body = store.getters.samplePlotData(params.drugId, params.tfId)
+        break
+      case 'flow-1/interaction-table':
+        body = store.getters.interactionTableData(params.drugId, params.tfId)
+        break
+      case 'flow-1/sample-table':
+        body = store.getters.sampleSummary(params.drugId, params.tfId, params.sampleId)
+        break
+
+      case 'flow-2/drug-options':
         body = store.getters.flow2DrugPairs(params.gmId)
         break
-      case 'gm-options':
+      case 'flow-2/gm-options':
         body = store.getters.flow2GMPairs(params.drugId)
         break
-      case 'tf-options':
+      case 'flow-2/tf-options':
         body = store.getters.flow2TFPairs(params.drugId, params.gmId)
         break
-      case 'box-plot':
+      case 'flow-2/box-plot':
         body = store.getters.boxPlotData(params.drugId, params.gmId, params.ctId, params.tfId)
         break
-      case 'nested-box-plot':
+      case 'flow-2/nested-box-plot':
         body = store.getters.boxPlotData(params.drugId, params.gmId, params.ctId, params.tfId, true)
         break
-      case 'simple-sample-plot':
+      case 'flow-2/simple-sample-plot':
         // TODO: this should take into account the gmId and ctId too
         // ie. will need a store.getters.simpleSamplePlotData method
         body = store.getters.samplePlotData(params.drugId, params.tfId)
         break
-      case 'gm-table':
+      case 'flow-2/gm-table':
         body = store.getters.gmTableData(params.gmId)
         break
-      case 'drug-table':
+      case 'flow-2/drug-table':
         body = store.getters.drugTableData(params.drugId)
         break
       default:

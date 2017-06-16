@@ -22,26 +22,11 @@ export default {
     }
   },
   getters: {
-    // // API
-    // apiF2DrugOptions: (state) => ({gmId, ctId}) => {
-
-    // }
-
     // FLOW 1
-    resultsForDrug: (state) => (drugId) => {
-      return state.rTfDrugAssoGdsc.filter((item) => item.drugId === drugId)
-    },
-    sampleResponsesForDrug: (state) => (drugId) => {
-      return state.mDrugIc50Gdsc[drugId]
-    },
-    drugSummary: (state) => (drugId) => {
-      if (!state.aDrugs) return {}
-      return state.aDrugs[drugId]
-    },
-    drugIndexNamePairs: (state) => () => {
+    flow1DrugOptions: (state) => () => {
       if (!state.aDrugs) return []
-      let keys = Object.keys(state.aDrugs)
-      let pairs = keys.map((drugId) => {
+      const drugIds = Object.keys(state.aDrugs)
+      const pairs = drugIds.map((drugId) => {
         return {
           label: state.aDrugs[drugId].drugName,
           value: state.aDrugs[drugId].drugId
@@ -53,7 +38,7 @@ export default {
       })
       return pairs
     },
-    tfIndexNamePairs: (state) => () => {
+    flow1TFOptions: (state) => () => {
       if (!state.rTfDrugAssoGdsc) return []
       // get unique tfs from this table
       // (ie. they appear in at least one association)
@@ -65,6 +50,23 @@ export default {
         }
       })
       return pairs
+    },
+    sampleOptions: (state) => () => {
+      // get the filter options for the sample plot
+      const sampleIds = Object.keys(state.aSamples)
+      const gdscDesc1s = sampleIds.map(id => state.aSamples[id].gdscDesc1)
+      const uniqueGdscDesc1s = _.uniq(gdscDesc1s)
+      return uniqueGdscDesc1s
+    },
+    resultsForDrug: (state) => (drugId) => {
+      return state.rTfDrugAssoGdsc.filter((item) => item.drugId === drugId)
+    },
+    sampleResponsesForDrug: (state) => (drugId) => {
+      return state.mDrugIc50Gdsc[drugId]
+    },
+    drugSummary: (state) => (drugId) => {
+      if (!state.aDrugs) return {}
+      return state.aDrugs[drugId]
     },
     sampleCount: (state) => (drugId, tfId) => {
       if (drugId === 'all' || tfId === 'all') return 0
@@ -114,14 +116,17 @@ export default {
           sampleId: sampleId,
           ic50: ic50sForDrug[sampleId],
           tfActivity: state.mTfActivitiesGdsc[tfId][sampleId],
-          sample: state.aSamples[sampleId]
+          ...state.aSamples[sampleId]
         }
       })
     },
     sampleSummary: (state, getters) => (drugId, tfId, sampleId) => {
-      // return state.aSamples[sampleId]
       return getters.samplePlotData(drugId, tfId).filter(r => r.sampleId === sampleId)[0]
     },
+    interactionTableData: (state, getters) => (drugId, tfId) => {
+      return getters.volcanoPlotData(drugId, tfId)[0]
+    },
+
     // FLOW 2
     drugGMPairData: (state) => (tf) => {
       // // // get the unique drug-gm pairs (optionally filtered for a given tf)

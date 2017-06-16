@@ -39,26 +39,26 @@ export default {
   },
   actions: {
     updateDrugOptions ({ state, commit }, params) {
-      Vue.http.get(apiBase + 'drug-options', {params: params})
+      Vue.http.get(apiBase + 'flow-2/drug-options', {params: params})
         .then(function (response) {
           commit('mUpdateDrugOptions', response.body)
         })
     },
     updateGMOptions ({ state, commit }, params) {
-      Vue.http.get(apiBase + 'gm-options', {params: params})
+      Vue.http.get(apiBase + 'flow-2/gm-options', {params: params})
         .then(function (response) {
           commit('mUpdateGMOptions', response.body)
         })
     },
     updateTFOptions ({ state, commit }, params) {
-      Vue.http.get(apiBase + 'tf-options', {params: params})
+      Vue.http.get(apiBase + 'flow-2/tf-options', {params: params})
         .then(function (response) {
           commit('mUpdateTFOptions', response.body)
         })
     },
     updateBoxPlotData ({state, commit}, params) {
       if (params.drugId && params.gmId && params.tfId) {
-        Vue.http.get(apiBase + 'box-plot', {params: params})
+        Vue.http.get(apiBase + 'flow-2/box-plot', {params: params})
         .then(function (response) {
           commit('mUpdateBoxPlotData', response.body)
         })
@@ -69,7 +69,7 @@ export default {
     },
     updateNestedBoxPlotData ({state, commit}, params) {
       if (params.drugId && params.gmId && params.tfId) {
-        Vue.http.get(apiBase + 'nested-box-plot', {params: params})
+        Vue.http.get(apiBase + 'flow-2/nested-box-plot', {params: params})
           .then(function (response) {
             commit('mUpdateNestedBoxPlotData', response.body)
           })
@@ -80,7 +80,7 @@ export default {
     },
     updateSimpleSamplePlotData ({state, commit}, params) {
       if (params.drugId && params.gmId && params.tfId) {
-        Vue.http.get(apiBase + 'simple-sample-plot', {params: params})
+        Vue.http.get(apiBase + 'flow-2/simple-sample-plot', {params: params})
           .then(function (response) {
             commit('mUpdateSimpleSamplePlotData', response.body)
           })
@@ -90,13 +90,13 @@ export default {
       }
     },
     updateGMTableData ({state, commit}, params) {
-      Vue.http.get(apiBase + 'gm-table', {params: params})
+      Vue.http.get(apiBase + 'flow-2/gm-table', {params: params})
         .then(function (response) {
           commit('mUpdateGMTableData', response.body)
         })
     },
     updateDrugTableData ({state, commit}, params) {
-      Vue.http.get(apiBase + 'drug-table', {params: params})
+      Vue.http.get(apiBase + 'flow-2/drug-table', {params: params})
         .then(function (response) {
           commit('mUpdateDrugTableData', response.body)
         })
