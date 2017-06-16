@@ -74,6 +74,7 @@ export default {
   },
   updated () {
     this.plot.data(this.plotData)
+             .xLabel(this.tfId + ' Activity')
              .render()
   },
   methods: {
@@ -93,7 +94,7 @@ export default {
                     .textAccessor(d => d.sample.analysisSetName)
                     .showCircleLabels(false)
                     .showLegend(false)
-                    .xLabel('Activity')
+                    .xLabel(this.tfId + ' Activity')
                     .yLabel('log IC50')
                     .showRegression(false)
       this.plot.render()
