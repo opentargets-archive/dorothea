@@ -41,7 +41,6 @@ export default {
       return this.$store.state.route.query.filterOnDrug
     },
     tableData () {
-      console.log(this.$store.state.flow2.drugTableData)
       return this.$store.state.flow2.drugTableData
     },
     description () {
