@@ -83,7 +83,7 @@ export default {
   },
   methods: {
     updateData () {
-      this.$store.dispatch('updateInteractionTableData', {
+      this.$store.dispatch('flow1/updateInteractionTableData', {
         drugId: this.drugId,
         tfId: this.tfId
       })

@@ -23,11 +23,11 @@
       <div class="width-1of2">
         <div v-if="filterInteractionsBy === 'drug'">
           <small class="caption">Select a drug:</small>
-          <q-select type="list" @input="changeDrug" v-model="drugIdModel" :options="drugOptions"></q-select>
+          <q-select type="list" @input="changeDrug" v-model="drugId" :options="drugOptions"></q-select>
         </div>
         <div v-if="filterInteractionsBy === 'tf'">
           <small class="caption">Select a transcription factor:</small>
-          <q-select type="list" @input="changeTF" v-model="tfIdModel" :options="tfOptions"></q-select>
+          <q-select type="list" @input="changeTF" v-model="tfId" :options="tfOptions"></q-select>
         </div>
       </div>
 
@@ -37,14 +37,14 @@
 </template>
 
 <script>
-import router from '../../router'
+import { mapActions } from 'vuex'
 
 export default {
   data () {
     return {
-      selectedRouteModel: 0, // note this is not used, merely prevents vue errors
-      drugIdModel: null, // note this is not used, merely prevents vue errors
-      tfIdModel: null // note this is not used, merely prevents vue errors
+      selectedRouteModel: this.filterInteractionsByToRadioIndex(), // note this is not used, merely prevents vue errors
+      drugId: +this.$store.state.route.query.filterInteractionsOnDrug, // note this is not used, merely prevents vue errors
+      tfId: this.$store.state.route.query.filterInteractionsOnTF // note this is not used, merely prevents vue errors
     }
   },
   computed: {
@@ -53,12 +53,6 @@ export default {
     },
     filterInteractionsBy () {
       return this.$store.state.route.query.filterInteractionsBy
-    },
-    drugId () {
-      return +this.$store.state.route.query.filterInteractionsOnDrug
-    },
-    tfId () {
-      return this.$store.state.route.query.filterInteractionsOnTF
     },
     drugOptions () {
       return this.$store.state.flow1.drugOptions
@@ -75,62 +69,32 @@ export default {
       return label
     }
   },
-  watch: {
-    dataLoaded: function () {
-      this.updateDrugOptions()
-      this.updateTFOptions()
-    }
-  },
   methods: {
-    updateDrugOptions () {
-      this.$store.dispatch('updateFlow1DrugOptions')
-    },
-    updateTFOptions () {
-      this.$store.dispatch('updateFlow1TFOptions')
-    },
-    selectAllDrugsAndAllTfs () {
-      router.push({
-        path: '/investigation/1'
-      })
-    },
-    selectFixADrug () {
-      router.push({
-        path: '/investigation/1',
-        query: {
-          filterInteractionsBy: 'drug'
-        }
-      })
-    },
-    selectFixATf () {
-      router.push({
-        path: '/investigation/1',
-        query: {
-          filterInteractionsBy: 'tf'
-        }
-      })
-    },
-    changeDrug (drugId) {
-      router.push({
-        path: '/investigation/1',
-        query: {
-          filterInteractionsBy: 'drug',
-          filterInteractionsOnDrug: drugId
-        }
-      })
-    },
-    changeTF (tfId) {
-      router.push({
-        path: '/investigation/1',
-        query: {
-          filterInteractionsBy: 'tf',
-          filterInteractionsOnTF: tfId
-        }
-      })
+    ...mapActions('flow1', [
+      'selectAllDrugsAndAllTfs',
+      'selectFixADrug',
+      'selectFixATf',
+      'changeDrug',
+      'changeTF',
+      'updateFlow1DrugOptions',
+      'updateFlow1TFOptions'
+    ]),
+    filterInteractionsByToRadioIndex () {
+      const filterBy = this.$store.state.route.query.filterInteractionsBy
+      if (filterBy === 'drug') {
+        return 1
+      }
+      else if (filterBy === 'tf') {
+        return 2
+      }
+      else {
+        return 0
+      }
     }
   },
   mounted () {
-    this.updateDrugOptions()
-    this.updateTFOptions()
+    this.updateFlow1DrugOptions()
+    this.updateFlow1TFOptions()
   }
 }
 </script>

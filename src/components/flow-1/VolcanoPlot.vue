@@ -32,15 +32,12 @@
     </div>
   </div>-->
 
-  <!--<spinner v-if="!dataLoaded" name="rings"></spinner>-->
 </template>
 
 <script>
 import resize from 'vue-resize-directive'
 import volcanoPlot from 'volcano-plot'
 import router from '../../router'
-// import * as d3 from 'd3'
-// import tntUtils from 'tnt.utils'
 
 export default {
   directives: {
@@ -159,7 +156,7 @@ export default {
       this.plot.render()
     },
     updateData () {
-      this.$store.dispatch('updateVolcanoPlotData', {
+      this.$store.dispatch('flow1/updateVolcanoPlotData', {
         drugId: this.drugId,
         tfId: this.tfId
       }).then(response => {

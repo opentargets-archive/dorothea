@@ -120,7 +120,7 @@ export default {
       this.plot.render()
     },
     updateData () {
-      this.$store.dispatch('updateSamplePlotData', {
+      this.$store.dispatch('flow1/updateSamplePlotData', {
         drugId: this.drugId,
         tfId: this.tfId
       }).then(response => {

@@ -38,7 +38,7 @@ export default {
   },
   methods: {
     updateData () {
-      this.$store.dispatch('updateSampleOptions')
+      this.$store.dispatch('flow1/updateSampleOptions')
     },
     changeSample (sampleType) {
       const query = this.$store.state.route.query
