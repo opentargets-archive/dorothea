@@ -1,5 +1,6 @@
 <template>
-  <dorothea-table-card title="Sample Summary"
+  <dorothea-table-card v-if="tableData"
+                       title="Sample Summary"
                        description="Showing detail of the clicked sample.">
     <thead slot="thead">
       <tr>
@@ -95,9 +96,14 @@ export default {
       })
     },
     formatter (sampleType) {
-      const split = sampleType.replace(/_/g, ' ')
-      const uppercased = split.charAt(0).toUpperCase() + split.slice(1)
-      return uppercased
+      if (sampleType) {
+        const split = sampleType.replace(/_/g, ' ')
+        const uppercased = split.charAt(0).toUpperCase() + split.slice(1)
+        return uppercased
+      }
+      else {
+        return ''
+      }
     }
   },
   mounted () {
