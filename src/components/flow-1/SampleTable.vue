@@ -28,11 +28,11 @@
       </tr>
       <tr>
         <td>GDSC Desc 1</td>
-        <td>{{ tableData.gdscDesc1 }}</td>
+        <td>{{ formatter(tableData.gdscDesc1) }}</td>
       </tr>
       <tr>
         <td>GDSC Desc 2</td>
-        <td>{{ tableData.gdscDesc2 }}</td>
+        <td>{{ formatter(tableData.gdscDesc2) }}</td>
       </tr>
       <tr>
         <td>Screen Medium</td>
@@ -88,12 +88,20 @@ export default {
   },
   methods: {
     updateData () {
-      this.$store.dispatch('updateSampleTableData', {
+      this.$store.dispatch('flow1/updateSampleTableData', {
         drugId: this.drugId,
         tfId: this.tfId,
         sampleId: this.sampleId
       })
+    },
+    formatter (sampleType) {
+      const split = sampleType.replace(/_/g, ' ')
+      const uppercased = split.charAt(0).toUpperCase() + split.slice(1)
+      return uppercased
     }
+  },
+  mounted () {
+    this.updateData()
   }
 }
 </script>

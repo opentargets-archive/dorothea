@@ -113,9 +113,9 @@ export default {
     tfId () {
       this.updateData()
     },
-    dataLoaded () {
-      this.updateData()
-    },
+    // dataLoaded () {
+    //   this.updateData()
+    // },
     plotData () {
       this.plot.data(this.plotData)
                .render()
@@ -123,6 +123,7 @@ export default {
   },
   mounted () {
     this.createPlot()
+    this.updateData()
   },
   updated () {
     this.plot.data(this.plotData)
