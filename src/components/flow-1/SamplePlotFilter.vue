@@ -24,16 +24,8 @@ export default {
     }
   },
   computed: {
-    dataLoaded () {
-      return this.$store.state.data.loaded
-    },
     sampleTypes () {
       return this.$store.state.flow1.sampleOptions
-    }
-  },
-  watch: {
-    dataLoaded () {
-      this.updateData()
     }
   },
   methods: {
@@ -55,6 +47,9 @@ export default {
       const uppercased = split.charAt(0).toUpperCase() + split.slice(1)
       return uppercased
     }
+  },
+  mounted () {
+    this.updateData()
   }
 }
 </script>
