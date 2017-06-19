@@ -22,8 +22,10 @@ export default {
     }
   },
   getters: {
+    dataFilesLoaded: (state) => () => state.loaded,
+
     // FLOW 1
-    flow1DrugOptions: (state) => () => {
+    flow1DrugOptions: (state, getters) => () => {
       if (!state.aDrugs) return []
       const drugIds = Object.keys(state.aDrugs)
       const pairs = drugIds.map((drugId) => {
