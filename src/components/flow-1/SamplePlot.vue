@@ -34,13 +34,23 @@ export default {
     tfId () {
       return this.$store.state.route.query.selectedInteractionTF
     },
+    filterSamplesOnTypes () {
+      const sampleTypes = this.$store.state.route.query.filterSamplesOnTypes
+      if (sampleTypes) {
+        return sampleTypes
+      }
+      else {
+        return []
+      }
+    },
     drugSummary: function () {
       let summary = this.$store.getters.drugSummary(this.drug)
       if (!summary) summary = {}
       return summary
     },
     plotData () {
-      return this.$store.state.flow1.samplePlotData
+      const allData = this.$store.state.flow1.samplePlotData
+      return allData.filter(d => this.filterSamplesOnTypes.indexOf(d.gdscDesc1) >= 0)
     },
     csvFields () {
       return [
