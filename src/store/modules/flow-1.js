@@ -86,16 +86,23 @@ export default {
         filterInteractionsOnDrug: drugId
       })
     },
-    changeTF (tfId) {
+    changeTF (context, tfId) {
       return updateRoute({
         filterInteractionsBy: 'tf',
         filterInteractionsOnTF: tfId
+      })
+    },
+    changeSampleTypes ({ rootState }, sampleTypes) {
+      return updateRoute({
+        ...rootState.route.query,
+        filterSamplesOnTypes: sampleTypes
       })
     },
     updateSampleOptions ({ state, commit }, params) {
       return Vue.http.get(apiBase + 'flow-1/sample-options', {params: params})
         .then(function (response) {
           commit('mUpdateSampleOptions', response.body)
+          return response.body
         })
     },
     updateFlow1DrugOptions ({ state, commit, rootState }, params) {
