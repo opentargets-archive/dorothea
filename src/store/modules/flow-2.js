@@ -35,6 +35,26 @@ export default {
         })
       }
       return gmName
+    },
+    interaction: (state, getters, rootState) => {
+      const drugId = +rootState.route.query.filterOnDrug
+      const gmId = rootState.route.query.filterOnGM
+      const tfId = rootState.route.query.filterOnTF
+
+      // TODO: Need to add cancer-type filter
+      // TODO: Use an api call
+      const rows = getters.flow2TableData(drugId, gmId, tfId)
+
+      // TODO: assert there is ONLY one
+      if (rows.length === 1) {
+        return rows[0]
+      }
+      else if (rows.length === 0) {
+        return {}
+      }
+      else {
+        console.log('WARNING: more than one interaction')
+      }
     }
   },
   mutations: {

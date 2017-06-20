@@ -47,7 +47,7 @@ export default {
       return 'Showing log IC50 (y) of individual cell lines in mutant ' +
              '(blue) and wild type (red).'
     },
-    ...mapGetters(['drugName', 'gmName'])
+    ...mapGetters(['drugName', 'gmName', 'interaction'])
   },
   watch: {
     drugId () {
@@ -69,6 +69,8 @@ export default {
       this.plot.data(this.plotData)
                .yLabel('[' + this.drugName() + '] log IC50')
                .seriesNameMap({mut: this.gmName})
+               .coeff(this.interaction.gmCoeff)
+               .pval(this.interaction.gmTTestPval)
                .render()
     }
   },
@@ -79,6 +81,8 @@ export default {
     this.plot.data(this.plotData)
              .yLabel('[' + this.drugName() + '] log IC50')
              .seriesNameMap({mut: this.gmName})
+             .coeff(this.interaction.gmCoeff)
+             .pval(this.interaction.gmTTestPval)
              .render()
   },
   methods: {
@@ -92,19 +96,21 @@ export default {
         this.plot.data(this.plotData)
                  .yLabel('[' + this.drugName() + '] log IC50')
                  .seriesNameMap({mut: this.gmName})
+                 .coeff(this.interaction.gmCoeff)
+                 .pval(this.interaction.gmTTestPval)
                  .render()
       })
     },
     createPlot () {
       this.plot = boxPlot('.box-plot')
                     .data(this.plotData)
-                    // .coeff(this.coeff)
-                    // .pval(this.pval)
                     .xAccessor(d => d.tfActivity)
                     .yAccessor(d => d.ic50)
                     .xLabel('Genomic Marker')
                     .yLabel('[' + this.drugName() + '] log IC50')
                     .seriesNameMap({mut: this.gmName})
+                    .coeff(this.interaction.gmCoeff)
+                    .pval(this.interaction.gmTTestPval)
       this.plot.render()
     },
     handlerResize () {

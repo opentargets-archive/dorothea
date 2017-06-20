@@ -50,7 +50,7 @@ export default {
              'lines in mutant and wild type. ' +
              'TF activity is partitioned about -1 and 1.'
     },
-    ...mapGetters(['drugName', 'gmName'])
+    ...mapGetters(['drugName', 'gmName', 'interaction'])
   },
   watch: {
     drugId () {
@@ -72,6 +72,8 @@ export default {
       this.plot.data(this.plotData)
                .yLabel('[' + this.drugName() + '] log IC50')
                .seriesNameMap({mut: this.gmName})
+               .coeff(this.interaction.intCoeff)
+               .pval(this.interaction.intLRTestPval)
                .render()
     }
   },
@@ -84,6 +86,8 @@ export default {
              .pval(this.pval)
              .yLabel('[' + this.drugName() + '] log IC50')
              .seriesNameMap({mut: this.gmName})
+             .coeff(this.interaction.intCoeff)
+             .pval(this.interaction.intLRTestPval)
              .render()
   },
   methods: {
@@ -105,6 +109,8 @@ export default {
                     .xLabel('Genomic Marker')
                     .yLabel('[' + this.drugName() + '] log IC50')
                     .seriesNameMap({mut: this.gmName})
+                    .coeff(this.interaction.intCoeff)
+                    .pval(this.interaction.intLRTestPval)
                     .nested(true)
       this.plot.render()
     },
