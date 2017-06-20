@@ -48,7 +48,7 @@ export default {
              'and predicted TF activity (x) of individual cell ' +
              'lines.'
     },
-    ...mapGetters(['drugName'])
+    ...mapGetters(['drugName', 'interaction'])
   },
   watch: {
     drugId () {
@@ -70,6 +70,8 @@ export default {
       this.plot.data(this.plotData)
                .xLabel('[' + this.tfId + '] Activity')
                .yLabel('[' + this.drugName() + '] log IC50')
+               .coeff(this.interaction.tfCoeff)
+               .pval(this.interaction.tfLRTestPval)
                .render()
     }
   },
@@ -80,6 +82,8 @@ export default {
     this.plot.data(this.plotData)
              .xLabel('[' + this.tfId + '] Activity')
              .yLabel('[' + this.drugName() + '] log IC50')
+             .coeff(this.interaction.tfCoeff)
+             .pval(this.interaction.tfLRTestPval)
              .render()
   },
   methods: {
@@ -101,6 +105,8 @@ export default {
                     .showLegend(false)
                     .xLabel('[' + this.tfId + '] Activity')
                     .yLabel('[' + this.drugName() + '] log IC50')
+                    .coeff(this.interaction.tfCoeff)
+                    .pval(this.interaction.tfLRTestPval)
                     .showRegression(false)
       this.plot.render()
     },
