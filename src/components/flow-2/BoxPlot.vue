@@ -47,7 +47,7 @@ export default {
       return 'Showing log IC50 (y) of individual cell lines in mutant ' +
              '(blue) and wild type (red).'
     },
-    ...mapGetters(['drugName'])
+    ...mapGetters(['drugName', 'gmName'])
   },
   watch: {
     drugId () {
@@ -68,6 +68,7 @@ export default {
     plotData () {
       this.plot.data(this.plotData)
                .yLabel('[' + this.drugName() + '] log IC50')
+               .seriesNameMap({mut: this.gmName})
                .render()
     }
   },
@@ -77,6 +78,7 @@ export default {
   updated () {
     this.plot.data(this.plotData)
              .yLabel('[' + this.drugName() + '] log IC50')
+             .seriesNameMap({mut: this.gmName})
              .render()
   },
   methods: {
@@ -89,6 +91,7 @@ export default {
       }).then(response => {
         this.plot.data(this.plotData)
                  .yLabel('[' + this.drugName() + '] log IC50')
+                 .seriesNameMap({mut: this.gmName})
                  .render()
       })
     },
@@ -101,6 +104,7 @@ export default {
                     .yAccessor(d => d.ic50)
                     .xLabel('Genomic Marker')
                     .yLabel('[' + this.drugName() + '] log IC50')
+                    .seriesNameMap({mut: this.gmName})
       this.plot.render()
     },
     handlerResize () {
