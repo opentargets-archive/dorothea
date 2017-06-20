@@ -13,6 +13,7 @@
 import resize from 'vue-resize-directive'
 import samplePlot from 'sample-plot'
 import router from '../../router'
+import { mapGetters } from 'vuex'
 
 export default {
   directives: {
@@ -74,7 +75,8 @@ export default {
       return 'Showing the relationship between log IC50 (y)' +
              ' and predicted TF activity (x) of individual cell ' +
              'lines'
-    }
+    },
+    ...mapGetters('flow1', ['drugName'])
   },
   watch: {
     drugId () {
@@ -98,8 +100,8 @@ export default {
     this.plot.data(this.plotData)
              .showCircleLabels(this.showLabels)
              .showLegend(this.showLegend)
-             .xLabel(this.tfId + ' Activity')
-             .yLabel('log IC50')
+             .xLabel('[' + this.tfId + '] Activity')
+             .yLabel('[' + this.drugName() + '] log IC50')
              .render()
   },
   methods: {
@@ -124,8 +126,8 @@ export default {
                     .showBoxPlots(true)
                     .handleCircleClick(this.clickHandler)
                     .legendTitle('GDSC Description 1')
-                    .xLabel(this.tfId + ' Activity')
-                    .yLabel('log IC50')
+                    .xLabel('[' + this.tfId + '] Activity')
+                    .yLabel('[' + this.drugName() + '] log IC50')
                     .showRegression(false)
       this.plot.render()
     },

@@ -35,7 +35,19 @@ export default {
     volcanoPlotData: (state) => () => state.volcanoPlotData,
     samplePlotData: (state) => () => state.samplePlotData,
     interactionTableData: (state) => () => state.interactionTableData,
-    sampleTableData: (state) => () => state.sampleTableData
+    sampleTableData: (state) => () => state.sampleTableData,
+    drugName: (state, getters, rootState) => () => {
+      const selectedInteractionDrug = +rootState.route.query.selectedInteractionDrug
+      let drugName = ''
+      if (selectedInteractionDrug) {
+        state.drugOptions.map(d => {
+          if (d.value === selectedInteractionDrug) {
+            drugName = d.label
+          }
+        })
+      }
+      return drugName
+    }
   },
   mutations: {
     setFilterInteractionsBy (state, value) {
