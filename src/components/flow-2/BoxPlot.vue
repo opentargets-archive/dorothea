@@ -12,6 +12,7 @@
 
 <script>
 import boxPlot from 'comparison-box-plot'
+import { mapGetters } from 'vuex'
 
 export default {
   computed: {
@@ -45,7 +46,8 @@ export default {
     description () {
       return 'Showing log IC50 (y) of individual cell lines in mutant ' +
              '(blue) and wild type (red).'
-    }
+    },
+    ...mapGetters(['drugName'])
   },
   watch: {
     drugId () {
@@ -65,6 +67,7 @@ export default {
     },
     plotData () {
       this.plot.data(this.plotData)
+               .yLabel('[' + this.drugName() + '] log IC50')
                .render()
     }
   },
@@ -73,6 +76,7 @@ export default {
   },
   updated () {
     this.plot.data(this.plotData)
+             .yLabel('[' + this.drugName() + '] log IC50')
              .render()
   },
   methods: {
@@ -84,7 +88,8 @@ export default {
         tfId: this.tfId
       }).then(response => {
         this.plot.data(this.plotData)
-             .render()
+                 .yLabel('[' + this.drugName() + '] log IC50')
+                 .render()
       })
     },
     createPlot () {
@@ -95,7 +100,7 @@ export default {
                     .xAccessor(d => d.tfActivity)
                     .yAccessor(d => d.ic50)
                     .xLabel('Genomic Marker')
-                    .yLabel('log IC50')
+                    .yLabel('[' + this.drugName() + '] log IC50')
       this.plot.render()
     },
     handlerResize () {

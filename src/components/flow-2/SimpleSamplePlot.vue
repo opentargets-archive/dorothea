@@ -12,6 +12,7 @@
 
 <script>
 import samplePlot from 'sample-plot'
+import { mapGetters } from 'vuex'
 
 export default {
   computed: {
@@ -46,7 +47,8 @@ export default {
       return 'Showing the relationship between log IC50 (y) ' +
              'and predicted TF activity (x) of individual cell ' +
              'lines.'
-    }
+    },
+    ...mapGetters(['drugName'])
   },
   watch: {
     drugId () {
@@ -66,6 +68,8 @@ export default {
     },
     plotData () {
       this.plot.data(this.plotData)
+               .xLabel('[' + this.tfId + '] Activity')
+               .yLabel('[' + this.drugName() + '] log IC50')
                .render()
     }
   },
@@ -74,7 +78,8 @@ export default {
   },
   updated () {
     this.plot.data(this.plotData)
-             .xLabel(this.tfId + ' Activity')
+             .xLabel('[' + this.tfId + '] Activity')
+             .yLabel('[' + this.drugName() + '] log IC50')
              .render()
   },
   methods: {
@@ -91,11 +96,11 @@ export default {
                     .data(this.plotData)
                     .xAccessor(d => d.tfActivity)
                     .yAccessor(d => d.ic50)
-                    .textAccessor(d => d.sample.analysisSetName)
+                    .textAccessor(d => d.analysisSetName)
                     .showCircleLabels(false)
                     .showLegend(false)
-                    .xLabel(this.tfId + ' Activity')
-                    .yLabel('log IC50')
+                    .xLabel('[' + this.tfId + '] Activity')
+                    .yLabel('[' + this.drugName() + '] log IC50')
                     .showRegression(false)
       this.plot.render()
     },

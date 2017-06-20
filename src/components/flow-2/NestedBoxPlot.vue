@@ -12,6 +12,7 @@
 
 <script>
 import boxPlot from 'comparison-box-plot'
+import { mapGetters } from 'vuex'
 
 export default {
   props: ['drug', 'tf', 'gm', 'pval', 'coeff'],
@@ -48,7 +49,8 @@ export default {
              ' and predicted TF activity (x) of individual cell ' +
              'lines in mutant and wild type. ' +
              'TF activity is partitioned about -1 and 1.'
-    }
+    },
+    ...mapGetters(['drugName'])
   },
   watch: {
     drugId () {
@@ -68,6 +70,7 @@ export default {
     },
     plotData () {
       this.plot.data(this.plotData)
+               .yLabel('[' + this.drugName() + '] log IC50')
                .render()
     }
   },
@@ -78,6 +81,7 @@ export default {
     this.plot.data(this.plotData)
              .coeff(this.coeff)
              .pval(this.pval)
+             .yLabel('[' + this.drugName() + '] log IC50')
              .render()
   },
   methods: {
@@ -97,7 +101,7 @@ export default {
                     .xAccessor(d => d.tfActivity)
                     .yAccessor(d => d.ic50)
                     .xLabel('Genomic Marker')
-                    .yLabel('log IC50')
+                    .yLabel('[' + this.drugName() + '] log IC50')
                     .nested(true)
       this.plot.render()
     },

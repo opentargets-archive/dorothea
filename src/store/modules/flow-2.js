@@ -11,6 +11,20 @@ export default {
     gmTableData: {},
     drugTableData: {}
   },
+  getters: {
+    drugName: (state, getters, rootState) => () => {
+      const drugId = +rootState.route.query.filterOnDrug
+      let drugName = ''
+      if (drugId) {
+        state.drugOptions.map(d => {
+          if (d.value === drugId) {
+            drugName = d.label
+          }
+        })
+      }
+      return drugName
+    }
+  },
   mutations: {
     mUpdateDrugOptions (state, payload) {
       state.drugOptions = payload
