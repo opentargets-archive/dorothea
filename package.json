@@ -21,7 +21,7 @@
     "lodash": "^4.17.4",
     "material-design-icons": "^3.0.1",
     "moment": "^2.15.0",
-    "quasar-framework": "^0.13.4",
+    "quasar-framework": "^0.13.10",
     "roboto-fontface": "^0.7.0",
     "sample-plot": "git+https://git@github.com/opentargets/sample-plot.git#v1.0.5",
     "sass-loader": "^6.0.3",
