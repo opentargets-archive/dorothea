@@ -1,9 +1,8 @@
 <template>
-  <div class="toolbar secondary">
-    <router-link tag="button" to="/">Home</router-link>
-    <router-link tag="button" to="/investigation/1">TF-Drug Interactions</router-link>
-    <router-link tag="button" to="/investigation/2">TF-Pharmacogenomic Marker Interactions</router-link>
-    <router-link tag="button" to="/glossary">Glossary</router-link>
-    <q-toolbar-title :padding="1"></q-toolbar-title>
-  </div>
+  <q-tabs class="secondary text-tertiary">
+    <q-tab route="/">Home</q-tab>
+    <q-tab route="/investigation/1">TF-Drug Interactions</q-tab>
+    <q-tab route="/investigation/2">TF-Pharmacogenomic Marker Interactions</q-tab>
+    <q-tab route="/glossary">Glossary</q-tab>
+  </q-tabs>
 </template>
