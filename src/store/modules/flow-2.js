@@ -23,6 +23,18 @@ export default {
         })
       }
       return drugName
+    },
+    gmName: (state, getters, rootState) => {
+      const gmId = rootState.route.query.filterOnGM
+      let gmName = ''
+      if (gmId) {
+        state.gmOptions.map(d => {
+          if (d.value === gmId) {
+            gmName = d.label
+          }
+        })
+      }
+      return gmName
     }
   },
   mutations: {
