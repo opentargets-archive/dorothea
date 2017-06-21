@@ -12,7 +12,9 @@
       <icon name="download"></icon>
     </button>
     <div slot="card-internals" class="card-content bg-white">
-      <div :class="name"></div>
+      <div class="plot-root-container">
+        <div :class="name" class="plot-root"></div>
+      </div>
     </div>
   </dorothea-base-card>
 </template>
@@ -55,3 +57,12 @@ export default {
   }
 }
 </script>
+
+<style>
+.plot-root-container {
+  padding-bottom: 60%;
+}
+.plot-root {
+  position: absolute;
+}
+</style>

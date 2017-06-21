@@ -115,7 +115,7 @@ export default {
     },
     handlerResize () {
       let aspectRatio = 5.0 / 3
-      let element = this.$el.querySelector('div.box-plot')
+      let element = this.$el.querySelector('div.plot-root-container')
       let width = element.offsetWidth
       let height = width / aspectRatio
       this.plot.width(width)
