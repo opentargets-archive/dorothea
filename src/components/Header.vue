@@ -1,7 +1,7 @@
 <template>
   <div class="toolbar inverted primary">
 
-    <img src="../assets/dorothea-logo.svg" alt="DoRothEA" width="55px" height="54px">
+    <img src="../assets/dorothea-logo.png" alt="DoRothEA" width="55px" height="54px">
 
     <q-toolbar-title :padding="0">
       DoRothEA <span class="text-secondary">Discriminant Regulon Enrichment Analysis</span>
