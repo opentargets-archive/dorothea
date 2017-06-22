@@ -1,5 +1,5 @@
 <template>
-  <dorothea-plot-card v-if="drugId && gmId && tfId"
+  <dorothea-plot-card v-if="drugId && gmId && ctId && tfId"
                       name="simple-sample-plot"
                       title="TF Activity Effect on IC50"
                       :description="description"
@@ -72,7 +72,8 @@ export default {
                .yLabel('[' + this.drugName() + '] log IC50')
                .coeff(this.interaction.tfCoeff)
                .pval(this.interaction.tfLRTestPval)
-               .render()
+              //  .render()
+      this.handlerResize()
     }
   },
   mounted () {
@@ -84,7 +85,8 @@ export default {
              .yLabel('[' + this.drugName() + '] log IC50')
              .coeff(this.interaction.tfCoeff)
              .pval(this.interaction.tfLRTestPval)
-             .render()
+            //  .render()
+    this.handlerResize()
   },
   methods: {
     updateData () {
@@ -108,7 +110,8 @@ export default {
                     .coeff(this.interaction.tfCoeff)
                     .pval(this.interaction.tfLRTestPval)
                     .showRegression(false)
-      this.plot.render()
+      // this.plot.render()
+      this.handlerResize()
     },
     handlerResize () {
       let aspectRatio = 5.0 / 3

@@ -90,7 +90,8 @@ export default {
     },
     plotData () {
       this.plot.data(this.plotData)
-               .render()
+              //  .render()
+      this.handlerResize()
     }
   },
   mounted () {
@@ -102,7 +103,8 @@ export default {
              .showLegend(this.showLegend)
              .xLabel('[' + this.tfId + '] Activity')
              .yLabel('[' + this.drugName() + '] log IC50')
-             .render()
+            //  .render()
+    this.handlerResize()
   },
   methods: {
     clickHandler (d) {
@@ -129,7 +131,8 @@ export default {
                     .xLabel('[' + this.tfId + '] Activity')
                     .yLabel('[' + this.drugName() + '] log IC50')
                     .showRegression(false)
-      this.plot.render()
+      // this.plot.render()
+      this.handlerResize()
     },
     updateData () {
       this.$store.dispatch('flow1/updateSamplePlotData', {
@@ -137,7 +140,8 @@ export default {
         tfId: this.tfId
       }).then(response => {
         this.plot.data(this.plotData)
-                 .render()
+                //  .render()
+        this.handlerResize()
       })
     },
     handlerResize () {

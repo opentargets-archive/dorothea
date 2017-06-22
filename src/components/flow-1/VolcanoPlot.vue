@@ -113,12 +113,13 @@ export default {
     tfId () {
       this.updateData()
     },
-    // dataLoaded () {
-    //   this.updateData()
-    // },
+    dataLoaded () {
+      this.updateData()
+    },
     plotData () {
       this.plot.data(this.plotData)
-               .render()
+              //  .render()
+      this.handlerResize()
     }
   },
   mounted () {
@@ -129,7 +130,8 @@ export default {
     this.plot.data(this.plotData)
              .showCircleLabels(this.showLabels)
              .textAccessor(this.labelAccessor)
-             .render()
+            //  .render()
+    this.handlerResize()
   },
   methods: {
     clickHandler (d) {
@@ -154,7 +156,8 @@ export default {
                     .showCircleLabels(this.showLabels)
                     .xLabel('Effect Size')
                     .yLabel('-log FDR')
-      this.plot.render()
+      // this.plot.render()
+      this.handlerResize()
     },
     updateData () {
       this.$store.dispatch('flow1/updateVolcanoPlotData', {
@@ -162,7 +165,8 @@ export default {
         tfId: this.tfId
       }).then(response => {
         this.plot.data(this.plotData)
-                 .render()
+                //  .render()
+        this.handlerResize()
       })
     },
     handlerResize () {

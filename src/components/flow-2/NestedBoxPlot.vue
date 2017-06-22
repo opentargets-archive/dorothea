@@ -1,5 +1,5 @@
 <template>
-  <dorothea-plot-card v-if="drugId && gmId && tfId"
+  <dorothea-plot-card v-if="drugId && gmId && ctId && tfId"
                       name="nested-box-plot"
                       title="GM and TF Combined Effect on IC50"
                       :description="description"
@@ -74,7 +74,8 @@ export default {
                .seriesNameMap({mut: this.gmName})
                .coeff(this.interaction.intCoeff)
                .pval(this.interaction.intLRTestPval)
-               .render()
+              //  .render()
+      this.handlerResize()
     }
   },
   mounted () {
@@ -88,7 +89,8 @@ export default {
              .seriesNameMap({mut: this.gmName})
              .coeff(this.interaction.intCoeff)
              .pval(this.interaction.intLRTestPval)
-             .render()
+            //  .render()
+    this.handlerResize()
   },
   methods: {
     updateData () {
@@ -112,7 +114,8 @@ export default {
                     .coeff(this.interaction.intCoeff)
                     .pval(this.interaction.intLRTestPval)
                     .nested(true)
-      this.plot.render()
+      // this.plot.render()
+      this.handlerResize()
     },
     handlerResize () {
       let aspectRatio = 5.0 / 3
