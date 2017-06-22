@@ -4,6 +4,7 @@ export default {
   state: {
     drugOptions: [],
     gmOptions: [],
+    ctOptions: [],
     tfOptions: [],
     boxPlotData: {},
     nestedBoxPlotData: {},
@@ -39,12 +40,12 @@ export default {
     interaction: (state, getters, rootState) => {
       const drugId = +rootState.route.query.filterOnDrug
       const gmId = rootState.route.query.filterOnGM
+      const ctId = rootState.route.query.filterOnCT
       const tfId = rootState.route.query.filterOnTF
 
       // TODO: Need to add cancer-type filter
       // TODO: Use an api call
-      const rows = getters.flow2TableData(drugId, gmId, tfId)
-
+      const rows = getters.flow2TableData(drugId, gmId, ctId, tfId)
       // TODO: assert there is ONLY one
       if (rows.length === 1) {
         return rows[0]
@@ -63,6 +64,9 @@ export default {
     },
     mUpdateGMOptions (state, payload) {
       state.gmOptions = payload
+    },
+    mUpdateCTOptions (state, payload) {
+      state.ctOptions = payload
     },
     mUpdateTFOptions (state, payload) {
       state.tfOptions = payload
@@ -96,6 +100,12 @@ export default {
           commit('mUpdateGMOptions', response.body)
         })
     },
+    updateCTOptions ({ state, commit }, params) {
+      Vue.http.get(apiBase + 'flow-2/ct-options', {params: params})
+        .then(function (response) {
+          commit('mUpdateCTOptions', response.body)
+        })
+    },
     updateTFOptions ({ state, commit }, params) {
       Vue.http.get(apiBase + 'flow-2/tf-options', {params: params})
         .then(function (response) {
@@ -103,7 +113,7 @@ export default {
         })
     },
     updateBoxPlotData ({state, commit}, params) {
-      if (params.drugId && params.gmId && params.tfId) {
+      if (params.drugId && params.gmId && params.ctId && params.tfId) {
         Vue.http.get(apiBase + 'flow-2/box-plot', {params: params})
         .then(function (response) {
           commit('mUpdateBoxPlotData', response.body)
@@ -114,7 +124,7 @@ export default {
       }
     },
     updateNestedBoxPlotData ({state, commit}, params) {
-      if (params.drugId && params.gmId && params.tfId) {
+      if (params.drugId && params.gmId && params.ctId && params.tfId) {
         Vue.http.get(apiBase + 'flow-2/nested-box-plot', {params: params})
           .then(function (response) {
             commit('mUpdateNestedBoxPlotData', response.body)
@@ -125,7 +135,7 @@ export default {
       }
     },
     updateSimpleSamplePlotData ({state, commit}, params) {
-      if (params.drugId && params.gmId && params.tfId) {
+      if (params.drugId && params.gmId && params.ctId && params.tfId) {
         Vue.http.get(apiBase + 'flow-2/simple-sample-plot', {params: params})
           .then(function (response) {
             commit('mUpdateSimpleSamplePlotData', response.body)

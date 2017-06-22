@@ -39,6 +39,9 @@ export default function (Vue) {
       case 'flow-2/gm-options':
         body = store.getters.flow2GMPairs(params.drugId)
         break
+      case 'flow-2/ct-options':
+        body = store.getters.flow2CTPairs(params.drugId, params.gmId)
+        break
       case 'flow-2/tf-options':
         body = store.getters.flow2TFPairs(params.drugId, params.gmId)
         break

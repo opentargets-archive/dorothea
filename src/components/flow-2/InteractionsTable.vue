@@ -103,7 +103,7 @@ export default {
     },
     tableData () {
       // TODO: Need to add cancer-type filter
-      return this.$store.getters.flow2TableData(this.drugId, this.gmId, this.tfId)
+      return this.$store.getters.flow2TableData(this.drugId, this.gmId, this.ctId, this.tfId)
     }
   },
   methods: {

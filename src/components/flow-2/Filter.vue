@@ -20,6 +20,14 @@
         </div>
       </div>
 
+      <div class="row justify-center items-center item">
+        <small class="width-1of3">Cancer Type:</small>
+        <div class="width-2of3">
+          <q-select v-if="!ctId" type="list" @input="selectCT" v-model="ctIdModel" :options="ctOptions"></q-select>
+          <small class="token" v-else>{{ ctId }}<i class="cursor-pointer" @click="deselectCT()">close</i></small>
+        </div>
+      </div>
+
       <div v-if="drugId && gmId" class="row justify-center items-center item">
         <small class="width-1of3">Transcription Factor:</small>
         <div class="width-2of3">
@@ -41,6 +49,7 @@ export default {
     return {
       drugIdModel: null, // note this is not used, merely prevents vue errors
       gmIdModel: null, // note this is not used, merely prevents vue errors
+      ctIdModel: null, // note this is not used, merely prevents vue errors
       tfIdModel: null // note this is not used, merely prevents vue errors
     }
   },
@@ -66,6 +75,9 @@ export default {
     gmOptions () {
       return store.state.flow2.gmOptions
     },
+    ctOptions () {
+      return store.state.flow2.ctOptions
+    },
     tfOptions () {
       return store.state.flow2.tfOptions
     },
@@ -89,15 +101,23 @@ export default {
   watch: {
     drugId: function () {
       this.updateGMOptions()
+      this.updateCTOptions()
       this.updateTFOptions()
     },
     gmId: function () {
       this.updateDrugOptions()
+      this.updateCTOptions()
+      this.updateTFOptions()
+    },
+    ctId: function () {
+      this.updateDrugOptions()
+      this.updateGMOptions()
       this.updateTFOptions()
     },
     dataLoaded: function () {
       this.updateDrugOptions()
       this.updateGMOptions()
+      this.updateCTOptions()
       this.updateTFOptions()
     }
   },
@@ -107,6 +127,7 @@ export default {
         filterOnDrug: drugId
       }
       if (this.gmId) query.filterOnGM = this.gmId
+      if (this.ctId) query.filterOnCT = this.ctId
       router.push({
         path: '/investigation/2',
         query
@@ -115,6 +136,7 @@ export default {
     deselectDrug () {
       let query = {}
       if (this.gmId) query.filterOnGM = this.gmId
+      if (this.ctId) query.filterOnCT = this.ctId
       router.push({
         path: '/investigation/2',
         query
@@ -125,6 +147,7 @@ export default {
         filterOnGM: gmId
       }
       if (this.drugId) query.filterOnDrug = this.drugId
+      if (this.ctId) query.filterOnCT = this.ctId
       router.push({
         path: '/investigation/2',
         query
@@ -133,6 +156,27 @@ export default {
     deselectGM () {
       let query = {}
       if (this.drugId) query.filterOnDrug = this.drugId
+      if (this.ctId) query.filterOnCT = this.ctId
+      router.push({
+        path: '/investigation/2',
+        query
+      })
+    },
+    selectCT (ctId) {
+      let query = {
+        filterOnCT: ctId
+      }
+      if (this.drugId) query.filterOnDrug = this.drugId
+      if (this.gmId) query.filterOnGM = this.gmId
+      router.push({
+        path: '/investigation/2',
+        query
+      })
+    },
+    deselectCT () {
+      let query = {}
+      if (this.drugId) query.filterOnDrug = this.drugId
+      if (this.gmId) query.filterOnGM = this.gmId
       router.push({
         path: '/investigation/2',
         query
@@ -144,6 +188,7 @@ export default {
       }
       if (this.drugId) query.filterOnDrug = this.drugId
       if (this.gmId) query.filterOnGM = this.gmId
+      if (this.ctId) query.filterOnCT = this.ctId
       router.push({
         path: '/investigation/2',
         query
@@ -153,6 +198,7 @@ export default {
       let query = {}
       if (this.drugId) query.filterOnDrug = this.drugId
       if (this.gmId) query.filterOnGM = this.gmId
+      if (this.ctId) query.filterOnCT = this.ctId
       router.push({
         path: '/investigation/2',
         query
@@ -168,6 +214,12 @@ export default {
       store.dispatch('updateGMOptions', {
         drugId: this.drugId,
         ctId: this.ctId
+      })
+    },
+    updateCTOptions () {
+      store.dispatch('updateCTOptions', {
+        drugId: this.drugId,
+        gmId: this.gmId
       })
     },
     updateTFOptions () {

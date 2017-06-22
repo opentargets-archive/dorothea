@@ -233,9 +233,10 @@ export default {
         mut
       }
     },
-    flow2TableData: (state) => (drugId, gmId, tfId) => {
+    flow2TableData: (state) => (drugId, gmId, ctId, tfId) => {
       return state.rTfDrugGmAssoGdsc.filter(r => (!drugId || r.drugId === drugId))
                                     .filter(r => (!gmId || r.gmId === gmId))
+                                    .filter(r => (!ctId || r.cancerType === ctId))
                                     .filter(r => (!tfId || r.transcriptionFactor === tfId))
     },
     flow2DrugPairs: (state) => (gmId) => {
@@ -267,6 +268,23 @@ export default {
         return {
           label: r.gm,
           value: r.gmId
+        }
+      })
+      const uniquePairs = _.uniqBy(pairs, r => r.value)
+      return uniquePairs.sort((a, b) => {
+        if (a.label < b.label) return -1
+        if (a.label > b.label) return 1
+        return 0
+      })
+    },
+    flow2CTPairs: (state) => (drugId, gmId) => {
+      // get all CT options, as label-value pairs, possibly given a fixed drug, GM
+      const filtered = state.rTfDrugGmAssoGdsc.filter(r => (!drugId || r.drugId === drugId))
+                                              .filter(r => (!gmId || r.gmId === gmId))
+      const pairs = filtered.map(r => {
+        return {
+          label: r.cancerType,
+          value: r.cancerType
         }
       })
       const uniquePairs = _.uniqBy(pairs, r => r.value)
