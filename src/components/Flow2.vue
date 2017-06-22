@@ -18,7 +18,7 @@
 
       <div class="width-3of4 column">
         <dorothea-interactions-table></dorothea-interactions-table>
-        <div class="row gutter">
+        <div class="row gutter" v-if="showPlots">
           <div class="width-1of3">
             <dorothea-box-plot></dorothea-box-plot>
           </div> 
@@ -39,21 +39,14 @@
 
 <script>
 export default {
-  // computed: {
-  //   plot1Pval () {
-  //     // TODO: Ensure there is only one row / write specific getter
-  //     return this.tableData[0].gmTTestPval
-  //   },
-  //   plot1Coeff () {
-  //     return this.tableData[0].gmCoeff
-  //   },
-  //   plot3Pval () {
-  //     return this.tableData[0].intLRTestPval
-  //   },
-  //   plot3Coeff () {
-  //     return this.tableData[0].intCoeff
-  //   }
-  // }
+  computed: {
+    showPlots () {
+      return (this.$store.state.route.query.filterOnDrug &&
+              this.$store.state.route.query.filterOnGM &&
+              this.$store.state.route.query.filterOnCT &&
+              this.$store.state.route.query.filterOnTF)
+    }
+  }
 }
 </script>
 
