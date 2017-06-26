@@ -114,6 +114,7 @@ export default {
                     .coeff(this.interaction.intCoeff)
                     .pval(this.interaction.intLRTestPval)
                     .nested(true)
+                    .margins({top: 30, bottom: 35, left: 45, right: 10})
       // this.plot.render()
       this.handlerResize()
     },

@@ -114,6 +114,7 @@ export default {
                     .seriesNameMap({mut: this.gmName})
                     .coeff(this.interaction.gmCoeff)
                     .pval(this.interaction.gmTTestPval)
+                    .margins({top: 30, bottom: 35, left: 45, right: 10})
       // this.plot.render()
       this.handlerResize()
     },

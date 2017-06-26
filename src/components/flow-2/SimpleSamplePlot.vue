@@ -110,6 +110,8 @@ export default {
                     .coeff(this.interaction.tfCoeff)
                     .pval(this.interaction.tfLRTestPval)
                     .showRegression(false)
+                    .showBoxPlots(false)
+                    .margins({top: 30, bottom: 35, left: 45, right: 10})
       // this.plot.render()
       this.handlerResize()
     },
