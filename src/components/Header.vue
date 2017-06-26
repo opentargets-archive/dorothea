@@ -4,7 +4,7 @@
     <img src="../assets/dorothea-logo.png" alt="DoRothEA" width="55px" height="54px">
 
     <q-toolbar-title :padding="0">
-      DoRothEA <span class="text-secondary">Discriminant Regulon Enrichment Analysis</span>
+      DoRothEA <span class="text-secondary">Discriminant Regulon Expression Analysis</span>
     </q-toolbar-title>
 
     <button onclick="window.open('http://biorxiv.org/content/early/2017/04/21/129478', '_blank')">
