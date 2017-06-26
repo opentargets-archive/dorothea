@@ -58,7 +58,7 @@ export default {
       const sampleIds = Object.keys(state.aSamples)
       const gdscDesc1s = sampleIds.map(id => state.aSamples[id].gdscDesc1)
       const uniqueGdscDesc1s = _.uniq(gdscDesc1s)
-      return uniqueGdscDesc1s
+      return uniqueGdscDesc1s.sort()
     },
     resultsForDrug: (state) => (drugId) => {
       return state.rTfDrugAssoGdsc.filter((item) => item.drugId === drugId)
