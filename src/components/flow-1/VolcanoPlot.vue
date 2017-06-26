@@ -21,6 +21,7 @@
 import resize from 'vue-resize-directive'
 import volcanoPlot from 'volcano-plot'
 import router from '../../router'
+import * as _ from 'lodash'
 
 export default {
   directives: {
@@ -124,13 +125,25 @@ export default {
       this.$children[0].$refs.downloadPopover.close()
     },
     clickHandler (d) {
+      let q = _.clone(this.$route.query)
+      delete q.selectedSample
       router.push({
         path: '/investigation/1',
         query: {
-          ...this.$route.query,
+          ...q,
           selectedInteractionDrug: d.drugId,
           selectedInteractionTF: d.transcriptionFactor
         }
+      })
+    },
+    clickBackgroundHandler () {
+      let q = _.clone(this.$route.query)
+      delete q.selectedInteractionDrug
+      delete q.selectedInteractionTF
+      delete q.selectedSample
+      router.push({
+        path: '/investigation/1',
+        query: q
       })
     },
     createPlot () {
@@ -142,6 +155,7 @@ export default {
                     // .rAccessor(d => d.sampleCount)
                     .rAccessor(d => 1)
                     .handleCircleClick(this.clickHandler)
+                    .handleBackgroundClick(this.clickBackgroundHandler)
                     .showCircleLabels(this.showLabels)
                     .xLabel('Effect Size')
                     .yLabel('-log FDR')
