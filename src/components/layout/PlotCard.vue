@@ -2,14 +2,15 @@
   <dorothea-base-card :title="title"
                       :description="description"
                       v-resize="resizeHandler">
-    <button slot="toolbar-button">
+    <button slot="toolbar-button" class="plot-card-menu">
       <q-popover ref="downloadPopover">
         <div class="list item-delimiter hightlight">
-          <button class="item item-link" style="text-transform:none;min-width:300px;" @click="pngDownload(), $refs.downloadPopover.close()">Download chart as PNG</button>
-          <button class="item item-link" style="text-transform:none;min-width:300px" @click="csvDownload(), $refs.downloadPopover.close()">Download data as CSV</button>
+          <button class="item item-link small text-left light-paragraph" style="text-transform:none;min-width:300px;" @click="pngDownload(), $refs.downloadPopover.close()">Download chart as PNG</button>
+          <button class="item item-link small text-left light-paragraph" style="text-transform:none;min-width:300px" @click="csvDownload(), $refs.downloadPopover.close()">Download data as CSV</button>
         </div>
+        <slot name="extra-toolbar-buttons"></slot>
       </q-popover>
-      <icon name="download"></icon>
+      <icon name="bars"></icon>
     </button>
     <div slot="card-internals" class="card-content bg-white">
       <div class="plot-root-container">
@@ -65,4 +66,19 @@ export default {
 .plot-root {
   position: absolute;
 }
+/*.plot-card-menu {
+  .item {
+    height: 32px;
+  }
+  .list .item.item-link {
+    padding: 8px 8px;
+    font-size: 80%;
+  }
+  .list > .item:first-child {
+    margin-top: 0;
+  }
+  .list > .item:last-child {
+    margin-bottom: 0;
+  }
+}*/
 </style>

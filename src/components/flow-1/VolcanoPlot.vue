@@ -7,31 +7,14 @@
                       :filename="filename"
                       :csv-data="csvData"
                       :csv-fields="csvFields">
-  </dorothea-plot-card>  
 
-  <!--<div class="card" v-resize="handleResize">
-    <div class="card-title text-primary inverted toolbar">{{ title }}
-      <button>
-        <q-popover ref="volcanoPlotDownloadPopover">
-          <div class="list item-delimiter hightlight">
-            <button class="item item-link" style="text-transform:none;min-width:300px;" @click="pngDownload(), $refs.volcanoPlotDownloadPopover.close()">Download chart as PNG</button>
-            <button class="item item-link" style="text-transform:none;min-width:300px" @click="csvDownload(), $refs.volcanoPlotDownloadPopover.close()">Download data as CSV</button>
-          </div>
-        </q-popover>
-        <icon name="download"></icon>
+    <div slot="extra-toolbar-buttons" class="list item-delimiter hightlight">
+      <button class="item item-link small text-left light-paragraph" style="text-transform:none;min-width:300px;" @click="showlabels">
+        Show significant labels
+        <icon name="check" v-if="showLabels"></icon>
       </button>
     </div>
-
-    <div class="card-content bg-white">
-      
-      <div class="volcano-plot"></div>
-      <label>
-      <q-checkbox v-model="showLabels"></q-checkbox>
-      Show Labels
-      </label>
-    </div>
-  </div>-->
-
+  </dorothea-plot-card>
 </template>
 
 <script>
@@ -134,6 +117,12 @@ export default {
     this.handlerResize()
   },
   methods: {
+    showlabels () {
+      this.showLabels = !this.showLabels
+      this.plot.showCircleLabels(this.showLabels)
+      this.handlerResize()
+      this.$children[0].$refs.downloadPopover.close()
+    },
     clickHandler (d) {
       router.push({
         path: '/investigation/1',

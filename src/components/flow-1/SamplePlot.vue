@@ -6,6 +6,17 @@
                       :filename="filename"
                       :csv-data="csvData"
                       :csv-fields="csvFields">
+
+    <div slot="extra-toolbar-buttons" class="list item-delimiter hightlight">
+      <button class="item item-link small text-left light-paragraph" style="text-transform:none;min-width:300px;" @click="showlabels">
+        Show labels
+        <icon name="check" v-if="showLabels"></icon>
+      </button>
+      <button class="item item-link small text-left light-paragraph" style="text-transform:none;min-width:300px;" @click="toggleboxplots">
+        Toggle box plots
+        <icon name="check" v-if="showBoxPlots"></icon>
+      </button>
+    </div>
   </dorothea-plot-card>
 </template>
 
@@ -22,7 +33,8 @@ export default {
   data () {
     return {
       showLabels: true,
-      showLegend: false
+      showLegend: false,
+      showBoxPlots: true
     }
   },
   computed: {
@@ -107,6 +119,18 @@ export default {
     this.handlerResize()
   },
   methods: {
+    showlabels: function () {
+      this.showLabels = !this.showLabels
+      this.plot.showCircleLabels(this.showLabels)
+      this.handlerResize()
+      this.$children[0].$refs.downloadPopover.close()
+    },
+    toggleboxplots () {
+      this.showBoxPlots = !this.showBoxPlots
+      this.plot.showBoxPlots(this.showBoxPlots)
+      this.handlerResize()
+      this.$children[0].$refs.downloadPopover.close()
+    },
     clickHandler (d) {
       router.push({
         path: '/investigation/1',
@@ -125,7 +149,7 @@ export default {
                     .legendFieldAccessor(d => d.gdscDesc1)
                     .showCircleLabels(this.showLabels)
                     .showLegend(this.showLegend)
-                    .showBoxPlots(true)
+                    .showBoxPlots(this.showBoxPlots)
                     .handleCircleClick(this.clickHandler)
                     .legendTitle('GDSC Description 1')
                     .xLabel('[' + this.tfId + '] Activity')
