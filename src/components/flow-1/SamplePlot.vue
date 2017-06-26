@@ -166,6 +166,7 @@ export default {
                     .xLabel('[' + this.tfId + '] Activity')
                     .yLabel('[' + this.drugName() + '] log IC50')
                     .showRegression(false)
+                    .margins({top: 5, bottom: 35, left: 40, right: 10})
       // this.plot.render()
       this.handlerResize()
     },

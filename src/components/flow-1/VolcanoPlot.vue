@@ -159,6 +159,7 @@ export default {
                     .showCircleLabels(this.showLabels)
                     .xLabel('Effect Size')
                     .yLabel('-log FDR')
+                    .margins({top: 5, bottom: 50, left: 40, right: 10})
       // this.plot.render()
       this.handlerResize()
     },
