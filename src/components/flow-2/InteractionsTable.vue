@@ -9,22 +9,22 @@
                     :columns="tableCols"
                     @rowclick="rowClickHandler">
         <template slot="col-drugName" scope="cell">
-          <span :class="{ 'text-secondary text-bold': significantCell(cell) }">{{  cell.data  }}</span>
+          <span @click="rowClickHandler(cell)" class="cursor-pointer" :class="{ 'text-secondary text-bold': significantCell(cell) }">{{  cell.data  }}</span>
         </template>
         <template slot="col-gm" scope="cell">
-          <span :class="{ 'text-secondary text-bold': significantCell(cell) }">{{  cell.data  }}</span>
+          <span @click="rowClickHandler(cell)" class="cursor-pointer" :class="{ 'text-secondary text-bold': significantCell(cell) }">{{  cell.data  }}</span>
         </template>
         <template slot="col-transcriptionFactor" scope="cell">
-          <span :class="{ 'text-secondary text-bold': significantCell(cell) }">{{  cell.data  }}</span>
+          <span @click="rowClickHandler(cell)" class="cursor-pointer" :class="{ 'text-secondary text-bold': significantCell(cell) }">{{  cell.data  }}</span>
         </template>
         <template slot="col-cancerType" scope="cell">
-          <span :class="{ 'text-secondary text-bold': significantCell(cell) }">{{  cell.data  }}</span>
+          <span @click="rowClickHandler(cell)" class="cursor-pointer" :class="{ 'text-secondary text-bold': significantCell(cell) }">{{  cell.data  }}</span>
         </template>
         <template slot="col-intLRTestPval" scope="cell">
-          <span :class="{ 'text-secondary text-bold': significantCell(cell) }">{{  formatter(cell.data)  }}</span>
+          <span @click="rowClickHandler(cell)" class="cursor-pointer" :class="{ 'text-secondary text-bold': significantCell(cell) }">{{  formatter(cell.data)  }}</span>
         </template>
         <template slot="col-intLRTestFdr" scope="cell">
-          <span :class="{ 'text-secondary text-bold': significantCell(cell) }">{{  formatter(cell.data)  }}</span>
+          <span @click="rowClickHandler(cell)" class="cursor-pointer" :class="{ 'text-secondary text-bold': significantCell(cell) }">{{  formatter(cell.data)  }}</span>
         </template>
       </q-data-table>
     </div>
@@ -33,6 +33,9 @@
 
 <script>
 import * as d3 from 'd3'
+// import { mapGetters, mapActions } from 'vuex'
+import { mapActions } from 'vuex'
+
 export default {
   data () {
     return {
@@ -89,6 +92,7 @@ export default {
     loaded () {
       return this.$store.state.data.loaded
     },
+    // ...mapGetters('flow2', ['drugId', 'gmId', 'ctId', 'tfId']),
     drugId () {
       return +this.$store.state.route.query.filterOnDrug
     },
@@ -107,11 +111,10 @@ export default {
     }
   },
   methods: {
-    rowClickHandler (row) {
-      // note: expected feature in quasar v0.14
-      console.log('clicked a row!')
-      console.log(row)
-    }
+    rowClickHandler (cell) {
+      this.selectInteractionRow(cell.row)
+    },
+    ...mapActions('flow2', ['selectInteractionRow'])
   }
 }
 </script>

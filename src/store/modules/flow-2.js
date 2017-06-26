@@ -1,5 +1,17 @@
 import Vue from 'vue'
+import router from '../../router'
 const apiBase = 'http://localhost:9009/api/'
+
+function updateRoute (query) {
+  return new Promise((resolve, reject) => {
+    router.push({
+      path: '/investigation/2',
+      query
+    })
+    resolve()
+  })
+}
+
 export default {
   namespaced: true,
   state: {
@@ -14,6 +26,19 @@ export default {
     drugTableData: {}
   },
   getters: {
+    drugId: (state, getters, rootState) => rootState.route.query.filterOnDrug,
+    gmId: (state, getters, rootState) => rootState.route.query.filterOnGM,
+    ctId: (state, getters, rootState) => rootState.route.query.filterOnCT,
+    tfId: (state, getters, rootState) => rootState.route.query.filterOnTF,
+    drugOptions: (state) => () => state.drugOptions,
+    gmOptions: (state) => () => state.gmOptions,
+    ctOptions: (state) => () => state.ctOptions,
+    tfOptions: (state) => () => state.tfOptions,
+    boxPlotData: (state) => () => state.boxPlotData,
+    nestedBoxPlotData: (state) => () => state.nestedBoxPlotData,
+    simpleSamplePlotData: (state) => () => state.simpleSamplePlotData,
+    gmTableData: (state) => state.gmTableData,
+    drugTableData: (state) => () => state.drugTableData,
     drugName: (state, getters, rootState) => () => {
       const drugId = +rootState.route.query.filterOnDrug
       let drugName = ''
@@ -157,6 +182,16 @@ export default {
         .then(function (response) {
           commit('mUpdateDrugTableData', response.body)
         })
+    },
+    selectInteractionRow (context, row) {
+      console.log('dispatching updateRoute with row')
+      console.log(row)
+      return updateRoute({
+        filterOnDrug: row.drugId,
+        filterOnGM: row.gmId,
+        filterOnCT: row.cancerType,
+        filterOnTF: row.transcriptionFactor
+      })
     }
   }
 }
