@@ -24,6 +24,7 @@
 import resize from 'vue-resize-directive'
 import samplePlot from 'sample-plot'
 import router from '../../router'
+import * as _ from 'lodash'
 import { mapGetters } from 'vuex'
 
 export default {
@@ -132,12 +133,21 @@ export default {
       this.$children[0].$refs.downloadPopover.close()
     },
     clickHandler (d) {
+      let q = _.clone(this.$route.query)
       router.push({
         path: '/investigation/1',
         query: {
-          ...this.$route.query,
+          ...q,
           selectedSample: d.sampleId
         }
+      })
+    },
+    clickBackgroundHandler () {
+      let q = _.clone(this.$route.query)
+      delete q.selectedSample
+      router.push({
+        path: '/investigation/1',
+        query: q
       })
     },
     createPlot () {
@@ -151,6 +161,7 @@ export default {
                     .showLegend(this.showLegend)
                     .showBoxPlots(this.showBoxPlots)
                     .handleCircleClick(this.clickHandler)
+                    .handleBackgroundClick(this.clickBackgroundHandler)
                     .legendTitle('GDSC Description 1')
                     .xLabel('[' + this.tfId + '] Activity')
                     .yLabel('[' + this.drugName() + '] log IC50')
