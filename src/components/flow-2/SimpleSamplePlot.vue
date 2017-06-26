@@ -48,7 +48,7 @@ export default {
              'and predicted TF activity (x) of individual cell ' +
              'lines.'
     },
-    ...mapGetters(['drugName', 'interaction'])
+    ...mapGetters('flow2', ['drugName', 'interaction'])
   },
   watch: {
     drugId () {
@@ -90,7 +90,7 @@ export default {
   },
   methods: {
     updateData () {
-      this.$store.dispatch('updateSimpleSamplePlotData', {
+      this.$store.dispatch('flow2/updateSimpleSamplePlotData', {
         drugId: this.drugId,
         gmId: this.gmId,
         ctId: this.ctId,

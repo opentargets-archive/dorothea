@@ -1,6 +1,7 @@
 import Vue from 'vue'
 const apiBase = 'http://localhost:9009/api/'
 export default {
+  namespaced: true,
   state: {
     drugOptions: [],
     gmOptions: [],
@@ -37,7 +38,7 @@ export default {
       }
       return gmName
     },
-    interaction: (state, getters, rootState) => {
+    interaction: (state, getters, rootState, rootGetters) => {
       const drugId = +rootState.route.query.filterOnDrug
       const gmId = rootState.route.query.filterOnGM
       const ctId = rootState.route.query.filterOnCT
@@ -45,7 +46,7 @@ export default {
 
       // TODO: Need to add cancer-type filter
       // TODO: Use an api call
-      const rows = getters.flow2TableData(drugId, gmId, ctId, tfId)
+      const rows = rootGetters.flow2TableData(drugId, gmId, ctId, tfId)
       // TODO: assert there is ONLY one
       if (rows.length === 1) {
         return rows[0]

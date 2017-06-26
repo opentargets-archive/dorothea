@@ -57,7 +57,7 @@ export default {
   },
   methods: {
     updateData () {
-      this.$store.dispatch('updateDrugTableData', {
+      this.$store.dispatch('flow2/updateDrugTableData', {
         drugId: this.drugId
       })
     }

@@ -50,7 +50,7 @@ export default {
              'lines in mutant and wild type. ' +
              'TF activity is partitioned about -1 and 1.'
     },
-    ...mapGetters(['drugName', 'gmName', 'interaction'])
+    ...mapGetters('flow2', ['drugName', 'gmName', 'interaction'])
   },
   watch: {
     drugId () {
@@ -94,7 +94,7 @@ export default {
   },
   methods: {
     updateData () {
-      this.$store.dispatch('updateNestedBoxPlotData', {
+      this.$store.dispatch('flow2/updateNestedBoxPlotData', {
         drugId: this.drugId,
         gmId: this.gmId,
         ctId: this.ctId,

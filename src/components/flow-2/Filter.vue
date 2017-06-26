@@ -205,25 +205,25 @@ export default {
       })
     },
     updateDrugOptions () {
-      store.dispatch('updateDrugOptions', {
+      store.dispatch('flow2/updateDrugOptions', {
         gmId: this.gmId,
         ctId: this.ctId
       })
     },
     updateGMOptions () {
-      store.dispatch('updateGMOptions', {
+      store.dispatch('flow2/updateGMOptions', {
         drugId: this.drugId,
         ctId: this.ctId
       })
     },
     updateCTOptions () {
-      store.dispatch('updateCTOptions', {
+      store.dispatch('flow2/updateCTOptions', {
         drugId: this.drugId,
         gmId: this.gmId
       })
     },
     updateTFOptions () {
-      store.dispatch('updateTFOptions', {
+      store.dispatch('flow2/updateTFOptions', {
         drugId: this.drugId,
         gmId: this.gmId,
         ctId: this.ctId

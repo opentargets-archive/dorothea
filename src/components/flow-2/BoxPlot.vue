@@ -47,7 +47,7 @@ export default {
       return 'Showing log IC50 (y) of individual cell lines in mutant ' +
              '(blue) and wild type (red).'
     },
-    ...mapGetters(['drugName', 'gmName', 'interaction'])
+    ...mapGetters('flow2', ['drugName', 'gmName', 'interaction'])
   },
   watch: {
     drugId () {
@@ -89,7 +89,7 @@ export default {
   },
   methods: {
     updateData () {
-      this.$store.dispatch('updateBoxPlotData', {
+      this.$store.dispatch('flow2/updateBoxPlotData', {
         drugId: this.drugId,
         gmId: this.gmId,
         ctId: this.ctId,

@@ -65,7 +65,7 @@ export default {
   },
   methods: {
     updateData () {
-      this.$store.dispatch('updateGMTableData', {
+      this.$store.dispatch('flow2/updateGMTableData', {
         gmId: this.gmId
       })
     }
