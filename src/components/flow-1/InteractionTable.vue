@@ -88,6 +88,9 @@ export default {
         tfId: this.tfId
       })
     }
+  },
+  mounted () {
+    this.updateData()
   }
 }
 </script>
