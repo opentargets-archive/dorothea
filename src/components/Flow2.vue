@@ -12,8 +12,8 @@
 
       <div class="width-1of4 column">
         <dorothea-flow-2-filter></dorothea-flow-2-filter>
-        <dorothea-drug-table></dorothea-drug-table>
-        <dorothea-gm-table></dorothea-gm-table>
+        <dorothea-drug-table v-if="showDrugSummary"></dorothea-drug-table>
+        <dorothea-gm-table v-if="showGMSummary"></dorothea-gm-table>
       </div>
 
       <div class="width-3of4 column">
@@ -38,13 +38,26 @@
 </template>
 
 <script>
+import { mapGetters } from 'vuex'
+
 export default {
   computed: {
+    ...mapGetters('flow2', ['drugId', 'gmId', 'ctId', 'tfId']),
     showPlots () {
-      return (this.$store.state.route.query.filterOnDrug &&
-              this.$store.state.route.query.filterOnGM &&
-              this.$store.state.route.query.filterOnCT &&
-              this.$store.state.route.query.filterOnTF)
+      // return (this.$store.state.route.query.filterOnDrug &&
+      //         this.$store.state.route.query.filterOnGM &&
+      //         this.$store.state.route.query.filterOnCT &&
+      //         this.$store.state.route.query.filterOnTF)
+      return (this.drugId &&
+              this.gmId &&
+              this.ctId &&
+              this.tfId)
+    },
+    showGMSummary () {
+      return this.gmId
+    },
+    showDrugSummary () {
+      return this.drugId
     }
   }
 }
