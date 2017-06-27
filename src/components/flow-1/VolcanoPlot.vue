@@ -70,7 +70,7 @@ export default {
       ]
     },
     csvData () {
-      return []
+      return this.plotData
     },
     filename () {
       return 'associations_' + this.drugId + '-' + this.tfId
