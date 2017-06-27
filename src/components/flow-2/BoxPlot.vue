@@ -77,6 +77,7 @@ export default {
   },
   mounted () {
     this.createPlot()
+    this.updateData()
   },
   updated () {
     this.plot.data(this.plotData)
