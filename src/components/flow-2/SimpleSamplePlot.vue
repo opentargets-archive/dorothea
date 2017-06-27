@@ -35,13 +35,24 @@ export default {
       return this.$store.state.flow2.simpleSamplePlotData
     },
     csvFields () {
-      return ['a', 'b']
+      return [
+        'analysisSetName',
+        'cosmicId',
+        'tfActivity',
+        'ic50',
+        'gdscDesc1',
+        'gdscDesc2',
+        'mmr',
+        'screenMedium',
+        'studyAbbreviation',
+        'comment'
+      ]
     },
     csvData () {
-      return [{a: 3, b: 9}, {a: 5, b: 7}]
+      return this.plotData
     },
     filename () {
-      return 'simple-sample-plot'
+      return 'samples_' + this.drugName() + '-' + this.tfId
     },
     description () {
       return 'Showing the relationship between log IC50 (y) ' +
