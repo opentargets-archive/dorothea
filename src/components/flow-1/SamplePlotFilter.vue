@@ -12,6 +12,7 @@
         <label class="no-margin" v-for="pair in pairs">
           <q-checkbox v-model="pair.checked" @input="togglers[pair.value]()"></q-checkbox>
           {{ formatter(pair.value) }}
+          <!--<icon name="circle" class="color-icon" :class="{ [pair.value]: true }"></icon>-->
         </label>
       </div>
     </div>
@@ -22,6 +23,8 @@
 <script>
 import router from '../../router'
 import { mapActions } from 'vuex'
+// import * as d3 from 'd3'
+// import * as d3ScaleChromatic from 'd3-scale-chromatic'
 
 export default {
   data () {
@@ -29,6 +32,8 @@ export default {
       sampleModel: null,
       pairs: null,
       togglers: null
+      // colorScale: d3.scaleSequential(d3ScaleChromatic.interpolateYlOrRd)
+      // colorScale: d3.scaleOrdinal().range(['brown', 'steelblue'])
     }
   },
   computed: {
@@ -56,15 +61,24 @@ export default {
       .then((response) => {
         this.pairs = []
         this.togglers = {}
+        // this.colorScale.domain([0, response.length])
+        // this.colorScale.domain(response)
         for (let sampleType of response) {
           this.pairs.push({
             value: sampleType,
-            checked: this.filterSamplesOnTypes.indexOf(sampleType) >= 0
+            checked: !(this.filterSamplesOnTypes.indexOf(sampleType) >= 0)
           })
 
           this.togglers[sampleType] = this.sampleTogglerGenerator(sampleType)
         }
       })
+      // .then(() => {
+      //   this.pairs.forEach(function (element, i) {
+      //     const el = d3.select('svg.color-icon.' + element.value).select('path')
+      //     // el.attr('fill', this.colorScale(i))
+      //     el.attr('fill', this.colorScale(element.value))
+      //   }, this)
+      // })
     },
     changeSample (sampleType) {
       const query = this.$store.state.route.query
@@ -79,7 +93,7 @@ export default {
     ...mapActions('flow1', ['changeSampleTypes']),
     sampleTogglerGenerator (sampleType) {
       return (value) => {
-        this.changeSampleTypes(this.pairs.filter(p => p.checked)
+        this.changeSampleTypes(this.pairs.filter(p => !p.checked)
                                          .map(p => p.value))
       }
     },
@@ -90,7 +104,7 @@ export default {
       })
 
       // update
-      this.changeSampleTypes(this.pairs.filter(p => p.checked)
+      this.changeSampleTypes(this.pairs.filter(p => !p.checked)
                                        .map(p => p.value))
     },
     clickNoneHandler () {
@@ -100,7 +114,7 @@ export default {
       })
 
       // update
-      this.changeSampleTypes(this.pairs.filter(p => p.checked)
+      this.changeSampleTypes(this.pairs.filter(p => !p.checked)
                                        .map(p => p.value))
     },
     formatter (sampleType) {
@@ -119,3 +133,9 @@ export default {
   }
 }
 </script>
+
+<style>
+/*.color-icon {
+  font-size: 8px;
+}*/
+</style>

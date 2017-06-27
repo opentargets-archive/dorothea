@@ -64,7 +64,7 @@ export default {
     },
     plotData () {
       const allData = this.$store.state.flow1.samplePlotData
-      return allData.filter(d => this.filterSamplesOnTypes.indexOf(d.gdscDesc1) >= 0)
+      return allData.filter(d => !(this.filterSamplesOnTypes.indexOf(d.gdscDesc1) >= 0))
     },
     csvFields () {
       return [
