@@ -1,6 +1,6 @@
 {
   "name": "quasar-app",
-  "version": "0.0.1",
+  "version": "0.0.8",
   "description": "A Quasar App",
   "author": "Your Name",
   "scripts": {
@@ -12,7 +12,7 @@
   "dependencies": {
     "babel-polyfill": "^6.23.0",
     "babel-runtime": "^6.0.0",
-    "comparison-box-plot": "git+https://git@github.com/opentargets/comparison-box-plot.git#v1.0.1",
+    "comparison-box-plot": "git+https://git@github.com/opentargets/comparison-box-plot.git#v1.0.2",
     "d3": "^4.8.0",
     "d3-scale-chromatic": "^1.1.1",
     "d3-svg-legend": "^2.24.0",
@@ -24,10 +24,10 @@
     "moment": "^2.15.0",
     "quasar-framework": "^0.13.10",
     "roboto-fontface": "^0.7.0",
-    "sample-plot": "git+https://git@github.com/opentargets/sample-plot.git#v1.0.5",
+    "sample-plot": "git+https://git@github.com/opentargets/sample-plot.git#v1.0.7",
     "sass-loader": "^6.0.3",
     "tnt.utils": "github:peatroot/tnt.utils",
-    "volcano-plot": "git+https://git@github.com/opentargets/volcano-plot.git#v1.0.4",
+    "volcano-plot": "git+https://git@github.com/opentargets/volcano-plot.git#v1.0.5",
     "vue": "^2.3.0",
     "vue-awesome": "^2.3.1",
     "vue-resize-directive": "^1.0.0",
