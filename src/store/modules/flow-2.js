@@ -69,7 +69,6 @@ export default {
       const ctId = rootState.route.query.filterOnCT
       const tfId = rootState.route.query.filterOnTF
 
-      // TODO: Need to add cancer-type filter
       // TODO: Use an api call
       const rows = rootGetters.flow2TableData(drugId, gmId, ctId, tfId)
       // TODO: assert there is ONLY one
@@ -81,6 +80,7 @@ export default {
       }
       else {
         console.log('WARNING: more than one interaction')
+        return {}
       }
     }
   },
