@@ -57,11 +57,6 @@ export default {
         return []
       }
     },
-    drugSummary: function () {
-      let summary = this.$store.getters.drugSummary(this.drug)
-      if (!summary) summary = {}
-      return summary
-    },
     plotData () {
       const allData = this.$store.state.flow1.samplePlotData
       return allData.filter(d => !(this.filterSamplesOnTypes.indexOf(d.gdscDesc1) >= 0))
@@ -70,6 +65,8 @@ export default {
       return [
         'analysisSetName',
         'cosmicId',
+        'tfActivity',
+        'ic50',
         'gdscDesc1',
         'gdscDesc2',
         'mmr',
@@ -82,7 +79,7 @@ export default {
       return this.plotData
     },
     filename () {
-      return 'samples_' + this.drug + '-' + this.tf
+      return 'samples_' + this.drugName() + '-' + this.tfId
     },
     description () {
       return 'Showing the relationship between log IC50 (y)' +
