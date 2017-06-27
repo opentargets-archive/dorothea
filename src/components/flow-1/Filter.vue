@@ -69,6 +69,12 @@ export default {
       return label
     }
   },
+  watch: {
+    dataLoaded () {
+      this.updateFlow1DrugOptions()
+      this.updateFlow1TFOptions()
+    }
+  },
   methods: {
     ...mapActions('flow1', [
       'selectAllDrugsAndAllTfs',
