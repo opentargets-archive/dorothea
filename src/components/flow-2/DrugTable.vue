@@ -61,6 +61,9 @@ export default {
         drugId: this.drugId
       })
     }
+  },
+  mounted () {
+    this.updateData()
   }
 }
 </script>

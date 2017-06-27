@@ -1,6 +1,5 @@
 <template>
-  <dorothea-table-card v-if="gmId"
-                       :title="'Genomic Marker Summary'"
+  <dorothea-table-card title="Genomic Marker Summary"
                        :description="description">
 
     <thead slot="thead">
@@ -40,20 +39,26 @@
 </template>
 
 <script>
+import { mapGetters, mapActions } from 'vuex'
+
 export default {
   computed: {
     dataLoaded () {
       return this.$store.state.data.loaded
     },
-    gmId () {
-      return this.$store.state.route.query.filterOnGM
-    },
-    tableData () {
-      return this.$store.state.flow2.gmTableData
-    },
+    // gmId () {
+    //   return this.$store.state.route.query.filterOnGM
+    // },
+    // tableData () {
+    //   return this.$store.state.flow2.gmTableData
+    // },
     description () {
       return 'Showing details of the genomic marker "' + this.tableData.gm + '".'
-    }
+    },
+    ...mapGetters('flow2', {
+      gmId: 'gmId',
+      tableData: 'gmTableData'
+    })
   },
   watch: {
     gmId () {
@@ -65,10 +70,17 @@ export default {
   },
   methods: {
     updateData () {
-      this.$store.dispatch('flow2/updateGMTableData', {
+      // this.$store.dispatch('flow2/updateGMTableData', {
+      //   gmId: this.gmId
+      // })
+      this.updateGMTableData({
         gmId: this.gmId
       })
-    }
+    },
+    ...mapActions('flow2', ['updateGMTableData'])
+  },
+  mounted () {
+    this.updateData()
   }
 }
 </script>
