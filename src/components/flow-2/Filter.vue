@@ -229,6 +229,12 @@ export default {
         ctId: this.ctId
       })
     }
+  },
+  mounted () {
+    this.updateDrugOptions()
+    this.updateGMOptions()
+    this.updateCTOptions()
+    this.updateTFOptions()
   }
 }
 </script>
