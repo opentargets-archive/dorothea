@@ -36,6 +36,9 @@ export default function (Vue) {
       case 'flow-2/drug-options':
         body = store.getters.flow2DrugPairs(params.gmId)
         break
+      case 'flow-2/drug-autocomplete-options':
+        body = store.getters.flow2DrugAutocompleteOptions(params)
+        break
       case 'flow-2/gm-options':
         body = store.getters.flow2GMPairs(params.drugId)
         break

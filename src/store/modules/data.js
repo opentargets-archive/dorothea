@@ -261,6 +261,37 @@ export default {
         return 0
       })
     },
+    flow2DrugAutocompleteOptions: (state) => (p) => {
+      // get all the drug options for drug autocompletion
+      const options = []
+      const interactions = state.rTfDrugGmAssoGdsc.filter(r => (!p.gmId || r.gmId === p.gmId))
+                                                  .filter(r => (!p.ctId || r.cancerType === p.ctId))
+      const drugs = _.uniqBy(interactions, d => d.drugId)
+      drugs.map(r => {
+        // add synonyms
+        const synonymStr = state.aDrugs[r.drugId].synonyms
+        const synonyms = synonymStr.split(', ')
+        if (synonymStr) {
+          synonyms.map(s => {
+            options.push({
+              value: r.drugName,
+              label: s,
+              drugId: r.drugId
+            })
+          })
+        }
+        // if the main name is not in list of synonyms, add it
+        if (!synonymStr || synonyms.indexOf(r.drugName) < 0) {
+          options.push({
+            value: r.drugName,
+            label: r.drugName,
+            drugId: r.drugId,
+            info: state.aDrugs[r.drugId]
+          })
+        }
+      })
+      return options
+    },
     flow2GMPairs: (state) => (drugId) => {
       // get all GM options, as label-value pairs, possibly given a fixed drug
       const filtered = state.rTfDrugGmAssoGdsc.filter(r => (!drugId || r.drugId === drugId))

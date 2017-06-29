@@ -16,6 +16,7 @@ export default {
   namespaced: true,
   state: {
     drugOptions: [],
+    drugAutocompleteOptions: [],
     gmOptions: [],
     ctOptions: [],
     tfOptions: [],
@@ -31,6 +32,7 @@ export default {
     ctId: (state, getters, rootState) => rootState.route.query.filterOnCT,
     tfId: (state, getters, rootState) => rootState.route.query.filterOnTF,
     drugOptions: (state) => () => state.drugOptions,
+    drugAutocompleteOptions: (state) => () => state.drugAutocompleteOptions,
     gmOptions: (state) => () => state.gmOptions,
     ctOptions: (state) => () => state.ctOptions,
     tfOptions: (state) => () => state.tfOptions,
@@ -88,6 +90,9 @@ export default {
     mUpdateDrugOptions (state, payload) {
       state.drugOptions = payload
     },
+    mUpdateDrugAutocompleteOptions (state, payload) {
+      state.drugAutocompleteOptions = payload
+    },
     mUpdateGMOptions (state, payload) {
       state.gmOptions = payload
     },
@@ -118,6 +123,12 @@ export default {
       Vue.http.get(apiBase + 'flow-2/drug-options', {params: params})
         .then(function (response) {
           commit('mUpdateDrugOptions', response.body)
+        })
+    },
+    updateDrugAutocompleteOptions ({ state, commit }, params) {
+      Vue.http.get(apiBase + 'flow-2/drug-autocomplete-options', {params: params})
+        .then(function (response) {
+          commit('mUpdateDrugAutocompleteOptions', response.body)
         })
     },
     updateGMOptions ({ state, commit }, params) {

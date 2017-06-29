@@ -13,6 +13,12 @@
       </div>
 
       <div class="row justify-center items-center item">
+        <small class="width-1of3">Drug:</small>
+        <q-autocomplete v-if="!drugSelected" v-model="drugTerm" :static-data="staticData" :max-results="100" @selected="selectDrugTerm"></q-autocomplete>
+        <small v-else class="token">{{ drugSelected.value }}<i class="cursor-pointer" @click="deselectDrugTerm()">close</i></small>
+      </div>
+
+      <div class="row justify-center items-center item">
         <small class="width-1of3">Genomic Marker:</small>
         <div class="width-2of3">
           <q-select v-if="!gmId" type="list" @input="selectGM" v-model="gmIdModel" :options="gmOptions"></q-select>
@@ -47,6 +53,8 @@ import router from '../../router'
 export default {
   data () {
     return {
+      drugTerm: '',
+      drugSelected: null,
       drugIdModel: null, // note this is not used, merely prevents vue errors
       gmIdModel: null, // note this is not used, merely prevents vue errors
       ctIdModel: null, // note this is not used, merely prevents vue errors
@@ -72,6 +80,9 @@ export default {
     drugOptions () {
       return store.state.flow2.drugOptions
     },
+    drugAutocompleteOptions () {
+      return store.state.flow2.drugAutocompleteOptions
+    },
     gmOptions () {
       return store.state.flow2.gmOptions
     },
@@ -96,6 +107,12 @@ export default {
         if (pair && pair.label) label = pair.label
       }
       return label
+    },
+    staticData () {
+      return {
+        field: 'label',
+        list: this.drugAutocompleteOptions
+      }
     }
   },
   watch: {
@@ -106,16 +123,19 @@ export default {
     },
     gmId: function () {
       this.updateDrugOptions()
+      this.updateDrugAutocompleteOptions()
       this.updateCTOptions()
       this.updateTFOptions()
     },
     ctId: function () {
       this.updateDrugOptions()
+      this.updateDrugAutocompleteOptions()
       this.updateGMOptions()
       this.updateTFOptions()
     },
     dataLoaded: function () {
       this.updateDrugOptions()
+      this.updateDrugAutocompleteOptions()
       this.updateGMOptions()
       this.updateCTOptions()
       this.updateTFOptions()
@@ -141,6 +161,13 @@ export default {
         path: '/investigation/2',
         query
       })
+    },
+    selectDrugTerm (item) {
+      this.drugSelected = item
+    },
+    deselectDrugTerm () {
+      this.drugTerm = ''
+      this.drugSelected = null
     },
     selectGM (gmId) {
       let query = {
@@ -210,6 +237,12 @@ export default {
         ctId: this.ctId
       })
     },
+    updateDrugAutocompleteOptions () {
+      store.dispatch('flow2/updateDrugAutocompleteOptions', {
+        gmId: this.gmId,
+        ctId: this.ctId
+      })
+    },
     updateGMOptions () {
       store.dispatch('flow2/updateGMOptions', {
         drugId: this.drugId,
@@ -232,6 +265,7 @@ export default {
   },
   mounted () {
     this.updateDrugOptions()
+    this.updateDrugAutocompleteOptions()
     this.updateGMOptions()
     this.updateCTOptions()
     this.updateTFOptions()
