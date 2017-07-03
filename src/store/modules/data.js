@@ -156,6 +156,36 @@ export default {
     interactionTableData: (state, getters) => (drugId, tfId) => {
       return getters.volcanoPlotData(drugId, tfId)[0]
     },
+    tfsBarPlotData: (state) => () => {
+      // return the top 20 tfs by interaction count
+      let interactionCountsByTF = {}
+
+      // create counters
+      const tfs = Object.keys(state.mTfActivitiesGdsc)
+      tfs.map(tfId => {
+        interactionCountsByTF[tfId] = {
+          tfId,
+          count: 0
+        }
+      })
+
+      // walk through significant interactions
+      state.rTfDrugAssoGdsc
+      .filter(r => (r.fdr < 0.05))
+      .map(r => {
+        interactionCountsByTF[r.transcriptionFactor].count += 1
+      })
+      let interactionCountsByTFList = tfs.map(tfId => {
+        return interactionCountsByTF[tfId]
+      })
+
+      // sort
+      interactionCountsByTFList.sort((a, b) => b.count - a.count)
+
+      // cut
+      interactionCountsByTFList = interactionCountsByTFList.slice(0, 20)
+      return interactionCountsByTFList
+    },
 
     // FLOW 2
     drugGMPairData: (state) => (tf) => {

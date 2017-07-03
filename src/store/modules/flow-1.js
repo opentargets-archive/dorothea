@@ -27,7 +27,8 @@ export default {
     samplePlotData: [],
     interactionTableData: {},
     sampleTableData: {},
-    drugsBarPlotData: []
+    drugsBarPlotData: [],
+    tfsBarPlotData: []
   },
   getters: {
     drugOptions: (state) => () => state.drugOptions,
@@ -38,6 +39,7 @@ export default {
     interactionTableData: (state) => () => state.interactionTableData,
     sampleTableData: (state) => () => state.sampleTableData,
     drugsBarPlotData: (state) => () => state.drugsBarPlotData,
+    tfsBarPlotData: (state) => () => state.drugsBarPlotData,
     drugName: (state, getters, rootState) => () => {
       const selectedInteractionDrug = +rootState.route.query.selectedInteractionDrug
       let drugName = ''
@@ -78,6 +80,9 @@ export default {
     },
     mUpdateDrugsBarPlotData (state, payload) {
       state.drugsBarPlotData = payload
+    },
+    mUpdateTFsBarPlotData (state, payload) {
+      state.tfsBarPlotData = payload
     }
   },
   actions: {
@@ -176,6 +181,12 @@ export default {
       Vue.http.get(apiBase + 'flow-1/drugs-bar-plot')
         .then(function (response) {
           commit('mUpdateDrugsBarPlotData', response.body)
+        })
+    },
+    updateTFsBarPlotData ({state, commit}, params) {
+      Vue.http.get(apiBase + 'flow-1/tfs-bar-plot')
+        .then(function (response) {
+          commit('mUpdateTFsBarPlotData', response.body)
         })
     }
   }

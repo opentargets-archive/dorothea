@@ -35,6 +35,9 @@ export default function (Vue) {
       case 'flow-1/drugs-bar-plot':
         body = store.getters.drugsBarPlotData()
         break
+      case 'flow-1/tfs-bar-plot':
+        body = store.getters.tfsBarPlotData()
+        break
 
       case 'flow-2/drug-options':
         body = store.getters.flow2DrugPairs(params.gmId)
