@@ -30,9 +30,9 @@ export default {
       return ''
     },
     description () {
-      return 'Showing the relationship between log IC50 (y)' +
-             ' and predicted TF activity (x) of individual cell ' +
-             'lines'
+      return 'Showing the top 20 drugs, when ' +
+             'sorted by the number of significantly interacting ' +
+             'transcription factors (FDR < 0.05).'
     }
   },
   watch: {

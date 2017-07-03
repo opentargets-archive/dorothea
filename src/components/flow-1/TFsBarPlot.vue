@@ -30,9 +30,9 @@ export default {
       return ''
     },
     description () {
-      return 'Showing the relationship between log IC50 (y)' +
-             ' and predicted TF activity (x) of individual cell ' +
-             'lines'
+      return 'Showing the top 20 transcription factors, when ' +
+             'sorted by the number of significantly interacting ' +
+             'drugs (FDR < 0.05).'
     }
   },
   watch: {
@@ -55,7 +55,7 @@ export default {
                     .yAccessor(d => d.count)
                     .xAccessor(d => d.tfId)
                     .xLabel('')
-                    .yLabel('Number of interacting TFs')
+                    .yLabel('Number of interacting drugs')
       // this.plot.render()
       this.handlerResize()
     },
