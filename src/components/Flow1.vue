@@ -9,7 +9,9 @@
         </div>
       </div>
     </div>
+    <h5>Results summary</h5>
     <div class="row gutter">
+      
       <div class="width-1of2">
         <dorothea-drugs-bar-plot></dorothea-drugs-bar-plot>
       </div>
@@ -17,42 +19,54 @@
         <dorothea-tfs-bar-plot></dorothea-tfs-bar-plot>
       </div>
     </div>
+    
+    <hr>
+    <h5>Results search</h5>
     <div class="row gutter">
-      <div class="width-1of4">
+      <div class="column width-1of3">
         <dorothea-flow-1-filter></dorothea-flow-1-filter>
-      </div>
-      <div class="width-1of2">
-        <volcano-plot></volcano-plot>
-      </div>
-      <div class="width-1of4">
         <dorothea-association-table v-if="showInteractionDetail"></dorothea-association-table>
       </div>
+      <div class="width-2of3">
+        <volcano-plot></volcano-plot>
+      </div>
     </div>
-    <div class="row gutter">
-      <div class="width-1of4">
-        <dorothea-sample-plot-filter v-if="showInteractionDetail"></dorothea-sample-plot-filter>
-      </div>
-      <div class="width-1of2">
-        <sample-plot v-if="showInteractionDetail"></sample-plot>
-      </div>
-      <div class="width-1of4">
-        <dorothea-sample-table v-if="showSampleDetail"></dorothea-sample-table>
+
+    <div v-if="showInteractionDetail">
+      <hr>
+      <h5>Interaction between {{ drugName() }} and {{ selectedInteractionTF }}</h5>
+      <div class="row gutter">
+        <div class="column width-1of3">
+          <dorothea-sample-plot-filter></dorothea-sample-plot-filter>
+          <dorothea-sample-table v-if="showSampleDetail"></dorothea-sample-table>
+        </div>
+        <div class="column width-2of3">
+          <sample-plot></sample-plot>
+        </div>
       </div>
     </div>
   </div>
 </template>
 
 <script>
+import { mapGetters } from 'vuex'
+
 export default {
   computed: {
     showInteractionDetail () {
-      return (this.$store.state.route.query.selectedInteractionDrug &&
-              this.$store.state.route.query.selectedInteractionTF)
+      return (this.selectedInteractionDrug &&
+              this.selectedInteractionTF)
     },
     showSampleDetail () {
       return (this.showInteractionDetail &&
-              this.$store.state.route.query.selectedSample)
-    }
+              this.selectedSample)
+    },
+    ...mapGetters('flow1', [
+      'drugName',
+      'selectedInteractionDrug',
+      'selectedInteractionTF',
+      'selectedSample'
+    ])
   }
 }
 </script>
@@ -60,5 +74,12 @@ export default {
 <style>
 .toolbar-title span {
   font-size: 0.8em;
+}
+hr {
+  height: 2px;
+  border: 0;
+  background-color: #ccc;
+  width: 100%;
+  margin: 0;
 }
 </style>

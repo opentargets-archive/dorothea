@@ -31,6 +31,9 @@ export default {
     tfsBarPlotData: []
   },
   getters: {
+    selectedInteractionDrug: (state, getters, rootState) => rootState.route.query.selectedInteractionDrug,
+    selectedInteractionTF: (state, getters, rootState) => rootState.route.query.selectedInteractionTF,
+    selectedSample: (state, getters, rootState) => rootState.route.query.selectedSample,
     drugOptions: (state) => () => state.drugOptions,
     tfOptions: (state) => () => state.tfOptions,
     sampleOptions: (state) => () => state.sampleOptions,
