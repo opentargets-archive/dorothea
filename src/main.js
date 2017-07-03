@@ -16,7 +16,8 @@ import Vue from 'vue'
 import Quasar from 'quasar'
 import VueResource from 'vue-resource'
 import router from './router'
-import BarPlot from './components/flow-1/BarPlot.vue'
+import DrugsBarPlot from './components/flow-1/DrugsBarPlot.vue'
+import TFsBarPlot from './components/flow-1/TFsBarPlot.vue'
 import VolcanoPlot from './components/flow-1/VolcanoPlot.vue'
 import SamplePlot from './components/flow-1/SamplePlot.vue'
 import SamplePlotFilter from './components/flow-1/SamplePlotFilter.vue'
@@ -60,7 +61,8 @@ Vue.component('volcano-plot', VolcanoPlot)
 Vue.component('sample-plot', SamplePlot)
 Vue.component('dorothea-sample-plot-filter', SamplePlotFilter)
 Vue.component('dorothea-simple-sample-plot', SimpleSamplePlot)
-Vue.component('dorothea-bar-plot', BarPlot)
+Vue.component('dorothea-drugs-bar-plot', DrugsBarPlot)
+Vue.component('dorothea-tfs-bar-plot', TFsBarPlot)
 Vue.component('dorothea-box-plot', BoxPlot)
 Vue.component('dorothea-nested-box-plot', NestedBoxPlot)
 Vue.component('dorothea-header', Header)

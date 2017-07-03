@@ -10,13 +10,9 @@
 </template>
 
 <script>
-import resize from 'vue-resize-directive'
 import barPlot from 'bar-plot'
 
 export default {
-  directives: {
-    resize
-  },
   computed: {
     dataLoaded () {
       return this.$store.state.data.loaded

@@ -11,11 +11,11 @@
     </div>
     <div class="row gutter">
       <div class="width-1of2">
-        <dorothea-bar-plot></dorothea-bar-plot>
+        <dorothea-drugs-bar-plot></dorothea-drugs-bar-plot>
       </div>
-      <!--<div class="width-1of2">
-        <dorothea-bar-plot></dorothea-bar-plot>
-      </div>-->
+      <div class="width-1of2">
+        <dorothea-tfs-bar-plot></dorothea-tfs-bar-plot>
+      </div>
     </div>
     <div class="row gutter">
       <div class="width-1of4">
