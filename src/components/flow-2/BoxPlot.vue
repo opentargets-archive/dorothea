@@ -36,12 +36,26 @@ export default {
     },
     csvFields () {
       return ['a', 'b']
+      // return [
+      //   'type',
+      //   'analysisSetName',
+      //   'cosmicId',
+      //   'tfActivity',
+      //   'ic50',
+      //   'gdscDesc1',
+      //   'gdscDesc2',
+      //   'mmr',
+      //   'screenMedium',
+      //   'studyAbbreviation',
+      //   'comment'
+      // ]
     },
     csvData () {
       return [{a: 3, b: 4}, {a: 5, b: 7}]
+      // return this.plotData
     },
     filename () {
-      return 'comparison-box-plot'
+      return 'gm-comparision-box-plot_' + this.drugId + '-' + this.gmId + '-' + this.ctId + '-' + this.tfId
     },
     description () {
       return 'Showing log IC50 (y) of individual cell lines in mutant ' +
@@ -120,13 +134,15 @@ export default {
       this.handlerResize()
     },
     handlerResize () {
-      let aspectRatio = 5.0 / 3
-      let element = this.$el.querySelector('div.plot-root-container')
-      let width = element.offsetWidth
-      let height = width / aspectRatio
-      this.plot.width(width)
-               .height(height)
-               .render()
+      if (this.plot && this.$el) {
+        let aspectRatio = 5.0 / 3
+        let element = this.$el.querySelector('div.plot-root-container')
+        let width = element.offsetWidth
+        let height = width / aspectRatio
+        this.plot.width(width)
+                .height(height)
+                .render()
+      }
     }
   }
 }
