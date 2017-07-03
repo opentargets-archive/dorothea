@@ -58,31 +58,31 @@ export default {
         {
           label: 'Genomic Marker',
           field: 'gm',
-          width: '60px',
+          width: '140px',
           sort: true
         },
         {
           label: 'Transcription Factor',
           field: 'transcriptionFactor',
-          width: '60px',
+          width: '70px',
           sort: true
         },
         {
           label: 'Cancer Type',
           field: 'cancerType',
-          width: '80px',
+          width: '50px',
           sort: true
         },
         {
           label: 'P Value',
           field: 'intLRTestPval',
-          width: '80px',
+          width: '40px',
           sort: true
         },
         {
           label: 'FDR',
           field: 'intLRTestFdr',
-          width: '80px',
+          width: '40px',
           sort: true
         }
       ]
