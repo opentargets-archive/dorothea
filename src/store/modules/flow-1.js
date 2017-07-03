@@ -26,7 +26,8 @@ export default {
     volcanoPlotData: [],
     samplePlotData: [],
     interactionTableData: {},
-    sampleTableData: {}
+    sampleTableData: {},
+    drugsBarPlotData: []
   },
   getters: {
     drugOptions: (state) => () => state.drugOptions,
@@ -36,6 +37,7 @@ export default {
     samplePlotData: (state) => () => state.samplePlotData,
     interactionTableData: (state) => () => state.interactionTableData,
     sampleTableData: (state) => () => state.sampleTableData,
+    drugsBarPlotData: (state) => () => state.drugsBarPlotData,
     drugName: (state, getters, rootState) => () => {
       const selectedInteractionDrug = +rootState.route.query.selectedInteractionDrug
       let drugName = ''
@@ -73,6 +75,9 @@ export default {
     },
     mUpdateSampleOptions (state, payload) {
       state.sampleOptions = payload
+    },
+    mUpdateDrugsBarPlotData (state, payload) {
+      state.drugsBarPlotData = payload
     }
   },
   actions: {
@@ -165,6 +170,12 @@ export default {
       Vue.http.get(apiBase + 'flow-1/sample-table', {params: params})
         .then(function (response) {
           commit('mUpdateSampleTableData', response.body)
+        })
+    },
+    updateDrugsBarPlotData ({state, commit}, params) {
+      Vue.http.get(apiBase + 'flow-1/drugs-bar-plot')
+        .then(function (response) {
+          commit('mUpdateDrugsBarPlotData', response.body)
         })
     }
   }

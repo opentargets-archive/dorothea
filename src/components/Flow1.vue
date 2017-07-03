@@ -10,6 +10,14 @@
       </div>
     </div>
     <div class="row gutter">
+      <div class="width-1of2">
+        <dorothea-bar-plot></dorothea-bar-plot>
+      </div>
+      <!--<div class="width-1of2">
+        <dorothea-bar-plot></dorothea-bar-plot>
+      </div>-->
+    </div>
+    <div class="row gutter">
       <div class="width-1of4">
         <dorothea-flow-1-filter></dorothea-flow-1-filter>
       </div>

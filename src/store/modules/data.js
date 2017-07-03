@@ -122,6 +122,34 @@ export default {
         }
       })
     },
+    drugsBarPlotData: (state) => () => {
+      // return the top 20 drugs by interaction count
+      let interactionCountsByDrug = {}
+      Object.keys(state.aDrugs).map(drugId => {
+        interactionCountsByDrug[drugId] = {
+          drugId,
+          drugName: state.aDrugs[drugId].drugName,
+          count: 0
+        }
+      })
+
+      // walk through significant interactions
+      state.rTfDrugAssoGdsc
+      .filter(r => (r.fdr < 0.05))
+      .map(r => {
+        interactionCountsByDrug[r.drugId].count += 1
+      })
+      let interactionCountsByDrugList = Object.keys(state.aDrugs).map(drugId => {
+        return interactionCountsByDrug[drugId]
+      })
+
+      // sort
+      interactionCountsByDrugList.sort((a, b) => b.count - a.count)
+
+      // cut
+      interactionCountsByDrugList = interactionCountsByDrugList.slice(0, 20)
+      return interactionCountsByDrugList
+    },
     sampleSummary: (state, getters) => (drugId, tfId, sampleId) => {
       return getters.samplePlotData(drugId, tfId).filter(r => r.sampleId === sampleId)[0]
     },

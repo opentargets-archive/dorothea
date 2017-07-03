@@ -9,12 +9,14 @@ require(`./themes/app.${__THEME}.styl`)
 require(`../node_modules/volcano-plot/index.scss`)
 require(`../node_modules/sample-plot/index.scss`)
 require(`../node_modules/comparison-box-plot/index.scss`)
+require(`../node_modules/bar-plot/index.scss`)
 // ==============================
 
 import Vue from 'vue'
 import Quasar from 'quasar'
 import VueResource from 'vue-resource'
 import router from './router'
+import BarPlot from './components/flow-1/BarPlot.vue'
 import VolcanoPlot from './components/flow-1/VolcanoPlot.vue'
 import SamplePlot from './components/flow-1/SamplePlot.vue'
 import SamplePlotFilter from './components/flow-1/SamplePlotFilter.vue'
@@ -58,6 +60,7 @@ Vue.component('volcano-plot', VolcanoPlot)
 Vue.component('sample-plot', SamplePlot)
 Vue.component('dorothea-sample-plot-filter', SamplePlotFilter)
 Vue.component('dorothea-simple-sample-plot', SimpleSamplePlot)
+Vue.component('dorothea-bar-plot', BarPlot)
 Vue.component('dorothea-box-plot', BoxPlot)
 Vue.component('dorothea-nested-box-plot', NestedBoxPlot)
 Vue.component('dorothea-header', Header)
