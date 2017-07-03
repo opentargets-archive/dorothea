@@ -42,7 +42,7 @@ export default {
       return [{a: 3, b: 9}, {a: 5, b: 7}]
     },
     filename () {
-      return 'nested-box-plot'
+      return 'gm-tf-nested-box-plot_' + this.drugId + '-' + this.gmId + '-' + this.ctId + '-' + this.tfId
     },
     description () {
       return 'Showing the relationship between log IC50 (y)' +
