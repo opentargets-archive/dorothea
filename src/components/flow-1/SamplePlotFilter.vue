@@ -1,7 +1,7 @@
 <template>
   <dorothea-base-card v-if="pairs"
-                      title="Sample Plot Filter"
-                      description="Samples can be filtered by tissue type">
+                      title="Filter by cancer type"
+                      description="">
 
     <div slot="card-internals" class="card-content column">
       <div class="row group self-start">

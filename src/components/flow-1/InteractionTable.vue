@@ -1,6 +1,6 @@
 <template>
-  <dorothea-table-card title="Interaction Summary"
-                       description="Showing detail of the clicked TF-drug interaction.">
+  <dorothea-table-card title="Selected interaction"
+                       description="">
     <thead slot="thead">
       <tr>
         <th>Drug</th>

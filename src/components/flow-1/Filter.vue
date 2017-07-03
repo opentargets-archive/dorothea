@@ -1,6 +1,6 @@
 <template>
-  <dorothea-base-card title="Volcano Plot Filter"
-                      description="Interactions can be filtered by drug or transcription factor.">
+  <dorothea-base-card title="Filter interactions"
+                      description="">
 
     <div slot="card-internals" class="card-content column">
 

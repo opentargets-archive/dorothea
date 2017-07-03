@@ -1,7 +1,7 @@
 <template>
   <dorothea-table-card v-if="tableData"
-                       title="Sample Summary"
-                       description="Showing detail of the clicked sample.">
+                       title="Selected sample"
+                       description="">
     <thead slot="thead">
       <tr>
         <th>Sample Name</th>

@@ -3,7 +3,7 @@
     <div class="card-title text-primary inverted toolbar">
       <div class="toolbar-content">
         <small>{{ title }}</small>
-        <button class="small" @click="toggleShowHelp">
+        <button v-if="description" class="small" @click="toggleShowHelp">
           <icon name="info-circle"></icon>
         </button>
       </div>
