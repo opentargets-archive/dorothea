@@ -1,12 +1,13 @@
 <template>
-  <dorothea-plot-card name="bar-plot"
-                      title="Drugs"
-                      :description="description"
-                      :resize-handler="handlerResize"
-                      :filename="filename"
-                      :csv-data="csvData"
-                      :csv-fields="csvFields">
-  </dorothea-plot-card>
+  <div class="column">
+    <h6>Drugs <small class="light-paragraph">X compounds</small></h6>
+    <dorothea-plot-card name="bar-plot"
+                        title=""
+                        description=""
+                        :resize-handler="handlerResize"
+                        :filename="filename">
+    </dorothea-plot-card>
+  </div>
 </template>
 
 <script>
@@ -18,13 +19,10 @@ export default {
       return this.$store.state.data.loaded
     },
     plotData () {
-      return this.$store.state.flow1.drugsBarPlotData
+      return this.$store.state.flow1.drugsBarPlotData.slice(0, 20)
     },
     csvFields () {
       return []
-    },
-    csvData () {
-      return this.plotData
     },
     filename () {
       return ''
@@ -38,6 +36,7 @@ export default {
   watch: {
     dataLoaded () {
       this.updateData()
+      this.handlerResize()
     }
   },
   mounted () {
@@ -45,6 +44,7 @@ export default {
     this.createPlot()
   },
   updated () {
+    this.updateData()
     this.plot.data(this.plotData)
     this.handlerResize()
   },
@@ -56,6 +56,7 @@ export default {
                     .xAccessor(d => d.drugName)
                     .xLabel('')
                     .yLabel('Number of interacting TFs')
+                    .title('<tspan font-style="italic">Showing top 20 drugs</tspan>')
       // this.plot.render()
       this.handlerResize()
     },

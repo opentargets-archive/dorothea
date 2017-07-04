@@ -1,11 +1,12 @@
 <template>
   <dorothea-plot-card name="sample-plot"
-                      title="Sample Plot"
-                      :description="description"
+                      title=""
+                      description=""
                       :resize-handler="handlerResize"
                       :filename="filename"
                       :csv-data="csvData"
-                      :csv-fields="csvFields">
+                      :csv-fields="csvFields"
+                      :table-columns="tableColumns">
 
     <div slot="extra-toolbar-buttons" class="list item-delimiter hightlight">
       <button class="item item-link small text-left light-paragraph" style="text-transform:none;min-width:300px;" @click="showlabels">
@@ -17,6 +18,17 @@
         <icon name="check" v-if="showBoxPlots"></icon>
       </button>
     </div>
+
+    <div slot="plot-controls">
+      <label>
+        <q-radio v-model="radioValue" val="box" @input="viewToggleHandler"></q-radio>
+        Box Plot
+      </label>
+      <label>
+        <q-radio v-model="radioValue" val="scatter" @input="viewToggleHandler"></q-radio>
+        Scatter Plot
+      </label>
+    </div>
   </dorothea-plot-card>
 </template>
 
@@ -25,6 +37,7 @@ import resize from 'vue-resize-directive'
 import samplePlot from 'sample-plot'
 import router from '../../router'
 import * as _ from 'lodash'
+import * as d3 from 'd3'
 import { mapGetters } from 'vuex'
 
 export default {
@@ -35,7 +48,8 @@ export default {
     return {
       showLabels: true,
       showLegend: false,
-      showBoxPlots: true
+      showBoxPlots: true,
+      radioValue: 'box'
     }
   },
   computed: {
@@ -78,6 +92,36 @@ export default {
     csvData () {
       return this.plotData
     },
+    tableColumns () {
+      return [
+        {
+          label: 'Sample',
+          field: 'analysisSetName',
+          width: '100px',
+          sort: true
+        },
+        {
+          label: 'Activity',
+          field: 'tfActivity',
+          width: '100px',
+          sort: true,
+          format: this.formatter
+        },
+        {
+          label: 'IC50',
+          field: 'ic50',
+          width: '100px',
+          sort: true,
+          format: this.formatter
+        },
+        {
+          label: 'COSMIC ID',
+          field: 'cosmicId',
+          width: '100px',
+          sort: true
+        }
+      ]
+    },
     filename () {
       return 'samples_' + this.drugName() + '-' + this.tfId
     },
@@ -112,12 +156,16 @@ export default {
     this.plot.data(this.plotData)
              .showCircleLabels(this.showLabels)
              .showLegend(this.showLegend)
+             .showBoxPlots(this.showBoxPlots)
              .xLabel('<tspan font-weight="bold">' + this.tfId + '</tspan> estimated activity')
              .yLabel('<tspan font-weight="bold">' + this.drugName() + '</tspan> log IC50')
             //  .render()
     this.handlerResize()
   },
   methods: {
+    viewToggleHandler (value) {
+      this.showBoxPlots = (value === 'box')
+    },
     showlabels: function () {
       this.showLabels = !this.showLabels
       this.plot.showCircleLabels(this.showLabels)
@@ -185,6 +233,9 @@ export default {
       this.plot.width(width)
                .height(height)
                .render()
+    },
+    formatter (value) {
+      return d3.format('.3g')(value)
     }
   }
 }

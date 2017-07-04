@@ -1,12 +1,13 @@
 <template>
-  <dorothea-plot-card name="tfs-bar-plot"
-                      title="Trascription Factors"
-                      :description="description"
-                      :resize-handler="handlerResize"
-                      :filename="filename"
-                      :csv-data="csvData"
-                      :csv-fields="csvFields">
-  </dorothea-plot-card>
+  <div class="column">
+    <h6>Transcription Factors <small class="light-paragraph">Y proteins</small></h6>
+    <dorothea-plot-card name="tfs-bar-plot"
+                        title=""
+                        description=""
+                        :resize-handler="handlerResize"
+                        :filename="filename">
+    </dorothea-plot-card>
+  </div>
 </template>
 
 <script>
@@ -17,8 +18,11 @@ export default {
     dataLoaded () {
       return this.$store.state.data.loaded
     },
+    tfCount () {
+      return this.$store.state.flow1.tfsBarPlotData.length
+    },
     plotData () {
-      return this.$store.state.flow1.tfsBarPlotData
+      return this.$store.state.flow1.tfsBarPlotData.slice(0, 20)
     },
     csvFields () {
       return []
@@ -45,6 +49,7 @@ export default {
     this.createPlot()
   },
   updated () {
+    this.updateData()
     this.plot.data(this.plotData)
     this.handlerResize()
   },
@@ -56,6 +61,7 @@ export default {
                     .xAccessor(d => d.tfId)
                     .xLabel('')
                     .yLabel('Number of interacting drugs')
+                    .title('<tspan font-style="italic">Showing top 20 transcription factors</tspan>')
       // this.plot.render()
       this.handlerResize()
     },

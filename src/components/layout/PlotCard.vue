@@ -12,7 +12,43 @@
       </q-popover>
       <icon name="bars"></icon>
     </button>
-    <div slot="card-internals" class="card-content bg-white">
+
+    <div v-if="csvFields" slot="card-internals" class="card-content bg-white no-padding">
+
+      <q-tabs :refs="$refs" default-tab="plot-tab" class="bg-white no-padding">
+        <q-tab v-if="plotTabName" name="plot-tab" class="capitalize">
+          {{ plotTabName }}
+        </q-tab>
+        <q-tab v-else name="plot-tab" class="capitalize">
+          Plot
+        </q-tab>
+        <q-tab name="table-tab" class="capitalize">
+          Table
+        </q-tab>
+      </q-tabs>
+
+      <div ref="plot-tab">
+        <div class="list item-delimiter">
+          <div class="row card-content">
+            <slot name="plot-controls">
+            </slot>
+          </div>
+        </div>
+        <div class="plot-root-container">
+          <div :class="name" class="plot-root"></div>
+        </div>
+      </div>
+
+      <div ref="table-tab">
+        <q-data-table
+          :data="csvData"
+          :config="tableConfig"
+          :columns="tableColumns">
+        </q-data-table>
+      </div>
+    </div>
+
+    <div v-else slot="card-internals" class="card-content bg-white no-padding">
       <div class="plot-root-container">
         <div :class="name" class="plot-root"></div>
       </div>
@@ -28,9 +64,20 @@ import FileSaver from 'file-saver'
 import tntUtils from 'tnt.utils'
 
 export default {
-  props: ['name', 'title', 'description', 'resizeHandler', 'filename', 'csvFields', 'csvData'],
+  props: ['name', 'title', 'description', 'resizeHandler', 'filename', 'csvFields', 'csvData', 'tableColumns', 'plotTabName'],
   directives: {
     resize
+  },
+  computed: {
+    tableConfig () {
+      return {
+        rowHeight: '25px',
+        pagination: {
+          rowsPerPage: 10,
+          options: [10, 25]
+        }
+      }
+    }
   },
   methods: {
     csvDownload () {

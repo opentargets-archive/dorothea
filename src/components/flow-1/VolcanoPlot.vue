@@ -1,18 +1,29 @@
 <template>
   <dorothea-plot-card
                       name="volcano-plot"
-                      title="Volcano Plot"
-                      description="Displaying interactions between drugs and transcription factors."
+                      title=""
+                      description=""
+                      plot-tab-name="Volcano Plot"
                       :resize-handler="handlerResize"
                       :filename="filename"
                       :csv-data="csvData"
-                      :csv-fields="csvFields">
+                      :csv-fields="csvFields"
+                      :table-columns="tableColumns">
 
     <div slot="extra-toolbar-buttons" class="list item-delimiter hightlight">
       <button class="item item-link small text-left light-paragraph" style="text-transform:none;min-width:300px;" @click="showlabels">
         Show significant labels
         <icon name="check" v-if="showLabels"></icon>
       </button>
+    </div>
+
+    <div slot="plot-controls">
+      <label>
+        <q-toggle
+          v-model="showLabels"
+        ></q-toggle>
+        Labels
+      </label>
     </div>
   </dorothea-plot-card>
 </template>
@@ -22,6 +33,7 @@ import resize from 'vue-resize-directive'
 import volcanoPlot from 'volcano-plot'
 import router from '../../router'
 import * as _ from 'lodash'
+import * as d3 from 'd3'
 
 export default {
   directives: {
@@ -72,8 +84,41 @@ export default {
     csvData () {
       return this.plotData
     },
+    tableColumns () {
+      return [
+        {
+          label: 'Drug',
+          field: 'drugName',
+          width: '100px',
+          sort: true
+        },
+        {
+          label: 'TF',
+          field: 'transcriptionFactor',
+          width: '100px',
+          sort: true
+        },
+        {
+          label: 'Effect Size',
+          field: 'effectSize',
+          width: '100px',
+          sort: true,
+          format: this.formatter
+        },
+        {
+          label: 'FDR',
+          field: 'fdr',
+          width: '100px',
+          sort: true,
+          format: this.formatter
+        }
+      ]
+    },
     filename () {
       return 'associations_' + this.drugId + '-' + this.tfId
+    },
+    title () {
+      return 'Showing ' + this.plotData.length + ' interactions'
     },
     plotData () {
       return this.$store.state.flow1.volcanoPlotData
@@ -114,6 +159,7 @@ export default {
     this.plot.data(this.plotData)
              .showCircleLabels(this.showLabels)
              .textAccessor(this.labelAccessor)
+             .title('<tspan font-style="italic">' + this.title + '</tspan>')
             //  .render()
     this.handlerResize()
   },
@@ -159,7 +205,8 @@ export default {
                     .showCircleLabels(this.showLabels)
                     .xLabel('Effect Size')
                     .yLabel('-log FDR')
-                    .margins({top: 5, bottom: 50, left: 40, right: 10})
+                    .title('<tspan font-style="italic">' + this.title + '</tspan>')
+                    // .margins({top: 5, bottom: 50, left: 40, right: 10})
       // this.plot.render()
       this.handlerResize()
     },
@@ -181,6 +228,9 @@ export default {
       this.plot.width(width)
                .height(height)
                .render()
+    },
+    formatter (value) {
+      return d3.format('.3g')(value)
     }
     // pngDownload () {
     //   // TODO: Combine svg and canvas

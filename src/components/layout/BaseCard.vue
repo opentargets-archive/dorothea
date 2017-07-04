@@ -1,13 +1,12 @@
 <template>
   <div class="card animate-fade bg-white">
-    <div class="card-title text-primary inverted toolbar">
+    <div v-if="title || description" class="card-title text-primary inverted toolbar">
       <div class="toolbar-content">
         <small>{{ title }}</small>
         <button v-if="description" class="small" @click="toggleShowHelp">
           <icon name="info-circle"></icon>
         </button>
       </div>
-      <slot name="toolbar-button"></slot>
     </div>
 
     <div v-if="showHelp" class="text-primary inverted toolbar">
