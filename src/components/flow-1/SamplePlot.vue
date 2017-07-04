@@ -125,6 +125,9 @@ export default {
     filename () {
       return 'samples_' + this.drugName() + '-' + this.tfId
     },
+    title () {
+      return 'Showing ' + this.plotData.length + ' samples for the ' + this.drugName() + ' - ' + this.tfId + ' interaction'
+    },
     description () {
       return 'Showing the relationship between log IC50 (y)' +
              ' and predicted TF activity (x) of individual cell ' +
@@ -159,6 +162,7 @@ export default {
              .showBoxPlots(this.showBoxPlots)
              .xLabel('<tspan font-weight="bold">' + this.tfId + '</tspan> estimated activity')
              .yLabel('<tspan font-weight="bold">' + this.drugName() + '</tspan> log IC50')
+             .title('<tspan font-style="italic">' + this.title + '</tspan>')
             //  .render()
     this.handlerResize()
   },
@@ -211,6 +215,7 @@ export default {
                     .legendTitle('GDSC Description 1')
                     .xLabel('<tspan font-weight="bold">' + this.tfId + '</tspan> estimated activity')
                     .yLabel('<tspan font-weight="bold">' + this.drugName() + '</tspan> log IC50')
+                    .title('<tspan font-style="italic">' + this.title + '</tspan>')
                     .showRegression(false)
       // this.plot.render()
       this.handlerResize()
