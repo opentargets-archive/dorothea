@@ -123,7 +123,7 @@ export default {
       })
     },
     drugsBarPlotData: (state) => () => {
-      // return the top 20 drugs by interaction count
+      // return drugs sorted by interaction count
       let interactionCountsByDrug = {}
       Object.keys(state.aDrugs).map(drugId => {
         interactionCountsByDrug[drugId] = {
@@ -146,8 +146,6 @@ export default {
       // sort
       interactionCountsByDrugList.sort((a, b) => b.count - a.count)
 
-      // cut
-      interactionCountsByDrugList = interactionCountsByDrugList.slice(0, 20)
       return interactionCountsByDrugList
     },
     sampleSummary: (state, getters) => (drugId, tfId, sampleId) => {
@@ -157,7 +155,9 @@ export default {
       return getters.volcanoPlotData(drugId, tfId)[0]
     },
     tfsBarPlotData: (state) => () => {
-      // return the top 20 tfs by interaction count
+      if (!state.mTfActivitiesGdsc) return []
+
+      // return tfs sorted by interaction count
       let interactionCountsByTF = {}
 
       // create counters
@@ -182,8 +182,6 @@ export default {
       // sort
       interactionCountsByTFList.sort((a, b) => b.count - a.count)
 
-      // cut
-      interactionCountsByTFList = interactionCountsByTFList.slice(0, 20)
       return interactionCountsByTFList
     },
 
