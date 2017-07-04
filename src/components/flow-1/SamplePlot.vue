@@ -112,8 +112,8 @@ export default {
     this.plot.data(this.plotData)
              .showCircleLabels(this.showLabels)
              .showLegend(this.showLegend)
-             .xLabel('[' + this.tfId + '] Activity')
-             .yLabel('[' + this.drugName() + '] log IC50')
+             .xLabel('<tspan font-weight="bold">' + this.tfId + '</tspan> estimated activity')
+             .yLabel('<tspan font-weight="bold">' + this.drugName() + '</tspan> log IC50')
             //  .render()
     this.handlerResize()
   },
@@ -161,10 +161,9 @@ export default {
                     .handleCircleClick(this.clickHandler)
                     .handleBackgroundClick(this.clickBackgroundHandler)
                     .legendTitle('GDSC Description 1')
-                    .xLabel('[' + this.tfId + '] Activity')
-                    .yLabel('[' + this.drugName() + '] log IC50')
+                    .xLabel('<tspan font-weight="bold">' + this.tfId + '</tspan> estimated activity')
+                    .yLabel('<tspan font-weight="bold">' + this.drugName() + '</tspan> log IC50')
                     .showRegression(false)
-                    .margins({top: 5, bottom: 35, left: 40, right: 10})
       // this.plot.render()
       this.handlerResize()
     },
