@@ -13,10 +13,10 @@
     <div class="row gutter">
       
       <div class="width-1of2">
-        <dorothea-drugs-bar-plot></dorothea-drugs-bar-plot>
+        <dorothea-drugs-bar-plot :plot-data="drugsBarPlotData"></dorothea-drugs-bar-plot>
       </div>
       <div class="width-1of2">
-        <dorothea-tfs-bar-plot></dorothea-tfs-bar-plot>
+        <dorothea-tfs-bar-plot :plot-data="tfsBarPlotData"></dorothea-tfs-bar-plot>
       </div>
     </div>
     
@@ -49,7 +49,7 @@
 </template>
 
 <script>
-import { mapGetters } from 'vuex'
+import { mapGetters, mapActions } from 'vuex'
 
 export default {
   computed: {
@@ -65,8 +65,27 @@ export default {
       'drugName',
       'selectedInteractionDrug',
       'selectedInteractionTF',
-      'selectedSample'
+      'selectedSample',
+      'drugsBarPlotData',
+      'tfsBarPlotData',
+      'dataLoaded'
     ])
+  },
+  methods: {
+    ...mapActions('flow1', [
+      'updateDrugsBarPlotData',
+      'updateTFsBarPlotData'
+    ]),
+    onDataLoad () {
+      this.updateDrugsBarPlotData({})
+      this.updateTFsBarPlotData({})
+    }
+  },
+  mounted () {
+    this.onDataLoad()
+  },
+  watch: {
+    dataLoaded: 'onDataLoad'
   }
 }
 </script>

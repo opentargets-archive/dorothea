@@ -15,11 +15,6 @@ function updateRoute (query) {
 export default {
   namespaced: true,
   state: {
-    // linked to route query
-    filterInteractionsBy: null,
-    filterInteractionsOnDrug: null,
-    filterInteractionsOnTF: null,
-
     drugOptions: [],
     tfOptions: [],
     sampleOptions: [],
@@ -31,19 +26,28 @@ export default {
     tfsBarPlotData: []
   },
   getters: {
+    // data module (ideally server-side)
+    dataLoaded: (state, getters, rootState) => rootState.data.loaded,
+
+    // route module (synced to url)
+    filterInteractionsBy: (state, getters, rootState) => rootState.route.query.filterInteractionsBy,
+    filterInteractionsOnDrug: (state, getters, rootState) => rootState.route.query.filterInteractionsOnDrug,
+    filterInteractionsOnTF: (state, getters, rootState) => rootState.route.query.filterInteractionsOnTF,
     selectedInteractionDrug: (state, getters, rootState) => rootState.route.query.selectedInteractionDrug,
     selectedInteractionTF: (state, getters, rootState) => rootState.route.query.selectedInteractionTF,
     selectedSample: (state, getters, rootState) => rootState.route.query.selectedSample,
-    drugOptions: (state) => () => state.drugOptions,
-    tfOptions: (state) => () => state.tfOptions,
+
+    // local
+    drugOptions: (state) => state.drugOptions,
+    tfOptions: (state) => state.tfOptions,
     sampleOptions: (state) => () => state.sampleOptions,
     volcanoPlotData: (state) => () => state.volcanoPlotData,
     samplePlotData: (state) => () => state.samplePlotData,
     interactionTableData: (state) => () => state.interactionTableData,
     sampleTableData: (state) => () => state.sampleTableData,
-    drugsBarPlotData: (state) => () => state.drugsBarPlotData,
-    tfsBarPlotData: (state) => () => state.drugsBarPlotData,
-    drugName: (state, getters, rootState) => () => {
+    drugsBarPlotData: (state) => state.drugsBarPlotData,
+    tfsBarPlotData: (state) => state.tfsBarPlotData,
+    drugName: (state, getters, rootState) => {
       const selectedInteractionDrug = +rootState.route.query.selectedInteractionDrug
       let drugName = ''
       if (selectedInteractionDrug) {

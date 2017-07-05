@@ -123,6 +123,8 @@ export default {
       })
     },
     drugsBarPlotData: (state) => () => {
+      if (!state.mTfActivitiesGdsc) return []
+
       // return drugs sorted by interaction count
       let interactionCountsByDrug = {}
       Object.keys(state.aDrugs).map(drugId => {
