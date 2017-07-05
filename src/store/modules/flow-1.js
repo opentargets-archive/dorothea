@@ -173,13 +173,10 @@ export default {
       }
     },
     updateInteractionTableData ({state, commit, getters}) {
-      console.log('updateInteractionTableData called')
       const params = {
         drugId: getters.selectedInteractionDrug,
         tfId: getters.selectedInteractionTF
       }
-
-      console.log(params)
       Vue.http.get(apiBase + 'flow-1/interaction-table', {params: params})
         .then(function (response) {
           commit('mUpdateInteractionTableData', response.body)
