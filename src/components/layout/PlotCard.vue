@@ -15,7 +15,7 @@
 
     <div v-if="csvFields" slot="card-internals" class="card-content bg-white no-padding">
 
-      <q-tabs :refs="$refs" default-tab="plot-tab" class="bg-white no-padding">
+      <q-tabs :refs="$refs" default-tab="plot-tab" class="bg-white no-padding plot-table-tabs">
         <q-tab v-if="plotTabName" name="plot-tab" class="capitalize">
           {{ plotTabName }}
         </q-tab>
@@ -28,11 +28,14 @@
       </q-tabs>
 
       <div ref="plot-tab">
-        <div class="list item-delimiter">
-          <div class="row card-content">
+        <div class="plot-options row card-content justify-between">
+          <div class="plot-controls-container row items-center">
             <slot name="plot-controls">
             </slot>
           </div>
+          <button class="small clear outline tertiary" @click="pngDownload()">
+            <icon name="image"></icon>
+          </button>
         </div>
         <div class="plot-root-container">
           <div :class="name" class="plot-root"></div>
@@ -128,4 +131,16 @@ export default {
     margin-bottom: 0;
   }
 }*/
+.plot-table-tabs {
+  border-bottom: 1px solid #bbb;
+}
+.plot-options {
+  border-bottom: 1px solid #bbb;
+  padding: 5px 10px;
+}
+.plot-controls-container {
+  /*border-radius: 3px;*/
+  /*border: 1px solid #555;*/
+  padding: 5px 10px;
+}
 </style>

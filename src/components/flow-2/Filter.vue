@@ -1,6 +1,6 @@
 <template>
-  <dorothea-base-card :title="'Filter'"
-                      :description="'Interactions can be filtered by drug, genomic marker, cancer type and transcription factor.'">
+  <dorothea-base-card title="Filter interactions"
+                      description="">
 
     <div slot="card-internals" class="card-content bg-white">
 
@@ -14,7 +14,7 @@
 
       <div class="row justify-center items-center item">
         <small class="width-1of3">Drug:</small>
-        <q-autocomplete v-if="!drugSelected" v-model="drugTerm" :static-data="staticData" :max-results="100" @selected="selectDrugTerm"></q-autocomplete>
+        <q-autocomplete v-if="!drugSelected" v-model="drugTerm" :static-data="staticData" :min-characters="-1" :max-results="100" @selected="selectDrugTerm"></q-autocomplete>
         <small v-else class="token">{{ drugSelected.value }}<i class="cursor-pointer" @click="deselectDrugTerm()">close</i></small>
       </div>
 

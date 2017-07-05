@@ -1,6 +1,6 @@
 <template>
   <dorothea-plot-card name="sample-plot"
-                      title=""
+                      title="Samples"
                       description=""
                       :resize-handler="handlerResize"
                       :filename="filename"

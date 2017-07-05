@@ -1,5 +1,12 @@
 <template>
-  <div class="card animate-fade bg-white">
+  <div class="column">
+    <h6 v-if="title">{{ title }} <small v-if="description" class="light-paragraph">{{ description }}</small></h6>
+    <div class="card animate-fade bg-white">
+      <slot name="card-internals"></slot>
+    </div>
+  </div>
+
+  <!--<div class="card animate-fade bg-white">
     <div v-if="title || description" class="card-title text-primary inverted toolbar">
       <div class="toolbar-content">
         <small>{{ title }}</small>
@@ -16,7 +23,7 @@
     </div>
 
     <slot name="card-internals"></slot>
-  </div>
+  </div>-->
 </template>
 
 <script>

@@ -1,6 +1,6 @@
 <template>
-  <dorothea-table-card title="Genomic Marker Summary"
-                       :description="description">
+  <dorothea-table-card title="Selected genomic marker"
+                       description="">
 
     <thead slot="thead">
       <tr>

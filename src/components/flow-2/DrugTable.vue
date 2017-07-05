@@ -1,7 +1,7 @@
 <template>
   <dorothea-table-card v-if="drugId"
-                       :title="'Drug Summary'"
-                       :description="description">
+                       :title="'Selected drug'"
+                       description="">
 
     <thead slot="thead">
       <tr>

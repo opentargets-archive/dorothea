@@ -1,6 +1,6 @@
 <template>
-  <dorothea-base-card title="Results"
-                      description="Displaying all filtered interactions.">
+  <dorothea-base-card title="Interactions"
+                      description="">
 
     <div slot="card-internals" class="card-content">
       <small class="text-secondary">Significant interactions appear in red</small>
