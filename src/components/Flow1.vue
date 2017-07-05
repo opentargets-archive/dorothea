@@ -25,7 +25,10 @@
     <div class="row gutter">
       <div class="column width-1of3">
         <dorothea-flow-1-filter></dorothea-flow-1-filter>
-        <dorothea-association-table v-if="showInteractionDetail"></dorothea-association-table>
+        <dorothea-association-table v-if="showInteractionDetail"
+                                    :drug-id="selectedInteractionDrug"
+                                    :table-data="interactionTableData">
+        </dorothea-association-table>
       </div>
       <div class="width-2of3">
         <volcano-plot></volcano-plot>
@@ -68,24 +71,35 @@ export default {
       'selectedSample',
       'drugsBarPlotData',
       'tfsBarPlotData',
-      'dataLoaded'
+      'dataLoaded',
+      'interactionTableData'
     ])
   },
   methods: {
     ...mapActions('flow1', [
       'updateDrugsBarPlotData',
-      'updateTFsBarPlotData'
+      'updateTFsBarPlotData',
+      'updateInteractionTableData'
     ]),
     onDataLoad () {
       this.updateDrugsBarPlotData({})
       this.updateTFsBarPlotData({})
+      this.updateInteractionTableData()
+    },
+    onSelectedDrugChange () {
+      this.updateInteractionTableData()
+    },
+    onSelectedTFChange () {
+      this.updateInteractionTableData()
     }
   },
   mounted () {
     this.onDataLoad()
   },
   watch: {
-    dataLoaded: 'onDataLoad'
+    dataLoaded: 'onDataLoad',
+    selectedInteractionDrug: 'onSelectedDrugChange',
+    selectedInteractionTF: 'onSelectedTFChange'
   }
 }
 </script>

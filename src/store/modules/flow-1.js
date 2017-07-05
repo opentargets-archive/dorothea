@@ -31,9 +31,9 @@ export default {
 
     // route module (synced to url)
     filterInteractionsBy: (state, getters, rootState) => rootState.route.query.filterInteractionsBy,
-    filterInteractionsOnDrug: (state, getters, rootState) => rootState.route.query.filterInteractionsOnDrug,
+    filterInteractionsOnDrug: (state, getters, rootState) => +rootState.route.query.filterInteractionsOnDrug,
     filterInteractionsOnTF: (state, getters, rootState) => rootState.route.query.filterInteractionsOnTF,
-    selectedInteractionDrug: (state, getters, rootState) => rootState.route.query.selectedInteractionDrug,
+    selectedInteractionDrug: (state, getters, rootState) => +rootState.route.query.selectedInteractionDrug,
     selectedInteractionTF: (state, getters, rootState) => rootState.route.query.selectedInteractionTF,
     selectedSample: (state, getters, rootState) => rootState.route.query.selectedSample,
 
@@ -43,7 +43,7 @@ export default {
     sampleOptions: (state) => () => state.sampleOptions,
     volcanoPlotData: (state) => () => state.volcanoPlotData,
     samplePlotData: (state) => () => state.samplePlotData,
-    interactionTableData: (state) => () => state.interactionTableData,
+    interactionTableData: (state) => state.interactionTableData,
     sampleTableData: (state) => () => state.sampleTableData,
     drugsBarPlotData: (state) => state.drugsBarPlotData,
     tfsBarPlotData: (state) => state.tfsBarPlotData,
@@ -172,7 +172,14 @@ export default {
         commit('mUpdateSamplePlotData', [])
       }
     },
-    updateInteractionTableData ({state, commit}, params) {
+    updateInteractionTableData ({state, commit, getters}) {
+      console.log('updateInteractionTableData called')
+      const params = {
+        drugId: getters.selectedInteractionDrug,
+        tfId: getters.selectedInteractionTF
+      }
+
+      console.log(params)
       Vue.http.get(apiBase + 'flow-1/interaction-table', {params: params})
         .then(function (response) {
           commit('mUpdateInteractionTableData', response.body)

@@ -43,20 +43,8 @@
 import * as d3 from 'd3'
 
 export default {
+  props: ['drugId', 'tableData'],
   computed: {
-    dataLoaded () {
-      return this.$store.state.data.loaded
-    },
-    drugId () {
-      return +this.$store.state.route.query.selectedInteractionDrug
-    },
-    tfId () {
-      return this.$store.state.route.query.selectedInteractionTF
-    },
-    tableData () {
-      return this.$store.state.flow1.interactionTableData
-    },
-
     effectSize () {
       return d3.format('.3g')(this.tableData.effectSize)
     },
@@ -69,28 +57,6 @@ export default {
     drugUrl () {
       return 'http://www.cancerrxgene.org/translation/Drug/' + this.drugId
     }
-  },
-  watch: {
-    drugId () {
-      this.updateData()
-    },
-    tfId () {
-      this.updateData()
-    },
-    dataLoaded () {
-      this.updateData()
-    }
-  },
-  methods: {
-    updateData () {
-      this.$store.dispatch('flow1/updateInteractionTableData', {
-        drugId: this.drugId,
-        tfId: this.tfId
-      })
-    }
-  },
-  mounted () {
-    this.updateData()
   }
 }
 </script>
