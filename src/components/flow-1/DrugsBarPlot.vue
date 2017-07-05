@@ -1,7 +1,7 @@
 <template>
   <div class="column">
     <h6>Drugs <small class="light-paragraph">{{ count }} compounds</small></h6>
-    <dorothea-plot-card name="bar-plot"
+    <dorothea-plot-card name="drugs-bar-plot"
                         title=""
                         description=""
                         :resize-handler="handlerResize">
@@ -34,7 +34,7 @@ export default {
   },
   mounted () {
     // create new bar plot
-    this.plot = barPlot('.bar-plot')
+    this.plot = barPlot('.drugs-bar-plot')
                     .data(this.plotData.slice(0, 20))
                     .yAccessor(d => d.count)
                     .xAccessor(d => d.drugName)
@@ -50,3 +50,9 @@ export default {
   }
 }
 </script>
+
+<style>
+.drugs-bar-plot .bar-plot .bars rect {
+  fill: #B8D9BE;
+}
+</style>
