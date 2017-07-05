@@ -154,7 +154,9 @@ export default {
       return getters.samplePlotData(drugId, tfId).filter(r => r.sampleId === sampleId)[0]
     },
     interactionTableData: (state, getters) => (drugId, tfId) => {
-      return getters.volcanoPlotData(drugId, tfId)[0]
+      let d = getters.volcanoPlotData(drugId, tfId)[0]
+      d = d || {}
+      return d
     },
     tfsBarPlotData: (state) => () => {
       if (!state.mTfActivitiesGdsc) return []
