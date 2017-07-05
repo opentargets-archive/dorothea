@@ -123,10 +123,10 @@ export default {
       ]
     },
     filename () {
-      return 'samples_' + this.drugName() + '-' + this.tfId
+      return 'samples_' + this.drugName + '-' + this.tfId
     },
     title () {
-      return 'Showing ' + this.plotData.length + ' samples for the ' + this.drugName() + ' - ' + this.tfId + ' interaction'
+      return 'Showing ' + this.plotData.length + ' samples for the ' + this.drugName + ' - ' + this.tfId + ' interaction'
     },
     description () {
       return 'Showing the relationship between log IC50 (y)' +
@@ -161,7 +161,7 @@ export default {
              .showLegend(this.showLegend)
              .showBoxPlots(this.showBoxPlots)
              .xLabel('<tspan font-weight="bold">' + this.tfId + '</tspan> estimated activity')
-             .yLabel('<tspan font-weight="bold">' + this.drugName() + '</tspan> log IC50')
+             .yLabel('<tspan font-weight="bold">' + this.drugName + '</tspan> log IC50')
              .title('<tspan font-style="italic">' + this.title + '</tspan>')
             //  .render()
     this.handlerResize()
@@ -214,7 +214,7 @@ export default {
                     .handleBackgroundClick(this.clickBackgroundHandler)
                     .legendTitle('GDSC Description 1')
                     .xLabel('<tspan font-weight="bold">' + this.tfId + '</tspan> estimated activity')
-                    .yLabel('<tspan font-weight="bold">' + this.drugName() + '</tspan> log IC50')
+                    .yLabel('<tspan font-weight="bold">' + this.drugName + '</tspan> log IC50')
                     .title('<tspan font-style="italic">' + this.title + '</tspan>')
                     .showRegression(false)
       // this.plot.render()

@@ -34,7 +34,7 @@
 
     <div v-if="showInteractionDetail">
       <hr>
-      <h5>Interaction between {{ drugName() }} and {{ selectedInteractionTF }}</h5>
+      <h5>Interaction between {{ drugName }} and {{ selectedInteractionTF }}</h5>
       <div class="row gutter">
         <div class="column width-1of3">
           <dorothea-sample-plot-filter></dorothea-sample-plot-filter>
