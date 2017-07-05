@@ -25,3 +25,9 @@ export default {
   }
 }
 </script>
+
+<style>
+div.card div.card-content {
+  color: #555;
+}
+</style>
