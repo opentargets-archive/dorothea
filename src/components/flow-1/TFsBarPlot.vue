@@ -50,3 +50,9 @@ export default {
   }
 }
 </script>
+
+<style lang="scss">
+.tfs-bar-plot .bar-plot .bars rect {
+  fill: #B7E9F3;
+}
+</style>
