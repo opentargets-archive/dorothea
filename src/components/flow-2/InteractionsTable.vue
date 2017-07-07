@@ -2,29 +2,31 @@
   <dorothea-base-card title="Interactions"
                       description="">
 
-    <div slot="card-internals" class="card-content">
-      <small class="text-secondary">Significant interactions appear in red</small>
+    <div slot="card-internals" class="card-content no-padding">
+      <div class="group">
+        <small class="text-red text-bold">Significant interactions appear in red</small>
+      </div>
       <q-data-table :data="tableData"
                     :config="tableConfig"
                     :columns="tableCols"
                     @rowclick="rowClickHandler">
         <template slot="col-drugName" scope="cell">
-          <span @click="rowClickHandler(cell)" class="cursor-pointer" :class="{ 'text-secondary text-bold': significantCell(cell) }">{{  cell.data  }}</span>
+          <span @click="rowClickHandler(cell)" class="cursor-pointer" :class="{ 'text-red text-bold': significantCell(cell) }">{{  cell.data  }}</span>
         </template>
         <template slot="col-gm" scope="cell">
-          <span @click="rowClickHandler(cell)" class="cursor-pointer" :class="{ 'text-secondary text-bold': significantCell(cell) }">{{  cell.data  }}</span>
+          <span @click="rowClickHandler(cell)" class="cursor-pointer" :class="{ 'text-red text-bold': significantCell(cell) }">{{  cell.data  }}</span>
         </template>
         <template slot="col-transcriptionFactor" scope="cell">
-          <span @click="rowClickHandler(cell)" class="cursor-pointer" :class="{ 'text-secondary text-bold': significantCell(cell) }">{{  cell.data  }}</span>
+          <span @click="rowClickHandler(cell)" class="cursor-pointer" :class="{ 'text-red text-bold': significantCell(cell) }">{{  cell.data  }}</span>
         </template>
         <template slot="col-cancerType" scope="cell">
-          <span @click="rowClickHandler(cell)" class="cursor-pointer" :class="{ 'text-secondary text-bold': significantCell(cell) }">{{  cell.data  }}</span>
+          <span @click="rowClickHandler(cell)" class="cursor-pointer" :class="{ 'text-red text-bold': significantCell(cell) }">{{  cell.data  }}</span>
         </template>
         <template slot="col-intLRTestPval" scope="cell">
-          <span @click="rowClickHandler(cell)" class="cursor-pointer" :class="{ 'text-secondary text-bold': significantCell(cell) }">{{  formatter(cell.data)  }}</span>
+          <span @click="rowClickHandler(cell)" class="cursor-pointer" :class="{ 'text-red text-bold': significantCell(cell) }">{{  formatter(cell.data)  }}</span>
         </template>
         <template slot="col-intLRTestFdr" scope="cell">
-          <span @click="rowClickHandler(cell)" class="cursor-pointer" :class="{ 'text-secondary text-bold': significantCell(cell) }">{{  formatter(cell.data)  }}</span>
+          <span @click="rowClickHandler(cell)" class="cursor-pointer" :class="{ 'text-red text-bold': significantCell(cell) }">{{  formatter(cell.data)  }}</span>
         </template>
       </q-data-table>
     </div>
