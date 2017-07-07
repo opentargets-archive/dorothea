@@ -37,7 +37,7 @@
 </template>
 
 <script>
-import { mapActions } from 'vuex'
+import { mapGetters, mapActions } from 'vuex'
 
 export default {
   data () {
@@ -51,23 +51,20 @@ export default {
     dataLoaded () {
       return this.$store.state.data.loaded
     },
-    filterInteractionsBy () {
-      return this.$store.state.route.query.filterInteractionsBy
-    },
-    drugOptions () {
-      return this.$store.state.flow1.drugOptions
-    },
-    tfOptions () {
-      return this.$store.state.flow1.tfOptions
-    },
-    drugLabel () {
-      let label = ''
-      if (this.drugOptions && this.drugId) {
-        const pair = this.drugOptions.filter(r => r.value === this.drugId)[0]
-        if (pair && pair.label) label = pair.label
-      }
-      return label
-    }
+    // filterInteractionsBy () {
+    //   return this.$store.state.route.query.filterInteractionsBy
+    // },
+    // drugOptions () {
+    //   return this.$store.state.flow1.drugOptions
+    // },
+    // tfOptions () {
+    //   return this.$store.state.flow1.tfOptions
+    // },
+    ...mapGetters('flow1', [
+      'filterInteractionsBy',
+      'drugOptions',
+      'tfOptions'
+    ])
   },
   watch: {
     dataLoaded () {
