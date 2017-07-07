@@ -30,4 +30,11 @@ export default {
 div.card div.card-content {
   color: #555;
 }
+hr {
+  height: 2px;
+  border: 0;
+  background-color: #ccc;
+  width: 100%;
+  margin: 0;
+}
 </style>

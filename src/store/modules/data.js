@@ -293,6 +293,54 @@ export default {
         mut
       }
     },
+    effectPlotData: (state) => (drugId, gmId, ctId, tfId) => {
+      // should return points with wt/mut annotation
+
+      // catches
+      if (drugId === 'all' || tfId === 'all') return []
+      if (!state.mDrugIc50Gdsc || !state.mTfActivitiesGdsc) return []
+
+      // get the ic50/activity values (dict with sample ids as keys)
+      const ic50sForDrug = state.mDrugIc50Gdsc[drugId]
+      const activitiesForTf = state.mTfActivitiesGdsc[tfId]
+
+      // get the sample ids derived from the drug/tf
+      const sampleIdsForDrug = Object.keys(ic50sForDrug).map(d => +d)
+      const sampleIdsForTf = Object.keys(activitiesForTf).map(d => +d)
+
+      // get the intersection of sample ids
+      let tfSet = new Set(sampleIdsForTf)
+      let sampleIds = []
+      sampleIdsForDrug.map(sampleId => {
+        if (tfSet.has(sampleId)) sampleIds.push(sampleId)
+      })
+
+      // get the sample ids representing mutants for the given gm
+      const sampleIdsForGm = state.mGM[gmId]
+
+      // construct plot data
+      let plotData = sampleIds.map(sampleId => {
+        return {
+          sampleId: sampleId,
+          ic50: ic50sForDrug[sampleId],
+          tfActivity: state.mTfActivitiesGdsc[tfId][sampleId],
+          ...state.aSamples[sampleId],
+          mut: (sampleIdsForGm.indexOf(sampleId) >= 0)
+        }
+      })
+
+      // filter out based on cancer type
+      plotData = plotData.filter(d => {
+        if (ctId === 'PANCAN') {
+          return true
+        }
+        else {
+          return d.tcgaLabel === ctId
+        }
+      })
+
+      return plotData
+    },
     flow2TableData: (state) => (drugId, gmId, ctId, tfId) => {
       return state.rTfDrugGmAssoGdsc.filter(r => (!drugId || r.drugId === drugId))
                                     .filter(r => (!gmId || r.gmId === gmId))
@@ -452,10 +500,10 @@ export default {
               analysisSetName: r['Cell.line.name'],
               gdscDesc1: r.Primary_Site_GDSC1,
               gdscDesc2: r.Primary_Site_GDSC2,
-              studyAbbreviation: r['TCGA_label'],
               comment: r.Comment,
               mmr: r.MMR,
-              screenMedium: r.Screen_Medium
+              screenMedium: r.Screen_Medium,
+              tcgaLabel: r['TCGA_label']
             }
           })
           .get(function (data) {

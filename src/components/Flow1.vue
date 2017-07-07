@@ -108,11 +108,4 @@ export default {
 .toolbar-title span {
   font-size: 0.8em;
 }
-hr {
-  height: 2px;
-  border: 0;
-  background-color: #ccc;
-  width: 100%;
-  margin: 0;
-}
 </style>

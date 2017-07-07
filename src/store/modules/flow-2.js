@@ -20,9 +20,10 @@ export default {
     gmOptions: [],
     ctOptions: [],
     tfOptions: [],
-    boxPlotData: {},
-    nestedBoxPlotData: {},
-    simpleSamplePlotData: [],
+    // boxPlotData: {},
+    // nestedBoxPlotData: {},
+    // simpleSamplePlotData: [],
+    effectPlotData: [],
     gmTableData: {},
     drugTableData: {}
   },
@@ -36,12 +37,13 @@ export default {
     gmOptions: (state) => () => state.gmOptions,
     ctOptions: (state) => () => state.ctOptions,
     tfOptions: (state) => () => state.tfOptions,
-    boxPlotData: (state) => () => state.boxPlotData,
-    nestedBoxPlotData: (state) => () => state.nestedBoxPlotData,
-    simpleSamplePlotData: (state) => () => state.simpleSamplePlotData,
+    // boxPlotData: (state) => () => state.boxPlotData,
+    // nestedBoxPlotData: (state) => () => state.nestedBoxPlotData,
+    // simpleSamplePlotData: (state) => () => state.simpleSamplePlotData,
+    effectPlotData: (state) => state.effectPlotData,
     gmTableData: (state) => state.gmTableData,
     drugTableData: (state) => () => state.drugTableData,
-    drugName: (state, getters, rootState) => () => {
+    drugName: (state, getters, rootState) => {
       const drugId = +rootState.route.query.filterOnDrug
       let drugName = ''
       if (drugId) {
@@ -102,14 +104,17 @@ export default {
     mUpdateTFOptions (state, payload) {
       state.tfOptions = payload
     },
-    mUpdateBoxPlotData (state, payload) {
-      state.boxPlotData = payload
-    },
-    mUpdateNestedBoxPlotData (state, payload) {
-      state.nestedBoxPlotData = payload
-    },
-    mUpdateSimpleSamplePlotData (state, payload) {
-      state.simpleSamplePlotData = payload
+    // mUpdateBoxPlotData (state, payload) {
+    //   state.boxPlotData = payload
+    // },
+    // mUpdateNestedBoxPlotData (state, payload) {
+    //   state.nestedBoxPlotData = payload
+    // },
+    // mUpdateSimpleSamplePlotData (state, payload) {
+    //   state.simpleSamplePlotData = payload
+    // },
+    mUpdateEffectPlotData (state, payload) {
+      state.effectPlotData = payload
     },
     mUpdateGMTableData (state, payload) {
       state.gmTableData = payload
@@ -149,37 +154,55 @@ export default {
           commit('mUpdateTFOptions', response.body)
         })
     },
-    updateBoxPlotData ({state, commit}, params) {
+    // updateBoxPlotData ({state, commit}, params) {
+    //   if (params.drugId && params.gmId && params.ctId && params.tfId) {
+    //     Vue.http.get(apiBase + 'flow-2/box-plot', {params: params})
+    //     .then(function (response) {
+    //       console.log('p1')
+    //       console.log(response.body)
+    //       commit('mUpdateBoxPlotData', response.body)
+    //     })
+    //   }
+    //   else {
+    //     commit('mUpdateBoxPlotData', {})
+    //   }
+    // },
+    // updateNestedBoxPlotData ({state, commit}, params) {
+    //   if (params.drugId && params.gmId && params.ctId && params.tfId) {
+    //     Vue.http.get(apiBase + 'flow-2/nested-box-plot', {params: params})
+    //       .then(function (response) {
+    //         console.log('p3')
+    //         console.log(response.body)
+    //         commit('mUpdateNestedBoxPlotData', response.body)
+    //       })
+    //   }
+    //   else {
+    //     commit('mUpdateNestedBoxPlotData', {})
+    //   }
+    // },
+    // updateSimpleSamplePlotData ({state, commit}, params) {
+    //   if (params.drugId && params.gmId && params.ctId && params.tfId) {
+    //     Vue.http.get(apiBase + 'flow-2/simple-sample-plot', {params: params})
+    //       .then(function (response) {
+    //         console.log('p2')
+    //         console.log(response.body)
+    //         commit('mUpdateSimpleSamplePlotData', response.body)
+    //       })
+    //   }
+    //   else {
+    //     commit('mUpdateSimpleSamplePlotData', [])
+    //   }
+    // },
+    updateEffectPlotData ({state, commit}, params) {
       if (params.drugId && params.gmId && params.ctId && params.tfId) {
-        Vue.http.get(apiBase + 'flow-2/box-plot', {params: params})
-        .then(function (response) {
-          commit('mUpdateBoxPlotData', response.body)
-        })
-      }
-      else {
-        commit('mUpdateBoxPlotData', {})
-      }
-    },
-    updateNestedBoxPlotData ({state, commit}, params) {
-      if (params.drugId && params.gmId && params.ctId && params.tfId) {
-        Vue.http.get(apiBase + 'flow-2/nested-box-plot', {params: params})
+        Vue.http.get(apiBase + 'flow-2/effect-plot', {params: params})
           .then(function (response) {
-            commit('mUpdateNestedBoxPlotData', response.body)
+            console.log(response.body)
+            commit('mUpdateEffectPlotData', response.body)
           })
       }
       else {
-        commit('mUpdateNestedBoxPlotData', {})
-      }
-    },
-    updateSimpleSamplePlotData ({state, commit}, params) {
-      if (params.drugId && params.gmId && params.ctId && params.tfId) {
-        Vue.http.get(apiBase + 'flow-2/simple-sample-plot', {params: params})
-          .then(function (response) {
-            commit('mUpdateSimpleSamplePlotData', response.body)
-          })
-      }
-      else {
-        commit('mUpdateSimpleSamplePlotData', [])
+        commit('mUpdateEffectPlotData', [])
       }
     },
     updateGMTableData ({state, commit}, params) {
@@ -195,8 +218,6 @@ export default {
         })
     },
     selectInteractionRow (context, row) {
-      console.log('dispatching updateRoute with row')
-      console.log(row)
       return updateRoute({
         filterOnDrug: row.drugId,
         filterOnGM: row.gmId,

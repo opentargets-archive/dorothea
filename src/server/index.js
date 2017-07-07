@@ -54,16 +54,19 @@ export default function (Vue) {
       case 'flow-2/tf-options':
         body = store.getters.flow2TFPairs(params.drugId, params.gmId)
         break
-      case 'flow-2/box-plot':
-        body = store.getters.boxPlotData(params.drugId, params.gmId, params.ctId, params.tfId)
-        break
-      case 'flow-2/nested-box-plot':
-        body = store.getters.boxPlotData(params.drugId, params.gmId, params.ctId, params.tfId, true)
-        break
-      case 'flow-2/simple-sample-plot':
-        // TODO: this should take into account the gmId and ctId too
-        // ie. will need a store.getters.simpleSamplePlotData method
-        body = store.getters.samplePlotData(params.drugId, params.tfId)
+      // case 'flow-2/box-plot':
+      //   body = store.getters.boxPlotData(params.drugId, params.gmId, params.ctId, params.tfId)
+      //   break
+      // case 'flow-2/nested-box-plot':
+      //   body = store.getters.boxPlotData(params.drugId, params.gmId, params.ctId, params.tfId, true)
+      //   break
+      // case 'flow-2/simple-sample-plot':
+      //   // TODO: this should take into account the gmId and ctId too
+      //   // ie. will need a store.getters.simpleSamplePlotData method
+      //   body = store.getters.samplePlotData(params.drugId, params.tfId)
+      //   break
+      case 'flow-2/effect-plot':
+        body = store.getters.effectPlotData(params.drugId, params.gmId, params.ctId, params.tfId)
         break
       case 'flow-2/gm-table':
         body = store.getters.gmTableData(params.gmId)

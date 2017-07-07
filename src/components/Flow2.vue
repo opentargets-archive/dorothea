@@ -8,7 +8,45 @@
       </div>
     </div>
 
-    <div class="width-1of1 row gutter">
+    <h5>Results summary</h5>
+    <div>
+      ...
+    </div>
+    
+    <hr>
+    <h5>Results search</h5>
+    <div class="row gutter">
+      <div class="width-1of4 column">
+        <dorothea-flow-2-filter></dorothea-flow-2-filter>
+        <!--<dorothea-drug-table v-if="showDrugSummary"></dorothea-drug-table>
+        <dorothea-gm-table v-if="showGMSummary"></dorothea-gm-table>-->
+      </div>
+
+      <div class="width-3of4 column">
+        <dorothea-interactions-table></dorothea-interactions-table>
+      </div>
+    </div>
+
+    <div v-if="showPlots">
+      <hr>
+      <h5>Interaction between {{ drugName }}, {{ gmId }}, {{ ctId }} and {{ tfId }}</h5>
+      <div class="row gutter" v-if="showPlots">
+        <div class="width-1of4 column">
+          <dorothea-drug-table v-if="showDrugSummary"></dorothea-drug-table>
+          <dorothea-gm-table v-if="showGMSummary"></dorothea-gm-table>
+        </div>
+        <!--<div class="width-1of1">-->
+        <div class="width-3of4">
+          <dorothea-effect-plot></dorothea-effect-plot>
+        </div>
+      </div>
+    </div>
+
+
+
+
+    <!--OLD-->
+    <!--<div class="width-1of1 row gutter">
 
       <div class="width-1of4 column">
         <dorothea-flow-2-filter></dorothea-flow-2-filter>
@@ -19,6 +57,10 @@
       <div class="width-3of4 column">
         <dorothea-interactions-table></dorothea-interactions-table>
         <div class="row gutter" v-if="showPlots">
+          <div class="width-1of1">
+            <dorothea-effect-plot></dorothea-effect-plot>
+          </div> 
+
           <div class="width-1of3">
             <dorothea-box-plot></dorothea-box-plot>
           </div> 
@@ -30,7 +72,7 @@
           </div>
         </div>
       </div>
-    </div>
+    </div>-->
 
     
   </div>
@@ -42,7 +84,7 @@ import { mapGetters } from 'vuex'
 
 export default {
   computed: {
-    ...mapGetters('flow2', ['drugId', 'gmId', 'ctId', 'tfId']),
+    ...mapGetters('flow2', ['drugId', 'gmId', 'ctId', 'tfId', 'drugName']),
     showPlots () {
       // return (this.$store.state.route.query.filterOnDrug &&
       //         this.$store.state.route.query.filterOnGM &&

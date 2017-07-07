@@ -10,6 +10,7 @@ require(`../node_modules/volcano-plot/index.scss`)
 require(`../node_modules/sample-plot/index.scss`)
 require(`../node_modules/comparison-box-plot/index.scss`)
 require(`../node_modules/bar-plot/index.scss`)
+require(`../node_modules/effect-plot/index.scss`)
 // ==============================
 
 import Vue from 'vue'
@@ -24,6 +25,7 @@ import SamplePlotFilter from './components/flow-1/SamplePlotFilter.vue'
 import BoxPlot from './components/flow-2/BoxPlot.vue'
 import NestedBoxPlot from './components/flow-2/NestedBoxPlot.vue'
 import SimpleSamplePlot from './components/flow-2/SimpleSamplePlot.vue'
+import EffectPlot from './components/flow-2/EffectPlot.vue'
 import Header from './components/Header.vue'
 import Footer from './components/Footer.vue'
 import Card from './components/Card.vue'
@@ -72,6 +74,7 @@ Vue.component('dorothea-navigation', Navigation)
 Vue.component('dorothea-association-table', AssociationTable)
 Vue.component('dorothea-interactions-table', InteractionsTable)
 Vue.component('dorothea-sample-table', SampleTable)
+Vue.component('dorothea-effect-plot', EffectPlot)
 Vue.component('dorothea-gm-table', GMTable)
 Vue.component('dorothea-drug-table', DrugTable)
 Vue.component('dorothea-flow-2-filter', Flow2Filter)
