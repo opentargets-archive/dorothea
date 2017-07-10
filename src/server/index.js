@@ -45,6 +45,15 @@ export default function (Vue) {
       case 'flow-2/drug-autocomplete-options':
         body = store.getters.flow2DrugAutocompleteOptions(params)
         break
+      case 'flow-2/gm-autocomplete-options':
+        body = store.getters.flow2GMAutocompleteOptions(params)
+        break
+      case 'flow-2/ct-autocomplete-options':
+        body = store.getters.flow2CTAutocompleteOptions(params)
+        break
+      case 'flow-2/tf-autocomplete-options':
+        body = store.getters.flow2TFAutocompleteOptions(params)
+        break
       case 'flow-2/gm-options':
         body = store.getters.flow2GMPairs(params.drugId)
         break
@@ -67,6 +76,12 @@ export default function (Vue) {
       //   break
       case 'flow-2/effect-plot':
         body = store.getters.effectPlotData(params.drugId, params.gmId, params.ctId, params.tfId)
+        break
+      case 'flow-2/tfs-bar-plot':
+        body = store.getters.flow2TFsBarPlotData()
+        break
+      case 'flow-2/triplets-bar-plot':
+        body = store.getters.flow2TripletsBarPlotData()
         break
       case 'flow-2/gm-table':
         body = store.getters.gmTableData(params.gmId)

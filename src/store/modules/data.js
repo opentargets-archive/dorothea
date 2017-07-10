@@ -341,6 +341,65 @@ export default {
 
       return plotData
     },
+    flow2TFsBarPlotData: (state) => () => {
+      if (!state.mTfActivitiesGdsc) return []
+
+      // get tfs sorted by interaction count
+      let interactionCountsByTF = {}
+
+      // create counters
+      const tfs = Object.keys(state.mTfActivitiesGdsc)
+      tfs.map(tfId => {
+        interactionCountsByTF[tfId] = {
+          tfId,
+          count: 0
+        }
+      })
+
+      // walk through significant interactions
+      state.rTfDrugGmAssoGdsc
+      .filter(r => (r.intLRTestFdr < 0.05))
+      .map(r => {
+        interactionCountsByTF[r.transcriptionFactor].count += 1
+      })
+      let interactionCountsByTFList = tfs.map(tfId => {
+        return interactionCountsByTF[tfId]
+      })
+
+      // sort
+      interactionCountsByTFList.sort((a, b) => b.count - a.count)
+
+      return interactionCountsByTFList
+    },
+    flow2TripletsBarPlotData: (state) => () => {
+      // get interactions (grouped by drug, gm and ct), count by tf
+      let keys = {}
+      state.rTfDrugGmAssoGdsc
+      .filter(r => (r.intLRTestFdr < 0.05))
+      .map(r => {
+        const key = r.drugName + ' - ' + r.gmId + ' - ' + r.cancerType
+        if (!keys[key]) {
+          keys[key] = {
+            key: key,
+            drugName: r.drugName,
+            drugId: r.drugId,
+            gm: r.gm,
+            gmId: r.gmId,
+            ctId: r.cancerType,
+            count: 0
+          }
+        }
+        keys[key].count += 1
+      })
+
+      // convert to list
+      let countsAsList = Object.values(keys)
+
+      // sort
+      countsAsList.sort((a, b) => b.count - a.count)
+
+      return countsAsList
+    },
     flow2TableData: (state) => (drugId, gmId, ctId, tfId) => {
       return state.rTfDrugGmAssoGdsc.filter(r => (!drugId || r.drugId === drugId))
                                     .filter(r => (!gmId || r.gmId === gmId))
@@ -379,12 +438,15 @@ export default {
         // add synonyms
         const synonymStr = state.aDrugs[r.drugId].synonyms
         const synonyms = synonymStr.split(', ')
+        // console.log(synonyms)
         if (synonymStr) {
           synonyms.map(s => {
             options.push({
               value: r.drugName,
               label: s,
-              drugId: r.drugId
+              drugId: r.drugId,
+              secondLabel: '(synonym of ' + r.drugName + ')'
+              // stamp: r.drugName
             })
           })
         }
@@ -393,12 +455,47 @@ export default {
           options.push({
             value: r.drugName,
             label: r.drugName,
-            drugId: r.drugId,
-            info: state.aDrugs[r.drugId]
+            drugId: r.drugId
+            // info: state.aDrugs[r.drugId]
           })
         }
       })
+      // console.log(options)
       return options
+    },
+    flow2GMAutocompleteOptions: (state) => (p) => {
+      // get all the gm options for gm autocompletion
+      const interactions = state.rTfDrugGmAssoGdsc.filter(r => (!p.drugId || r.drugId === p.drugId))
+                                                  .filter(r => (!p.ctId || r.cancerType === p.ctId))
+      const gms = _.uniqBy(interactions, d => d.gmId)
+      return gms.map(r => ({
+        value: r.gm,
+        label: r.gm,
+        gmId: r.gmId
+      }))
+    },
+    flow2CTAutocompleteOptions: (state) => (p) => {
+      // get all the ct options for ct autocompletion
+      const interactions = state.rTfDrugGmAssoGdsc.filter(r => (!p.drugId || r.drugId === p.drugId))
+                                                  .filter(r => (!p.gmId || r.gmId === p.gmId))
+      const cts = _.uniqBy(interactions, d => d.cancerType)
+      return cts.map(r => ({
+        value: r.cancerType,
+        label: r.cancerType,
+        ctId: r.cancerType
+      }))
+    },
+    flow2TFAutocompleteOptions: (state) => (p) => {
+      // get all the tf options for tf autocompletion
+      const interactions = state.rTfDrugGmAssoGdsc.filter(r => (!p.drugId || r.drugId === p.drugId))
+                                                  .filter(r => (!p.gmId || r.gmId === p.gmId))
+                                                  .filter(r => (!p.ctId || r.cancerType === p.ctId))
+      const tfs = _.uniqBy(interactions, d => d.transcriptionFactor)
+      return tfs.map(r => ({
+        value: r.transcriptionFactor,
+        label: r.transcriptionFactor,
+        tfId: r.transcriptionFactor
+      }))
     },
     flow2GMPairs: (state) => (drugId) => {
       // get all GM options, as label-value pairs, possibly given a fixed drug

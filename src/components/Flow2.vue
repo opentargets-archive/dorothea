@@ -9,8 +9,13 @@
     </div>
 
     <h5>Results summary</h5>
-    <div>
-      ...
+    <div class="row gutter">
+      <div class="width-1of2">
+        <dorothea-triplets-bar-plot :plot-data="tripletsBarPlotData"></dorothea-triplets-bar-plot>
+      </div>
+      <div class="width-1of2">
+        <dorothea-tfs-bar-plot :plot-data="tfsBarPlotData"></dorothea-tfs-bar-plot>
+      </div>
     </div>
     
     <hr>
@@ -80,11 +85,16 @@
 </template>
 
 <script>
-import { mapGetters } from 'vuex'
+import { mapGetters, mapActions } from 'vuex'
 
 export default {
   computed: {
-    ...mapGetters('flow2', ['drugId', 'gmId', 'ctId', 'tfId', 'drugName']),
+    ...mapGetters('flow2', [
+      'drugId', 'gmId', 'ctId', 'tfId', 'drugName',
+      'dataLoaded',
+      'tfsBarPlotData',
+      'tripletsBarPlotData'
+    ]),
     showPlots () {
       // return (this.$store.state.route.query.filterOnDrug &&
       //         this.$store.state.route.query.filterOnGM &&
@@ -101,6 +111,22 @@ export default {
     showDrugSummary () {
       return this.drugId
     }
+  },
+  methods: {
+    ...mapActions('flow2', [
+      'updateTFsBarPlotData',
+      'updateTripletsBarPlotData'
+    ]),
+    onDataLoad () {
+      this.updateTripletsBarPlotData({})
+      this.updateTFsBarPlotData({})
+    }
+  },
+  mounted () {
+    this.onDataLoad()
+  },
+  watch: {
+    dataLoaded: 'onDataLoad'
   }
 }
 </script>

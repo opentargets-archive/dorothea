@@ -22,6 +22,7 @@ import VueResource from 'vue-resource'
 import router from './router'
 import DrugsBarPlot from './components/flow-1/DrugsBarPlot.vue'
 import TFsBarPlot from './components/flow-1/TFsBarPlot.vue'
+import TripletsBarPlot from './components/flow-2/TripletsBarPlot.vue'
 import VolcanoPlot from './components/flow-1/VolcanoPlot.vue'
 import SamplePlot from './components/flow-1/SamplePlot.vue'
 import SamplePlotFilter from './components/flow-1/SamplePlotFilter.vue'
@@ -68,6 +69,7 @@ Vue.component('dorothea-sample-plot-filter', SamplePlotFilter)
 Vue.component('dorothea-simple-sample-plot', SimpleSamplePlot)
 Vue.component('dorothea-drugs-bar-plot', DrugsBarPlot)
 Vue.component('dorothea-tfs-bar-plot', TFsBarPlot)
+Vue.component('dorothea-triplets-bar-plot', TripletsBarPlot)
 Vue.component('dorothea-box-plot', BoxPlot)
 Vue.component('dorothea-nested-box-plot', NestedBoxPlot)
 Vue.component('dorothea-header', Header)

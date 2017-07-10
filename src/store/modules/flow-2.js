@@ -17,6 +17,9 @@ export default {
   state: {
     drugOptions: [],
     drugAutocompleteOptions: [],
+    gmAutocompleteOptions: [],
+    ctAutocompleteOptions: [],
+    tfAutocompleteOptions: [],
     gmOptions: [],
     ctOptions: [],
     tfOptions: [],
@@ -25,15 +28,26 @@ export default {
     // simpleSamplePlotData: [],
     effectPlotData: [],
     gmTableData: {},
-    drugTableData: {}
+    drugTableData: {},
+    tfsBarPlotData: [],
+    tripletsBarPlotData: []
   },
   getters: {
+    // data module (ideally server-side)
+    dataLoaded: (state, getters, rootState) => rootState.data.loaded,
+
+    // route module (synced to url)
     drugId: (state, getters, rootState) => rootState.route.query.filterOnDrug,
     gmId: (state, getters, rootState) => rootState.route.query.filterOnGM,
     ctId: (state, getters, rootState) => rootState.route.query.filterOnCT,
     tfId: (state, getters, rootState) => rootState.route.query.filterOnTF,
+
+    // local
     drugOptions: (state) => () => state.drugOptions,
     drugAutocompleteOptions: (state) => () => state.drugAutocompleteOptions,
+    gmAutocompleteOptions: (state) => () => state.gmAutocompleteOptions,
+    ctAutocompleteOptions: (state) => () => state.ctAutocompleteOptions,
+    tfAutocompleteOptions: (state) => () => state.tfAutocompleteOptions,
     gmOptions: (state) => () => state.gmOptions,
     ctOptions: (state) => () => state.ctOptions,
     tfOptions: (state) => () => state.tfOptions,
@@ -41,6 +55,8 @@ export default {
     // nestedBoxPlotData: (state) => () => state.nestedBoxPlotData,
     // simpleSamplePlotData: (state) => () => state.simpleSamplePlotData,
     effectPlotData: (state) => state.effectPlotData,
+    tfsBarPlotData: (state) => state.tfsBarPlotData,
+    tripletsBarPlotData: (state) => state.tripletsBarPlotData,
     gmTableData: (state) => state.gmTableData,
     drugTableData: (state) => () => state.drugTableData,
     drugName: (state, getters, rootState) => {
@@ -95,6 +111,15 @@ export default {
     mUpdateDrugAutocompleteOptions (state, payload) {
       state.drugAutocompleteOptions = payload
     },
+    mUpdateGMAutocompleteOptions (state, payload) {
+      state.gmAutocompleteOptions = payload
+    },
+    mUpdateCTAutocompleteOptions (state, payload) {
+      state.ctAutocompleteOptions = payload
+    },
+    mUpdateTFAutocompleteOptions (state, payload) {
+      state.tfAutocompleteOptions = payload
+    },
     mUpdateGMOptions (state, payload) {
       state.gmOptions = payload
     },
@@ -116,6 +141,12 @@ export default {
     mUpdateEffectPlotData (state, payload) {
       state.effectPlotData = payload
     },
+    mUpdateTFsBarPlotData (state, payload) {
+      state.tfsBarPlotData = payload
+    },
+    mUpdateTripletsBarPlotData (state, payload) {
+      state.tripletsBarPlotData = payload
+    },
     mUpdateGMTableData (state, payload) {
       state.gmTableData = payload
     },
@@ -134,6 +165,24 @@ export default {
       Vue.http.get(apiBase + 'flow-2/drug-autocomplete-options', {params: params})
         .then(function (response) {
           commit('mUpdateDrugAutocompleteOptions', response.body)
+        })
+    },
+    updateGMAutocompleteOptions ({ state, commit }, params) {
+      Vue.http.get(apiBase + 'flow-2/gm-autocomplete-options', {params: params})
+        .then(function (response) {
+          commit('mUpdateGMAutocompleteOptions', response.body)
+        })
+    },
+    updateCTAutocompleteOptions ({ state, commit }, params) {
+      Vue.http.get(apiBase + 'flow-2/ct-autocomplete-options', {params: params})
+        .then(function (response) {
+          commit('mUpdateCTAutocompleteOptions', response.body)
+        })
+    },
+    updateTFAutocompleteOptions ({ state, commit }, params) {
+      Vue.http.get(apiBase + 'flow-2/tf-autocomplete-options', {params: params})
+        .then(function (response) {
+          commit('mUpdateTFAutocompleteOptions', response.body)
         })
     },
     updateGMOptions ({ state, commit }, params) {
@@ -197,13 +246,24 @@ export default {
       if (params.drugId && params.gmId && params.ctId && params.tfId) {
         Vue.http.get(apiBase + 'flow-2/effect-plot', {params: params})
           .then(function (response) {
-            console.log(response.body)
             commit('mUpdateEffectPlotData', response.body)
           })
       }
       else {
         commit('mUpdateEffectPlotData', [])
       }
+    },
+    updateTFsBarPlotData ({state, commit}, params) {
+      Vue.http.get(apiBase + 'flow-2/tfs-bar-plot')
+        .then(function (response) {
+          commit('mUpdateTFsBarPlotData', response.body)
+        })
+    },
+    updateTripletsBarPlotData ({state, commit}, params) {
+      Vue.http.get(apiBase + 'flow-2/triplets-bar-plot')
+        .then(function (response) {
+          commit('mUpdateTripletsBarPlotData', response.body)
+        })
     },
     updateGMTableData ({state, commit}, params) {
       Vue.http.get(apiBase + 'flow-2/gm-table', {params: params})

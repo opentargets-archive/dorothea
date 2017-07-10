@@ -3,7 +3,120 @@
                       description="">
 
     <div slot="card-internals" class="card-content bg-white">
+      <div class="group multiselect-container">
+        <label>Drug</label>
+        <multiselect v-model="myDrugTerm"
+                    placeholder="Select a drug"
+                    :options="drugAutocompleteOptions"
+                    label="label"
+                    track-by="value"
+                    :custom-label="drugNameWithSynonym"
+                    select-label=""
+                    selected-label=""
+                    deselect-label=""
+                    :reset-after="false"
+                    :show-labels="false"
+                    :max-height="500"
+                    @input="drugOptionChanged">
+        
+          <template slot="beforeList">
+            <div v-if="myDrugTerm" class="before-list bg-tertiary text-white column">
+              <span>{{ myDrugTerm.value }} selected</span>
+              <span>Press backspace to deselect</span>
+            </div>
+          </template>
 
+          <template slot="option" scope="props">
+            <div class="option__description column">
+              <span class="option__name text-bold">{{ props.option.label }}</span>
+              <span class="option__synonym">synonym of {{ props.option.value }}</span>
+            </div>
+          </template>
+        
+        </multiselect>
+      </div>
+
+      <div class="group multiselect-container">
+        <label>Genomic marker</label>
+        <multiselect v-model="myGMTerm"
+                    placeholder="Select a genomic marker"
+                    :options="gmAutocompleteOptions"
+                    label="label"
+                    track-by="value"
+                    select-label=""
+                    selected-label=""
+                    deselect-label=""
+                    :reset-after="false"
+                    :show-labels="false"
+                    :max-height="500"
+                    @input="gmOptionChanged">
+        
+          <template slot="beforeList">
+            <div v-if="myGMTerm" class="before-list bg-tertiary text-white column">
+              <span>{{ myGMTerm.value }} selected</span>
+              <span>Press backspace to deselect</span>
+            </div>
+          </template>
+        
+        </multiselect>
+      </div>
+
+      <div class="group multiselect-container">
+        <label>Cancer type</label>
+        <multiselect v-model="myCTTerm"
+                    placeholder="Select a cancer type"
+                    :options="ctAutocompleteOptions"
+                    label="label"
+                    track-by="value"
+                    select-label=""
+                    selected-label=""
+                    deselect-label=""
+                    :reset-after="false"
+                    :show-labels="false"
+                    :max-height="500"
+                    @input="ctOptionChanged">
+        
+          <template slot="beforeList">
+            <div v-if="myCTTerm" class="before-list bg-tertiary text-white column">
+              <span>{{ myCTTerm.value }} selected</span>
+              <span>Press backspace to deselect</span>
+            </div>
+          </template>
+        
+        </multiselect>
+      </div>
+
+      <div class="group multiselect-container">
+        <label>Transcription factor</label>
+        <multiselect v-model="myTFTerm"
+                    placeholder="Select a transcription factor"
+                    :options="tfAutocompleteOptions"
+                    label="label"
+                    track-by="value"
+                    select-label=""
+                    selected-label=""
+                    deselect-label=""
+                    :reset-after="false"
+                    :show-labels="false"
+                    :max-height="500"
+                    @input="tfOptionChanged">
+        
+          <template slot="beforeList">
+            <div v-if="myTFTerm" class="before-list bg-tertiary text-white column">
+              <span>{{ myTFTerm.value }} selected</span>
+              <span>Press backspace to deselect</span>
+            </div>
+          </template>
+        
+        </multiselect>
+      </div>
+
+      <div class="group">
+        <button class="capitalize tertiary small clear outline" @click="clickClearAllHandler">Clear All</button>
+      </div>
+
+      <!--<hr/>
+      OLD
       <div class="row justify-center items-center item">
         <small class="width-1of3">Drug:</small>
         <div class="width-2of3">
@@ -12,9 +125,10 @@
         </div>
       </div>
 
-      <div class="row justify-center items-center item">
-        <small class="width-1of3">Drug:</small>
-        <q-autocomplete v-if="!drugSelected" v-model="drugTerm" :static-data="staticData" :min-characters="-1" :max-results="100" @selected="selectDrugTerm"></q-autocomplete>
+      <div class="column">
+        <q-autocomplete v-if="!drugSelected" v-model="drugTerm" :static-data="staticData" :min-characters="-1" :max-results="10" @selected="selectDrugTerm">
+          <input v-model="drugTerm" class="full-width" placeholder="Type a drug name" />
+        </q-autocomplete>
         <small v-else class="token">{{ drugSelected.value }}<i class="cursor-pointer" @click="deselectDrugTerm()">close</i></small>
       </div>
 
@@ -42,6 +156,8 @@
         </div>
       </div>
 
+      <button class="capitalize tertiary small clear outline" @click="clickClearAllHandler">Clear All</button>-->
+
     </div>
 
   </dorothea-base-card>
@@ -50,10 +166,16 @@
 <script>
 import store from '../../store'
 import router from '../../router'
+import Multiselect from 'vue-multiselect'
 export default {
+  components: { Multiselect },
   data () {
     return {
       drugTerm: '',
+      myDrugTerm: null,
+      myGMTerm: null,
+      myCTTerm: null,
+      myTFTerm: null,
       drugSelected: null,
       drugIdModel: null, // note this is not used, merely prevents vue errors
       gmIdModel: null, // note this is not used, merely prevents vue errors
@@ -82,6 +204,15 @@ export default {
     },
     drugAutocompleteOptions () {
       return store.state.flow2.drugAutocompleteOptions
+    },
+    gmAutocompleteOptions () {
+      return store.state.flow2.gmAutocompleteOptions
+    },
+    ctAutocompleteOptions () {
+      return store.state.flow2.ctAutocompleteOptions
+    },
+    tfAutocompleteOptions () {
+      return store.state.flow2.tfAutocompleteOptions
     },
     gmOptions () {
       return store.state.flow2.gmOptions
@@ -118,27 +249,37 @@ export default {
   watch: {
     drugId: function () {
       this.updateGMOptions()
+      this.updateGMAutocompleteOptions()
       this.updateCTOptions()
+      this.updateCTAutocompleteOptions()
       this.updateTFOptions()
+      this.updateTFAutocompleteOptions()
     },
     gmId: function () {
       this.updateDrugOptions()
       this.updateDrugAutocompleteOptions()
       this.updateCTOptions()
+      this.updateCTAutocompleteOptions()
       this.updateTFOptions()
+      this.updateTFAutocompleteOptions()
     },
     ctId: function () {
       this.updateDrugOptions()
       this.updateDrugAutocompleteOptions()
       this.updateGMOptions()
+      this.updateGMAutocompleteOptions()
       this.updateTFOptions()
+      this.updateTFAutocompleteOptions()
     },
     dataLoaded: function () {
       this.updateDrugOptions()
       this.updateDrugAutocompleteOptions()
       this.updateGMOptions()
+      this.updateGMAutocompleteOptions()
       this.updateCTOptions()
+      this.updateCTAutocompleteOptions()
       this.updateTFOptions()
+      this.updateTFAutocompleteOptions()
     }
   },
   methods: {
@@ -168,6 +309,63 @@ export default {
     deselectDrugTerm () {
       this.drugTerm = ''
       this.drugSelected = null
+    },
+    drugOptionChanged (option) {
+      // for use with vue-multiselect
+      console.log(option)
+      let query = {}
+      if (option) {
+        query.filterOnDrug = option.drugId
+      }
+      if (this.gmId) query.filterOnGM = this.gmId
+      if (this.ctId) query.filterOnCT = this.ctId
+      router.push({
+        path: '/investigation/2',
+        query
+      })
+    },
+    gmOptionChanged (option) {
+      // for use with vue-multiselect
+      console.log(option)
+      let query = {}
+      if (option) {
+        query.filterOnGM = option.gmId
+      }
+      if (this.drugId) query.filterOnDrug = this.drugId
+      if (this.ctId) query.filterOnCT = this.ctId
+      router.push({
+        path: '/investigation/2',
+        query
+      })
+    },
+    ctOptionChanged (option) {
+      // for use with vue-multiselect
+      console.log(option)
+      let query = {}
+      if (option) {
+        query.filterOnCT = option.ctId
+      }
+      if (this.drugId) query.filterOnDrug = this.drugId
+      if (this.gmId) query.filterOnGM = this.gmId
+      router.push({
+        path: '/investigation/2',
+        query
+      })
+    },
+    tfOptionChanged (option) {
+      // for use with vue-multiselect
+      console.log(option)
+      let query = {}
+      if (option) {
+        query.filterOnTF = option.tfId
+      }
+      if (this.drugId) query.filterOnDrug = this.drugId
+      if (this.gmId) query.filterOnGM = this.gmId
+      if (this.ctId) query.filterOnCT = this.ctId
+      router.push({
+        path: '/investigation/2',
+        query
+      })
     },
     selectGM (gmId) {
       let query = {
@@ -231,6 +429,12 @@ export default {
         query
       })
     },
+    clickClearAllHandler () {
+      router.push({
+        path: '/investigation/2',
+        query: {}
+      })
+    },
     updateDrugOptions () {
       store.dispatch('flow2/updateDrugOptions', {
         gmId: this.gmId,
@@ -239,6 +443,25 @@ export default {
     },
     updateDrugAutocompleteOptions () {
       store.dispatch('flow2/updateDrugAutocompleteOptions', {
+        gmId: this.gmId,
+        ctId: this.ctId
+      })
+    },
+    updateGMAutocompleteOptions () {
+      store.dispatch('flow2/updateGMAutocompleteOptions', {
+        drugId: this.drugId,
+        ctId: this.ctId
+      })
+    },
+    updateCTAutocompleteOptions () {
+      store.dispatch('flow2/updateCTAutocompleteOptions', {
+        drugId: this.drugId,
+        gmId: this.gmId
+      })
+    },
+    updateTFAutocompleteOptions () {
+      store.dispatch('flow2/updateTFAutocompleteOptions', {
+        drugId: this.drugId,
         gmId: this.gmId,
         ctId: this.ctId
       })
@@ -261,27 +484,75 @@ export default {
         gmId: this.gmId,
         ctId: this.ctId
       })
+    },
+    drugNameWithSynonym (option) {
+      if (option.label === option.value) return option.label
+      return option.label + ' (synonym of ' + option.value + ')'
     }
   },
   mounted () {
     this.updateDrugOptions()
     this.updateDrugAutocompleteOptions()
     this.updateGMOptions()
+    this.updateGMAutocompleteOptions()
     this.updateCTOptions()
+    this.updateCTAutocompleteOptions()
     this.updateTFOptions()
+    this.updateTFAutocompleteOptions()
   }
 }
 </script>
 
 <style>
-.item {
+.item, .item.two-lines {
   height: 32px;
 }
-.item > .item-content {
+.item > .item-content, .item.two-lines > .item-content {
   padding: 8px 0;
   font-size: 80%;
 }
 .token {
   font-size: 80%;
+}
+
+
+.multiselect-container {
+  padding-top: 5px;
+  padding-bottom: 5px;
+}
+
+.multiselect {
+  margin-top: 0px;
+}
+.multiselect__tags {
+  border: none;
+  padding-left: 0px;
+  padding-top: 0px;
+  input {
+    font-size: 80%;
+  }
+}
+.multiselect__option {
+  padding: 4px 4px;
+  min-height: 10px;
+  font-size: 80%;
+}
+.multiselect__input {
+  border-radius: 0;
+  font-size: 80%;
+  padding: 0px;
+}
+.multiselect__option--highlight {
+  background: #B7E9F3;
+  color: #555;
+}
+
+div.card {
+  overflow: visible;
+}
+.before-list {
+  padding: 4px;
+  font-size: 80%;
+  font-weight: bold;
 }
 </style>
