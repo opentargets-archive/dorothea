@@ -11,6 +11,9 @@ require(`../node_modules/sample-plot/index.scss`)
 require(`../node_modules/comparison-box-plot/index.scss`)
 require(`../node_modules/bar-plot/index.scss`)
 require(`../node_modules/effect-plot/index.scss`)
+
+// multiselect
+require(`../node_modules/vue-multiselect/dist/vue-multiselect.min.css`)
 // ==============================
 
 import Vue from 'vue'
