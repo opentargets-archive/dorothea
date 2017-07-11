@@ -5,110 +5,126 @@
     <div slot="card-internals" class="card-content bg-white">
       <div class="group multiselect-container">
         <label>Drug</label>
-        <multiselect v-model="myDrugTerm"
-                    placeholder="Select a drug"
-                    :options="drugAutocompleteOptions"
-                    label="label"
-                    track-by="value"
-                    :custom-label="drugNameWithSynonym"
-                    select-label=""
-                    selected-label=""
-                    deselect-label=""
-                    :reset-after="false"
-                    :show-labels="false"
-                    :max-height="500"
-                    @input="drugOptionChanged">
-        
-          <template slot="beforeList">
-            <div v-if="myDrugTerm" class="before-list bg-tertiary text-white column">
-              <span>{{ myDrugTerm.value }} selected</span>
-              <span>Press backspace to deselect</span>
-            </div>
-          </template>
+        <div class="multiselect-or-chip row items-center">
+          <multiselect v-if="!drugId"
+                      v-model="myDrugTerm"
+                      placeholder="Select a drug"
+                      :options="drugAutocompleteOptions"
+                      label="label"
+                      track-by="value"
+                      :custom-label="drugNameWithSynonym"
+                      select-label=""
+                      selected-label=""
+                      deselect-label=""
+                      :reset-after="false"
+                      :show-labels="false"
+                      :max-height="500"
+                      @input="drugOptionChanged">
+          
+            <template slot="beforeList">
+              <div v-if="myDrugTerm" class="before-list bg-tertiary text-white column">
+                <span>{{ myDrugTerm.value }} selected</span>
+                <span>Press backspace to deselect</span>
+              </div>
+            </template>
 
-          <template slot="option" scope="props">
-            <div class="option__description column">
-              <span class="option__name text-bold">{{ props.option.label }}</span>
-              <span class="option__synonym">synonym of {{ props.option.value }}</span>
-            </div>
-          </template>
-        
-        </multiselect>
+            <template slot="option" scope="props">
+              <div class="option__description column">
+                <span class="option__name text-bold">{{ props.option.label }}</span>
+                <span class="option__synonym">synonym of {{ props.option.value }}</span>
+              </div>
+            </template>
+          
+          </multiselect>
+          <small class="token" v-else>{{ drugLabel }}<i class="cursor-pointer" @click="drugOptionChanged">close</i></small>
+        </div>
       </div>
 
       <div class="group multiselect-container">
         <label>Genomic marker</label>
-        <multiselect v-model="myGMTerm"
-                    placeholder="Select a genomic marker"
-                    :options="gmAutocompleteOptions"
-                    label="label"
-                    track-by="value"
-                    select-label=""
-                    selected-label=""
-                    deselect-label=""
-                    :reset-after="false"
-                    :show-labels="false"
-                    :max-height="500"
-                    @input="gmOptionChanged">
-        
-          <template slot="beforeList">
-            <div v-if="myGMTerm" class="before-list bg-tertiary text-white column">
-              <span>{{ myGMTerm.value }} selected</span>
-              <span>Press backspace to deselect</span>
-            </div>
-          </template>
-        
-        </multiselect>
+        <div class="multiselect-or-chip row items-center">
+          <multiselect v-if="!gmId"
+                      v-model="myGMTerm"
+                      placeholder="Select a genomic marker"
+                      :options="gmAutocompleteOptions"
+                      label="label"
+                      track-by="value"
+                      select-label=""
+                      selected-label=""
+                      deselect-label=""
+                      :reset-after="false"
+                      :show-labels="false"
+                      :max-height="500"
+                      @input="gmOptionChanged">
+          
+            <template slot="beforeList">
+              <div v-if="myGMTerm" class="before-list bg-tertiary text-white column">
+                <span>{{ myGMTerm.value }} selected</span>
+                <span>Press backspace to deselect</span>
+              </div>
+            </template>
+          
+          </multiselect>
+          <small class="token" v-else>{{ gmLabel }}<i class="cursor-pointer" @click="gmOptionChanged">close</i></small>
+        </div>
       </div>
 
       <div class="group multiselect-container">
         <label>Cancer type</label>
-        <multiselect v-model="myCTTerm"
-                    placeholder="Select a cancer type"
-                    :options="ctAutocompleteOptions"
-                    label="label"
-                    track-by="value"
-                    select-label=""
-                    selected-label=""
-                    deselect-label=""
-                    :reset-after="false"
-                    :show-labels="false"
-                    :max-height="500"
-                    @input="ctOptionChanged">
-        
-          <template slot="beforeList">
-            <div v-if="myCTTerm" class="before-list bg-tertiary text-white column">
-              <span>{{ myCTTerm.value }} selected</span>
-              <span>Press backspace to deselect</span>
-            </div>
-          </template>
-        
-        </multiselect>
+        <div class="multiselect-or-chip row items-center">
+          <multiselect v-if="!ctId"
+                      v-model="myCTTerm"
+                      placeholder="Select a cancer type"
+                      :options="ctAutocompleteOptions"
+                      label="label"
+                      track-by="value"
+                      select-label=""
+                      selected-label=""
+                      deselect-label=""
+                      :reset-after="false"
+                      :show-labels="false"
+                      :max-height="500"
+                      @input="ctOptionChanged">
+          
+            <template slot="beforeList">
+              <div v-if="myCTTerm" class="before-list bg-tertiary text-white column">
+                <span>{{ myCTTerm.value }} selected</span>
+                <span>Press backspace to deselect</span>
+              </div>
+            </template>
+          
+          </multiselect>
+          <small class="token" v-else>{{ ctId }}<i class="cursor-pointer" @click="ctOptionChanged">close</i></small>
+        </div>
       </div>
 
       <div class="group multiselect-container">
         <label>Transcription factor</label>
-        <multiselect v-model="myTFTerm"
-                    placeholder="Select a transcription factor"
-                    :options="tfAutocompleteOptions"
-                    label="label"
-                    track-by="value"
-                    select-label=""
-                    selected-label=""
-                    deselect-label=""
-                    :reset-after="false"
-                    :show-labels="false"
-                    :max-height="500"
-                    @input="tfOptionChanged">
-        
-          <template slot="beforeList">
-            <div v-if="myTFTerm" class="before-list bg-tertiary text-white column">
-              <span>{{ myTFTerm.value }} selected</span>
-              <span>Press backspace to deselect</span>
-            </div>
-          </template>
-        
-        </multiselect>
+        <div class="multiselect-or-chip row items-center">
+          <multiselect v-if="!tfId" 
+                      v-model="myTFTerm"
+                      placeholder="Select a transcription factor"
+                      :options="tfAutocompleteOptions"
+                      label="label"
+                      track-by="value"
+                      select-label=""
+                      selected-label=""
+                      deselect-label=""
+                      :reset-after="false"
+                      :show-labels="false"
+                      :max-height="500"
+                      @input="tfOptionChanged">
+          
+            <template slot="beforeList">
+              <div v-if="myTFTerm" class="before-list bg-tertiary text-white column">
+                <span>{{ myTFTerm.value }} selected</span>
+                <span>Press backspace to deselect</span>
+              </div>
+            </template>
+          
+          </multiselect>
+          <small class="token" v-else>{{ tfId }}<i class="cursor-pointer" @click="tfOptionChanged">close</i></small>
+        </div>
       </div>
 
       <div class="group">
@@ -173,6 +189,7 @@ export default {
     return {
       drugTerm: '',
       myDrugTerm: null,
+      // myDrugTerm: this.drugId,
       myGMTerm: null,
       myCTTerm: null,
       myTFTerm: null,
@@ -312,7 +329,9 @@ export default {
     },
     drugOptionChanged (option) {
       // for use with vue-multiselect
-      console.log(option)
+      // console.log(option)
+      // deselect
+      this.myDrugTerm = null
       let query = {}
       if (option) {
         query.filterOnDrug = option.drugId
@@ -326,7 +345,9 @@ export default {
     },
     gmOptionChanged (option) {
       // for use with vue-multiselect
-      console.log(option)
+      // console.log(option)
+      // deselect
+      this.myGMTerm = null
       let query = {}
       if (option) {
         query.filterOnGM = option.gmId
@@ -340,7 +361,9 @@ export default {
     },
     ctOptionChanged (option) {
       // for use with vue-multiselect
-      console.log(option)
+      // console.log(option)
+      // deselect
+      this.myCTTerm = null
       let query = {}
       if (option) {
         query.filterOnCT = option.ctId
@@ -354,7 +377,9 @@ export default {
     },
     tfOptionChanged (option) {
       // for use with vue-multiselect
-      console.log(option)
+      // console.log(option)
+      // deselect
+      this.myTFTerm = null
       let query = {}
       if (option) {
         query.filterOnTF = option.tfId
@@ -554,5 +579,10 @@ div.card {
   padding: 4px;
   font-size: 80%;
   font-weight: bold;
+}
+
+.multiselect-or-chip {
+  height: 40px;
+  margin-top: 0px;
 }
 </style>
