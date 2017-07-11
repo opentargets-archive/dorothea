@@ -4,7 +4,10 @@
 
     <div slot="card-internals" class="card-content no-padding">
       <div class="group">
-        <small class="text-red text-bold">Significant interactions appear in red</small>
+        <small>
+          Click a row to see further interaction information.
+          <span class="text-red text-bold">(Significant interactions appear in red.)</span>
+        </small>
       </div>
       <q-data-table :data="tableData"
                     :config="tableConfig"
