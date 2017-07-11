@@ -11,7 +11,8 @@
     <div slot="plot-controls">
       <div class="group">
         <label>
-          <q-radio v-model="radioEffectValue" val="gm" @input="effectToggleHandler"></q-radio>
+          <q-radio v-if="radioViewValue === 'box'" v-model="radioEffectValue" val="gm" @input="effectToggleHandler"></q-radio>
+          <q-radio v-else disable v-model="radioEffectValue" val="gm"></q-radio>
           Genomic Marker
         </label>
         <label>
@@ -29,7 +30,8 @@
           Box Plot
         </label>
         <label>
-          <q-radio v-model="radioViewValue" val="scatter" @input="viewToggleHandler"></q-radio>
+          <q-radio v-if="radioEffectValue !== 'gm'" v-model="radioViewValue" val="scatter" @input="viewToggleHandler"></q-radio>
+          <q-radio v-else disable v-model="radioViewValue" val="scatter"></q-radio>
           Scatter Plot
         </label>
       </div>
