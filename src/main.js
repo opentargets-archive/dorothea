@@ -44,6 +44,8 @@ import InteractionsTable from './components/flow-2/InteractionsTable.vue'
 import AssociationTable from './components/flow-1/InteractionTable.vue'
 import SampleTable from './components/flow-1/SampleTable.vue'
 import GMTable from './components/flow-2/GMTable.vue'
+import CTTable from './components/flow-2/CTTable.vue'
+import TFTable from './components/flow-2/TFTable.vue'
 import DrugTable from './components/flow-2/DrugTable.vue'
 import Flow2Filter from './components/flow-2/Filter.vue'
 import Flow1Filter from './components/flow-1/Filter.vue'
@@ -81,6 +83,8 @@ Vue.component('dorothea-interactions-table', InteractionsTable)
 Vue.component('dorothea-sample-table', SampleTable)
 Vue.component('dorothea-effect-plot', EffectPlot)
 Vue.component('dorothea-gm-table', GMTable)
+Vue.component('dorothea-ct-table', CTTable)
+Vue.component('dorothea-tf-table', TFTable)
 Vue.component('dorothea-drug-table', DrugTable)
 Vue.component('dorothea-flow-2-filter', Flow2Filter)
 Vue.component('dorothea-flow-1-filter', Flow1Filter)

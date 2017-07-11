@@ -39,6 +39,8 @@
         <div class="width-1of4 column">
           <dorothea-drug-table v-if="showDrugSummary"></dorothea-drug-table>
           <dorothea-gm-table v-if="showGMSummary"></dorothea-gm-table>
+          <dorothea-ct-table v-if="showCTSummary"></dorothea-ct-table>
+          <dorothea-tf-table v-if="tfId"></dorothea-tf-table>
         </div>
         <!--<div class="width-1of1">-->
         <div class="width-3of4">
@@ -110,6 +112,9 @@ export default {
     },
     showDrugSummary () {
       return this.drugId
+    },
+    showCTSummary () {
+      return this.ctId
     }
   },
   methods: {
