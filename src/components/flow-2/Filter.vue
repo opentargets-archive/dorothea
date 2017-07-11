@@ -22,7 +22,7 @@
                       @input="drugOptionChanged">
           
             <template slot="beforeList">
-              <div v-if="myDrugTerm" class="before-list bg-tertiary text-white column">
+              <div v-if="myDrugTerm" class="before-list bg-primary text-white column">
                 <span>{{ myDrugTerm.value }} selected</span>
                 <span>Press backspace to deselect</span>
               </div>
@@ -58,7 +58,7 @@
                       @input="gmOptionChanged">
           
             <template slot="beforeList">
-              <div v-if="myGMTerm" class="before-list bg-tertiary text-white column">
+              <div v-if="myGMTerm" class="before-list bg-primary text-white column">
                 <span>{{ myGMTerm.value }} selected</span>
                 <span>Press backspace to deselect</span>
               </div>
@@ -87,7 +87,7 @@
                       @input="ctOptionChanged">
           
             <template slot="beforeList">
-              <div v-if="myCTTerm" class="before-list bg-tertiary text-white column">
+              <div v-if="myCTTerm" class="before-list bg-primary text-white column">
                 <span>{{ myCTTerm.value }} selected</span>
                 <span>Press backspace to deselect</span>
               </div>
@@ -116,7 +116,7 @@
                       @input="tfOptionChanged">
           
             <template slot="beforeList">
-              <div v-if="myTFTerm" class="before-list bg-tertiary text-white column">
+              <div v-if="myTFTerm" class="before-list bg-primary text-white column">
                 <span>{{ myTFTerm.value }} selected</span>
                 <span>Press backspace to deselect</span>
               </div>
@@ -128,7 +128,7 @@
       </div>
 
       <div class="group">
-        <button class="capitalize tertiary small clear outline" @click="clickClearAllHandler">Clear All</button>
+        <button class="capitalize primary small clear outline" @click="clickClearAllHandler">Clear All</button>
       </div>
 
       <!--<hr/>

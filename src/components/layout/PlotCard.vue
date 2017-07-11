@@ -33,7 +33,7 @@
             <slot name="plot-controls">
             </slot>
           </div>
-          <button class="small clear outline tertiary" @click="pngDownload()">
+          <button class="small clear outline primary" @click="pngDownload()">
             <icon name="image"></icon>
           </button>
         </div>

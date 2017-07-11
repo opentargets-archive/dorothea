@@ -5,8 +5,8 @@
 
     <div slot="card-internals" class="card-content column">
       <div class="row group self-start">
-        <button class="capitalize tertiary small clear outline" @click="clickAllHandler">All</button>
-        <button class="capitalize tertiary small clear outline" @click="clickNoneHandler">None</button>
+        <button class="capitalize primary small clear outline" @click="clickAllHandler">All</button>
+        <button class="capitalize primary small clear outline" @click="clickNoneHandler">None</button>
       </div>
       <div class="column group">
         <label class="no-margin" v-for="pair in pairs">
@@ -27,6 +27,7 @@ import { mapActions } from 'vuex'
 // import * as d3ScaleChromatic from 'd3-scale-chromatic'
 
 export default {
+  // props: ['colorScale'],
   data () {
     return {
       sampleModel: null,
@@ -130,6 +131,8 @@ export default {
   },
   mounted () {
     this.updateData()
+    // console.log(this.colorScale(0))
+    // console.log(this.colorScale(1))
   }
 }
 </script>
