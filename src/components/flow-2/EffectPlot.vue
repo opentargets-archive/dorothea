@@ -127,6 +127,14 @@ export default {
     title () {
       return 'Showing ' + this.plotData.length + ' samples for the ' + this.drugName + ' - ' + this.gmId + ' - ' + this.ctId + ' - ' + this.tfId + ' interaction'
     },
+    xLabel () {
+      if (this.radioEffectValue === 'tf' || this.radioViewValue === 'scatter') {
+        return '<tspan font-weight="bold">' + this.tfId + '</tspan> estimated activity'
+      }
+      else {
+        return 'Genomic Marker'
+      }
+    },
     description () {
       return 'Showing the relationship between log IC50 (y) ' +
              'and predicted TF activity (x) of individual cell ' +
@@ -152,7 +160,7 @@ export default {
     },
     plotData () {
       this.plot.data(this.plotData)
-               .xLabel('<tspan font-weight="bold">' + this.tfId + '</tspan> estimated activity')
+               .xLabel(this.xLabel)
                .yLabel('<tspan font-weight="bold">' + this.drugName + '</tspan> log IC50')
                .coeff(this.interaction.tfCoeff)
                .pval(this.interaction.tfLRTestPval)
@@ -170,7 +178,7 @@ export default {
   },
   updated () {
     this.plot.data(this.plotData)
-             .xLabel('<tspan font-weight="bold">' + this.tfId + '</tspan> estimated activity')
+             .xLabel(this.xLabel)
              .yLabel('<tspan font-weight="bold">' + this.drugName + '</tspan> log IC50')
              .coeff(this.interaction.tfCoeff)
              .pval(this.interaction.tfLRTestPval)
@@ -204,7 +212,7 @@ export default {
                     .textAccessor(d => d.analysisSetName)
                     .showCircleLabels(false)
                     .showLegend(false)
-                    .xLabel('<tspan font-weight="bold">' + this.tfId + '</tspan> estimated activity')
+                    .xLabel(this.xLabel)
                     .yLabel('<tspan font-weight="bold">' + this.drugName + '</tspan> log IC50')
                     .coeff(this.interaction.tfCoeff)
                     .pval(this.interaction.tfLRTestPval)
