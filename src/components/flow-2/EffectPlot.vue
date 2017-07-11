@@ -135,6 +135,26 @@ export default {
         return 'Genomic Marker'
       }
     },
+    pval () {
+      switch (this.radioEffectValue) {
+        case 'gm':
+          return this.interaction.gmTTestPval
+        case 'tf':
+          return this.interaction.tfLRTestPval
+        case 'combined':
+          return this.interaction.intLRTestPval
+      }
+    },
+    coeff () {
+      switch (this.radioEffectValue) {
+        case 'gm':
+          return this.interaction.gmCoeff
+        case 'tf':
+          return this.interaction.tfCoeff
+        case 'combined':
+          return this.interaction.intCoeff
+      }
+    },
     description () {
       return 'Showing the relationship between log IC50 (y) ' +
              'and predicted TF activity (x) of individual cell ' +
@@ -162,8 +182,8 @@ export default {
       this.plot.data(this.plotData)
                .xLabel(this.xLabel)
                .yLabel('<tspan font-weight="bold">' + this.drugName + '</tspan> log IC50')
-               .coeff(this.interaction.tfCoeff)
-               .pval(this.interaction.tfLRTestPval)
+               .coeff(this.coeff)
+               .pval(this.pval)
                .effectType(this.radioEffectValue)
                .seriesNameMap({mut: this.gmName})
                .showBoxPlots(this.showBoxPlots)
@@ -180,8 +200,8 @@ export default {
     this.plot.data(this.plotData)
              .xLabel(this.xLabel)
              .yLabel('<tspan font-weight="bold">' + this.drugName + '</tspan> log IC50')
-             .coeff(this.interaction.tfCoeff)
-             .pval(this.interaction.tfLRTestPval)
+             .coeff(this.coeff)
+             .pval(this.pval)
              .effectType(this.radioEffectValue)
              .seriesNameMap({mut: this.gmName})
              .showBoxPlots(this.showBoxPlots)
@@ -214,8 +234,8 @@ export default {
                     .showLegend(false)
                     .xLabel(this.xLabel)
                     .yLabel('<tspan font-weight="bold">' + this.drugName + '</tspan> log IC50')
-                    .coeff(this.interaction.tfCoeff)
-                    .pval(this.interaction.tfLRTestPval)
+                    .coeff(this.coeff)
+                    .pval(this.pval)
                     .showRegression(false)
                     .showBoxPlots(this.showBoxPlots)
                     .effectType(this.radioEffectValue)
