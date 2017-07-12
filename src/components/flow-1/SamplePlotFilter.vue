@@ -9,10 +9,10 @@
         <button class="capitalize primary small clear outline" @click="clickNoneHandler">None</button>
       </div>
       <div class="column group">
-        <label class="no-margin" v-for="pair in pairs">
+        <label class="sample-type-option no-margin row items-center" v-for="pair in pairs">
           <q-checkbox v-model="pair.checked" @input="togglers[pair.value]()"></q-checkbox>
-          {{ formatter(pair.value) }}
-          <!--<icon name="circle" class="color-icon" :class="{ [pair.value]: true }"></icon>-->
+          <span>{{ formatter(pair.value) }}</span>
+          <icon name="circle" class="color-icon" :class="{ [pair.value]: true, hidden: !pair.checked }"></icon>
         </label>
       </div>
     </div>
@@ -21,26 +21,20 @@
 </template>
 
 <script>
-import router from '../../router'
-import { mapActions } from 'vuex'
-// import * as d3 from 'd3'
-// import * as d3ScaleChromatic from 'd3-scale-chromatic'
+import { mapGetters, mapActions } from 'vuex'
+import * as d3 from 'd3'
 
 export default {
-  // props: ['colorScale'],
+  props: ['colorScale'],
   data () {
     return {
       sampleModel: null,
       pairs: null,
       togglers: null
-      // colorScale: d3.scaleSequential(d3ScaleChromatic.interpolateYlOrRd)
-      // colorScale: d3.scaleOrdinal().range(['brown', 'steelblue'])
     }
   },
   computed: {
-    sampleTypes () {
-      return this.$store.state.flow1.sampleOptions
-    },
+    ...mapGetters('flow1', ['sampleOptions']),
     filterSamplesOnTypes () {
       const sampleTypes = this.$store.state.route.query.filterSamplesOnTypes
       if (sampleTypes) {
@@ -51,7 +45,7 @@ export default {
       }
     },
     showingSampleTypes () {
-      return this.sampleTypes.filter(st => {
+      return this.sampleOptions.filter(st => {
         return this.sampleTypesModel[st]
       })
     }
@@ -62,8 +56,6 @@ export default {
       .then((response) => {
         this.pairs = []
         this.togglers = {}
-        // this.colorScale.domain([0, response.length])
-        // this.colorScale.domain(response)
         for (let sampleType of response) {
           this.pairs.push({
             value: sampleType,
@@ -72,27 +64,18 @@ export default {
 
           this.togglers[sampleType] = this.sampleTogglerGenerator(sampleType)
         }
+        this.colorScale.domain(response)
       })
-      // .then(() => {
-      //   this.pairs.forEach(function (element, i) {
-      //     const el = d3.select('svg.color-icon.' + element.value).select('path')
-      //     // el.attr('fill', this.colorScale(i))
-      //     el.attr('fill', this.colorScale(element.value))
-      //   }, this)
-      // })
-    },
-    changeSample (sampleType) {
-      const query = this.$store.state.route.query
-      router.push({
-        path: '/investigation/1',
-        query: {
-          ...query,
-          filterSamplesOnType: sampleType
-        }
+      .then(() => {
+        this.pairs.forEach(function (element, i) {
+          const el = d3.select('svg.color-icon.' + element.value).select('path')
+          el.attr('fill', this.colorScale(element.value))
+        }, this)
       })
     },
     ...mapActions('flow1', ['changeSampleTypes']),
     sampleTogglerGenerator (sampleType) {
+      // generate a function which toggles a specific checkbox
       return (value) => {
         this.changeSampleTypes(this.pairs.filter(p => !p.checked)
                                          .map(p => p.value))
@@ -131,14 +114,18 @@ export default {
   },
   mounted () {
     this.updateData()
-    // console.log(this.colorScale(0))
-    // console.log(this.colorScale(1))
   }
 }
 </script>
 
 <style>
-/*.color-icon {
+.color-icon {
   font-size: 8px;
-}*/
+  .hidden {
+    opacity: 0;
+  }
+}
+.sample-type-option span, .sample-type-option svg {
+  margin: 2px 5px;
+}
 </style>

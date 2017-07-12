@@ -11,7 +11,6 @@
     </div>
     <h5>Results summary</h5>
     <div class="row gutter">
-      
       <div class="width-1of2">
         <dorothea-drugs-bar-plot :plot-data="drugsBarPlotData"></dorothea-drugs-bar-plot>
       </div>
@@ -40,11 +39,13 @@
       <h5>Interaction between {{ drugName }} and {{ selectedInteractionTF }}</h5>
       <div class="row gutter">
         <div class="column width-1of3">
-          <dorothea-sample-plot-filter></dorothea-sample-plot-filter>
-          <dorothea-sample-table v-if="showSampleDetail"></dorothea-sample-table>
+          <dorothea-sample-plot-filter :color-scale="colorScale">
+          </dorothea-sample-plot-filter>
+          <dorothea-sample-table v-if="showSampleDetail">
+          </dorothea-sample-table>
         </div>
         <div class="column width-2of3">
-          <sample-plot></sample-plot>
+          <sample-plot :color-scale="colorScale"></sample-plot>
         </div>
       </div>
     </div>
@@ -53,8 +54,14 @@
 
 <script>
 import { mapGetters, mapActions } from 'vuex'
+import * as d3 from 'd3'
 
 export default {
+  data () {
+    return {
+      colorScale: d3.scaleOrdinal(d3.schemeCategory20)
+    }
+  },
   computed: {
     showInteractionDetail () {
       return (this.selectedInteractionDrug &&

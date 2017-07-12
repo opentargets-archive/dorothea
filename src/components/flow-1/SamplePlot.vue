@@ -20,14 +20,16 @@
     </div>
 
     <div slot="plot-controls">
-      <label>
-        <q-radio v-model="radioValue" val="box" @input="viewToggleHandler"></q-radio>
-        Box Plot
-      </label>
-      <label>
-        <q-radio v-model="radioValue" val="scatter" @input="viewToggleHandler"></q-radio>
-        Scatter Plot
-      </label>
+      <div class="group">
+        <label>
+          <q-radio v-model="radioValue" val="box" @input="viewToggleHandler"></q-radio>
+          Box Plot
+        </label>
+        <label>
+          <q-radio v-model="radioValue" val="scatter" @input="viewToggleHandler"></q-radio>
+          Scatter Plot
+        </label>
+      </div>
     </div>
   </dorothea-plot-card>
 </template>
@@ -41,6 +43,7 @@ import * as d3 from 'd3'
 import { mapGetters } from 'vuex'
 
 export default {
+  props: ['colorScale'],
   directives: {
     resize
   },
@@ -160,6 +163,7 @@ export default {
              .showCircleLabels(this.showLabels)
              .showLegend(this.showLegend)
              .showBoxPlots(this.showBoxPlots)
+             .colorScale(this.colorScale)
              .xLabel('<tspan font-weight="bold">' + this.tfId + '</tspan> estimated activity')
              .yLabel('<tspan font-weight="bold">' + this.drugName + '</tspan> log IC50')
              .title('<tspan font-style="italic">' + this.title + '</tspan>')
@@ -207,6 +211,7 @@ export default {
                     .yAccessor(d => d.ic50)
                     .textAccessor(d => d.analysisSetName)
                     .legendFieldAccessor(d => d.gdscDesc1)
+                    .colorScale(this.colorScale)
                     .showCircleLabels(this.showLabels)
                     .showLegend(this.showLegend)
                     .showBoxPlots(this.showBoxPlots)
@@ -226,6 +231,7 @@ export default {
         tfId: this.tfId
       }).then(response => {
         this.plot.data(this.plotData)
+                 .colorScale(this.colorScale)
                 //  .render()
         this.handlerResize()
       })

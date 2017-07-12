@@ -40,7 +40,7 @@ export default {
     // local
     drugOptions: (state) => state.drugOptions,
     tfOptions: (state) => state.tfOptions,
-    sampleOptions: (state) => () => state.sampleOptions,
+    sampleOptions: (state) => state.sampleOptions,
     volcanoPlotData: (state) => () => state.volcanoPlotData,
     samplePlotData: (state) => () => state.samplePlotData,
     interactionTableData: (state) => state.interactionTableData,
