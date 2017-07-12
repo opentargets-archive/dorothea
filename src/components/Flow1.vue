@@ -22,14 +22,14 @@
     <hr>
     <h5>Results search</h5>
     <div class="row gutter">
-      <div class="column width-1of3">
+      <div class="column width-1of4">
         <dorothea-flow-1-filter></dorothea-flow-1-filter>
         <dorothea-association-table v-if="showInteractionDetail"
                                     :drug-id="selectedInteractionDrug"
                                     :table-data="interactionTableData">
         </dorothea-association-table>
       </div>
-      <div class="width-2of3">
+      <div class="width-3of4">
         <volcano-plot></volcano-plot>
       </div>
     </div>
@@ -38,13 +38,13 @@
       <hr>
       <h5>Interaction between {{ drugName }} and {{ selectedInteractionTF }}</h5>
       <div class="row gutter">
-        <div class="column width-1of3">
+        <div class="column width-1of4">
           <dorothea-sample-plot-filter :color-scale="colorScale">
           </dorothea-sample-plot-filter>
           <dorothea-sample-table v-if="showSampleDetail">
           </dorothea-sample-table>
         </div>
-        <div class="column width-2of3">
+        <div class="column width-3of4">
           <sample-plot :color-scale="colorScale"></sample-plot>
         </div>
       </div>
