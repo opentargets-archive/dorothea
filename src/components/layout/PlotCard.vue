@@ -28,7 +28,7 @@
       </q-tabs>
 
       <div ref="plot-tab">
-        <div class="plot-options row card-content justify-between">
+        <div class="plot-options row card-content justify-between group">
           <div class="plot-controls-container row items-center">
             <slot name="plot-controls">
             </slot>
@@ -43,6 +43,14 @@
       </div>
 
       <div ref="table-tab">
+        <div class="plot-options row card-content justify-end group">
+          <button class="small clear outline primary" @click="csvDownload()">
+            CSV
+          </button>
+          <button class="small clear outline primary" @click="tsvDownload()">
+            TSV
+          </button>
+        </div>
         <q-data-table
           :data="csvData"
           :config="tableConfig"
@@ -90,6 +98,15 @@ export default {
       })
       let blob = new Blob([csv], {type: 'text/plain;charset=utf-8'})
       FileSaver.saveAs(blob, this.filename + '.csv')
+    },
+    tsvDownload () {
+      let tsv = json2csv({
+        data: this.csvData,
+        fields: this.csvFields,
+        del: '\t'
+      })
+      let blob = new Blob([tsv], {type: 'text/plain;charset=utf-8'})
+      FileSaver.saveAs(blob, this.filename + '.tsv')
     },
     pngDownload () {
       let pngExporter = tntUtils.png()
