@@ -1,6 +1,6 @@
 {
   "name": "quasar-app",
-  "version": "0.0.13",
+  "version": "0.0.14",
   "description": "A Quasar App",
   "author": "Your Name",
   "scripts": {
@@ -26,7 +26,7 @@
     "moment": "^2.15.0",
     "quasar-framework": "^0.13.10",
     "roboto-fontface": "^0.7.0",
-    "sample-plot": "git+https://git@github.com/opentargets/sample-plot.git#v1.0.8",
+    "sample-plot": "git+https://git@github.com/opentargets/sample-plot.git#v1.0.9",
     "sass-loader": "^6.0.3",
     "tnt.utils": "github:peatroot/tnt.utils",
     "volcano-plot": "git+https://git@github.com/opentargets/volcano-plot.git#v1.0.6",
