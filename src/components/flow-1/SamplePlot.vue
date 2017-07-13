@@ -56,15 +56,6 @@ export default {
     }
   },
   computed: {
-    dataLoaded () {
-      return this.$store.state.data.loaded
-    },
-    drugId () {
-      return this.$store.state.route.query.selectedInteractionDrug
-    },
-    tfId () {
-      return this.$store.state.route.query.selectedInteractionTF
-    },
     filterSamplesOnTypes () {
       const sampleTypes = this.$store.state.route.query.filterSamplesOnTypes
       if (sampleTypes) {
@@ -136,7 +127,12 @@ export default {
              ' and predicted TF activity (x) of individual cell ' +
              'lines'
     },
-    ...mapGetters('flow1', ['drugName'])
+    ...mapGetters('flow1', {
+      drugName: 'drugName',
+      dataLoaded: 'dataLoaded',
+      drugId: 'selectedInteractionDrug',
+      tfId: 'selectedInteractionTF'
+    })
   },
   watch: {
     drugId () {
