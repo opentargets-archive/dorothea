@@ -4,7 +4,7 @@
                       description=""
                       :resize-handler="handlerResize"
                       :filename="filename"
-                      :csv-data="csvData"
+                      :csv-data="plotData"
                       :csv-fields="csvFields"
                       :table-columns="tableColumns">
 
@@ -82,9 +82,6 @@ export default {
         'studyAbbreviation',
         'comment'
       ]
-    },
-    csvData () {
-      return this.plotData
     },
     tableColumns () {
       return [
