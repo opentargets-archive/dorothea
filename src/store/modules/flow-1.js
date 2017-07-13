@@ -48,7 +48,7 @@ export default {
     drugsBarPlotData: (state) => state.drugsBarPlotData,
     tfsBarPlotData: (state) => state.tfsBarPlotData,
     drugName: (state, getters, rootState) => {
-      const drugId = getters.drugId
+      const drugId = getters.filterInteractionsOnDrug
       const drugAutocompleteOptions = getters.drugAutocompleteOptions
       let label = ''
       if (drugAutocompleteOptions && drugId) {
@@ -105,18 +105,6 @@ export default {
     selectFixATf () {
       return updateRoute({
         filterInteractionsBy: 'tf'
-      })
-    },
-    changeDrug (context, drugId) {
-      return updateRoute({
-        filterInteractionsBy: 'drug',
-        filterInteractionsOnDrug: drugId
-      })
-    },
-    changeTF (context, tfId) {
-      return updateRoute({
-        filterInteractionsBy: 'tf',
-        filterInteractionsOnTF: tfId
       })
     },
     changeSampleTypes ({ rootState }, sampleTypes) {

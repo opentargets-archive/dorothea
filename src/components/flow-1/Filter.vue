@@ -107,29 +107,19 @@ export default {
     }
   },
   computed: {
-    dataLoaded () {
-      return this.$store.state.data.loaded
-    },
-    drugId () {
-      return +this.$store.state.route.query.filterInteractionsOnDrug
-    },
-    tfId () {
-      return this.$store.state.route.query.filterInteractionsOnTF
-    },
     drugNameWithSynonym (option) {
       if (option.label === option.value) return option.label
       return option.label + ' (synonym of ' + option.value + ')'
     },
-    drugAutocompleteOptions () {
-      return this.$store.state.flow1.drugAutocompleteOptions
-    },
-    tfAutocompleteOptions () {
-      return this.$store.state.flow1.tfAutocompleteOptions
-    },
-    ...mapGetters('flow1', [
-      'drugName',
-      'filterInteractionsBy'
-    ])
+    ...mapGetters('flow1', {
+      drugName: 'drugName',
+      filterInteractionsBy: 'filterInteractionsBy',
+      drugId: 'filterInteractionsOnDrug',
+      tfId: 'filterInteractionsOnTF',
+      dataLoaded: 'dataLoaded',
+      drugAutocompleteOptions: 'drugAutocompleteOptions',
+      tfAutocompleteOptions: 'tfAutocompleteOptions'
+    })
   },
   watch: {
     dataLoaded () {
@@ -142,8 +132,6 @@ export default {
       'selectAllDrugsAndAllTfs',
       'selectFixADrug',
       'selectFixATf',
-      'changeDrug',
-      'changeTF',
       'updateDrugAutocompleteOptions',
       'updateTFAutocompleteOptions'
     ]),
