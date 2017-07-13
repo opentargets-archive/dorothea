@@ -48,7 +48,7 @@ export default {
     drugsBarPlotData: (state) => state.drugsBarPlotData,
     tfsBarPlotData: (state) => state.tfsBarPlotData,
     drugName: (state, getters, rootState) => {
-      const drugId = getters.filterInteractionsOnDrug
+      const drugId = getters.selectedInteractionDrug || getters.filterInteractionsOnDrug
       const drugAutocompleteOptions = getters.drugAutocompleteOptions
       let label = ''
       if (drugAutocompleteOptions && drugId) {
