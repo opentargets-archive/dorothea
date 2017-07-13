@@ -2,16 +2,6 @@
   <dorothea-base-card :title="title"
                       :description="description"
                       v-resize="resizeHandler">
-    <button slot="toolbar-button" class="plot-card-menu">
-      <q-popover ref="downloadPopover">
-        <div class="list item-delimiter hightlight">
-          <button class="item item-link small text-left light-paragraph" style="text-transform:none;min-width:300px;" @click="pngDownload(), $refs.downloadPopover.close()">Download chart as PNG</button>
-          <button class="item item-link small text-left light-paragraph" style="text-transform:none;min-width:300px" @click="csvDownload(), $refs.downloadPopover.close()">Download data as CSV</button>
-        </div>
-        <slot name="extra-toolbar-buttons"></slot>
-      </q-popover>
-      <icon name="bars"></icon>
-    </button>
 
     <div v-if="csvFields" slot="card-internals" class="card-content bg-white no-padding">
 

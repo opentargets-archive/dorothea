@@ -171,13 +171,11 @@ export default {
       this.showLabels = !this.showLabels
       this.plot.showCircleLabels(this.showLabels)
       this.handlerResize()
-      this.$children[0].$refs.downloadPopover.close()
     },
     toggleboxplots () {
       this.showBoxPlots = !this.showBoxPlots
       this.plot.showBoxPlots(this.showBoxPlots)
       this.handlerResize()
-      this.$children[0].$refs.downloadPopover.close()
     },
     clickHandler (d) {
       let q = _.clone(this.$route.query)
