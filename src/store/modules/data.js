@@ -40,6 +40,72 @@ export default {
       })
       return pairs
     },
+    flow1DrugAutocompleteOptions: (state, getters) => () => {
+      if (!state.aDrugs) return []
+      let options = []
+      const drugIds = Object.keys(state.aDrugs)
+      drugIds.map((drugId) => {
+        const r = state.aDrugs[drugId]
+        // add synonyms
+        const synonymStr = state.aDrugs[r.drugId].synonyms
+        const synonyms = synonymStr.split(', ')
+
+        if (synonymStr) {
+          synonyms.map(s => {
+            options.push({
+              value: r.drugName,
+              label: s,
+              drugId: r.drugId,
+              secondLabel: '(synonym of ' + r.drugName + ')'
+              // stamp: r.drugName
+            })
+          })
+        }
+        // if the main name is not in list of synonyms, add it
+        if (!synonymStr || synonyms.indexOf(r.drugName) < 0) {
+          options.push({
+            value: r.drugName,
+            label: r.drugName,
+            drugId: r.drugId
+            // info: state.aDrugs[r.drugId]
+          })
+        }
+      })
+      return options
+
+      // const options = drugIds.map((drugId) => {
+      //   return {
+      //     label: state.aDrugs[drugId].drugName,
+      //     value: state.aDrugs[drugId].drugId
+      //     drugId: state.aDrugs[drugId].drugId
+      //   }
+      // }).sort((a, b) => {
+      //   if (a.label < b.label) return -1
+      //   if (a.label > b.label) return 1
+      //   return 0
+      // })
+      // return pairs
+    },
+    flow1TFAutocompleteOptions: (state) => () => {
+      if (!state.rTfDrugAssoGdsc) return []
+      // get unique tfs from this table
+      // (ie. they appear in at least one association)
+      const tfs = _.uniq(state.rTfDrugAssoGdsc.map(d => d.transcriptionFactor))
+      const options = tfs.sort().map(tfId => ({
+        value: tfId,
+        label: tfId,
+        tfId
+      }))
+      return options
+      // let tfIdsSet = new Set(state.rTfDrugAssoGdsc.map(d => d.transcriptionFactor))
+      // let pairs = [...tfIdsSet].sort().map((tfId) => {
+      //   return {
+      //     label: tfId,
+      //     value: tfId
+      //   }
+      // })
+      // return pairs
+    },
     flow1TFOptions: (state) => () => {
       if (!state.rTfDrugAssoGdsc) return []
       // get unique tfs from this table

@@ -16,6 +16,8 @@ export default {
   namespaced: true,
   state: {
     drugOptions: [],
+    drugAutocompleteOptions: [],
+    tfAutocompleteOptions: [],
     tfOptions: [],
     sampleOptions: [],
     volcanoPlotData: [],
@@ -39,6 +41,8 @@ export default {
 
     // local
     drugOptions: (state) => state.drugOptions,
+    drugAutocompleteOptions: (state) => state.drugAutocompleteOptions,
+    tfAutocompleteOptions: (state) => state.tfAutocompleteOptions,
     tfOptions: (state) => state.tfOptions,
     sampleOptions: (state) => state.sampleOptions,
     volcanoPlotData: (state) => () => state.volcanoPlotData,
@@ -66,6 +70,12 @@ export default {
     },
     mUpdateFlow1DrugOptions (state, payload) {
       state.drugOptions = payload
+    },
+    mUpdateFlow1DrugAutocompleteOptions (state, payload) {
+      state.drugAutocompleteOptions = payload
+    },
+    mUpdateFlow1TFAutocompleteOptions (state, payload) {
+      state.tfAutocompleteOptions = payload
     },
     mUpdateFlow1TFOptions (state, payload) {
       state.tfOptions = payload
@@ -138,6 +148,18 @@ export default {
       return Vue.http.get(apiBase + 'flow-1/drug-options', {params: params})
         .then(function (response) {
           commit('mUpdateFlow1DrugOptions', response.body)
+        })
+    },
+    updateDrugAutocompleteOptions ({ state, commit }, params) {
+      Vue.http.get(apiBase + 'flow-1/drug-autocomplete-options', {params: params})
+        .then(function (response) {
+          commit('mUpdateFlow1DrugAutocompleteOptions', response.body)
+        })
+    },
+    updateTFAutocompleteOptions ({ state, commit }, params) {
+      Vue.http.get(apiBase + 'flow-1/tf-autocomplete-options', {params: params})
+        .then(function (response) {
+          commit('mUpdateFlow1TFAutocompleteOptions', response.body)
         })
     },
     updateFlow1TFOptions ({ state, commit }, params) {

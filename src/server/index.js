@@ -17,6 +17,12 @@ export default function (Vue) {
       case 'flow-1/drug-options':
         body = store.getters.flow1DrugOptions()
         break
+      case 'flow-1/drug-autocomplete-options':
+        body = store.getters.flow1DrugAutocompleteOptions()
+        break
+      case 'flow-1/tf-autocomplete-options':
+        body = store.getters.flow1TFAutocompleteOptions()
+        break
       case 'flow-1/tf-options':
         body = store.getters.flow1TFOptions()
         break

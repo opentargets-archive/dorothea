@@ -216,9 +216,9 @@ export default {
     tfId () {
       return store.state.route.query.filterOnTF
     },
-    drugOptions () {
-      return store.state.flow2.drugOptions
-    },
+    // drugOptions () {
+    //   return store.state.flow2.drugOptions
+    // },
     drugAutocompleteOptions () {
       return store.state.flow2.drugAutocompleteOptions
     },
@@ -231,28 +231,28 @@ export default {
     tfAutocompleteOptions () {
       return store.state.flow2.tfAutocompleteOptions
     },
-    gmOptions () {
-      return store.state.flow2.gmOptions
-    },
-    ctOptions () {
-      return store.state.flow2.ctOptions
-    },
-    tfOptions () {
-      return store.state.flow2.tfOptions
-    },
+    // gmOptions () {
+    //   return store.state.flow2.gmOptions
+    // },
+    // ctOptions () {
+    //   return store.state.flow2.ctOptions
+    // },
+    // tfOptions () {
+    //   return store.state.flow2.tfOptions
+    // },
     drugLabel () {
       let label = ''
-      if (this.drugOptions && this.drugId) {
-        const pair = this.drugOptions.filter(r => r.value === this.drugId)[0]
-        if (pair && pair.label) label = pair.label
+      if (this.drugAutocompleteOptions && this.drugId) {
+        const option = this.drugAutocompleteOptions.filter(r => r.drugId === this.drugId)[0]
+        if (option && option.label) label = option.value
       }
       return label
     },
     gmLabel () {
       let label = ''
-      if (this.gmOptions && this.gmId) {
-        const pair = this.gmOptions.filter(r => r.value === this.gmId)[0]
-        if (pair && pair.label) label = pair.label
+      if (this.gmAutocompleteOptions && this.gmId) {
+        const option = this.gmAutocompleteOptions.filter(r => r.gmId === this.gmId)[0]
+        if (option && option.label) label = option.value
       }
       return label
     },
@@ -265,68 +265,68 @@ export default {
   },
   watch: {
     drugId: function () {
-      this.updateGMOptions()
+      // this.updateGMOptions()
       this.updateGMAutocompleteOptions()
-      this.updateCTOptions()
+      // this.updateCTOptions()
       this.updateCTAutocompleteOptions()
-      this.updateTFOptions()
+      // this.updateTFOptions()
       this.updateTFAutocompleteOptions()
     },
     gmId: function () {
-      this.updateDrugOptions()
+      // this.updateDrugOptions()
       this.updateDrugAutocompleteOptions()
-      this.updateCTOptions()
+      // this.updateCTOptions()
       this.updateCTAutocompleteOptions()
-      this.updateTFOptions()
+      // this.updateTFOptions()
       this.updateTFAutocompleteOptions()
     },
     ctId: function () {
-      this.updateDrugOptions()
+      // this.updateDrugOptions()
       this.updateDrugAutocompleteOptions()
-      this.updateGMOptions()
+      // this.updateGMOptions()
       this.updateGMAutocompleteOptions()
-      this.updateTFOptions()
+      // this.updateTFOptions()
       this.updateTFAutocompleteOptions()
     },
     dataLoaded: function () {
-      this.updateDrugOptions()
+      // this.updateDrugOptions()
       this.updateDrugAutocompleteOptions()
-      this.updateGMOptions()
+      // this.updateGMOptions()
       this.updateGMAutocompleteOptions()
-      this.updateCTOptions()
+      // this.updateCTOptions()
       this.updateCTAutocompleteOptions()
-      this.updateTFOptions()
+      // this.updateTFOptions()
       this.updateTFAutocompleteOptions()
     }
   },
   methods: {
-    selectDrug (drugId) {
-      let query = {
-        filterOnDrug: drugId
-      }
-      if (this.gmId) query.filterOnGM = this.gmId
-      if (this.ctId) query.filterOnCT = this.ctId
-      router.push({
-        path: '/investigation/2',
-        query
-      })
-    },
-    deselectDrug () {
-      let query = {}
-      if (this.gmId) query.filterOnGM = this.gmId
-      if (this.ctId) query.filterOnCT = this.ctId
-      router.push({
-        path: '/investigation/2',
-        query
-      })
-    },
-    selectDrugTerm (item) {
-      this.drugSelected = item
-    },
-    deselectDrugTerm () {
-      this.drugTerm = ''
-      this.drugSelected = null
-    },
+    // selectDrug (drugId) {
+    //   let query = {
+    //     filterOnDrug: drugId
+    //   }
+    //   if (this.gmId) query.filterOnGM = this.gmId
+    //   if (this.ctId) query.filterOnCT = this.ctId
+    //   router.push({
+    //     path: '/investigation/2',
+    //     query
+    //   })
+    // },
+    // deselectDrug () {
+    //   let query = {}
+    //   if (this.gmId) query.filterOnGM = this.gmId
+    //   if (this.ctId) query.filterOnCT = this.ctId
+    //   router.push({
+    //     path: '/investigation/2',
+    //     query
+    //   })
+    // },
+    // selectDrugTerm (item) {
+    //   this.drugSelected = item
+    // },
+    // deselectDrugTerm () {
+    //   this.drugTerm = ''
+    //   this.drugSelected = null
+    // },
     drugOptionChanged (option) {
       // for use with vue-multiselect
       // console.log(option)
@@ -392,80 +392,80 @@ export default {
         query
       })
     },
-    selectGM (gmId) {
-      let query = {
-        filterOnGM: gmId
-      }
-      if (this.drugId) query.filterOnDrug = this.drugId
-      if (this.ctId) query.filterOnCT = this.ctId
-      router.push({
-        path: '/investigation/2',
-        query
-      })
-    },
-    deselectGM () {
-      let query = {}
-      if (this.drugId) query.filterOnDrug = this.drugId
-      if (this.ctId) query.filterOnCT = this.ctId
-      router.push({
-        path: '/investigation/2',
-        query
-      })
-    },
-    selectCT (ctId) {
-      let query = {
-        filterOnCT: ctId
-      }
-      if (this.drugId) query.filterOnDrug = this.drugId
-      if (this.gmId) query.filterOnGM = this.gmId
-      router.push({
-        path: '/investigation/2',
-        query
-      })
-    },
-    deselectCT () {
-      let query = {}
-      if (this.drugId) query.filterOnDrug = this.drugId
-      if (this.gmId) query.filterOnGM = this.gmId
-      router.push({
-        path: '/investigation/2',
-        query
-      })
-    },
-    selectTF (tfId) {
-      let query = {
-        filterOnTF: tfId
-      }
-      if (this.drugId) query.filterOnDrug = this.drugId
-      if (this.gmId) query.filterOnGM = this.gmId
-      if (this.ctId) query.filterOnCT = this.ctId
-      router.push({
-        path: '/investigation/2',
-        query
-      })
-    },
-    deselectTF () {
-      let query = {}
-      if (this.drugId) query.filterOnDrug = this.drugId
-      if (this.gmId) query.filterOnGM = this.gmId
-      if (this.ctId) query.filterOnCT = this.ctId
-      router.push({
-        path: '/investigation/2',
-        query
-      })
-    },
+    // selectGM (gmId) {
+    //   let query = {
+    //     filterOnGM: gmId
+    //   }
+    //   if (this.drugId) query.filterOnDrug = this.drugId
+    //   if (this.ctId) query.filterOnCT = this.ctId
+    //   router.push({
+    //     path: '/investigation/2',
+    //     query
+    //   })
+    // },
+    // deselectGM () {
+    //   let query = {}
+    //   if (this.drugId) query.filterOnDrug = this.drugId
+    //   if (this.ctId) query.filterOnCT = this.ctId
+    //   router.push({
+    //     path: '/investigation/2',
+    //     query
+    //   })
+    // },
+    // selectCT (ctId) {
+    //   let query = {
+    //     filterOnCT: ctId
+    //   }
+    //   if (this.drugId) query.filterOnDrug = this.drugId
+    //   if (this.gmId) query.filterOnGM = this.gmId
+    //   router.push({
+    //     path: '/investigation/2',
+    //     query
+    //   })
+    // },
+    // deselectCT () {
+    //   let query = {}
+    //   if (this.drugId) query.filterOnDrug = this.drugId
+    //   if (this.gmId) query.filterOnGM = this.gmId
+    //   router.push({
+    //     path: '/investigation/2',
+    //     query
+    //   })
+    // },
+    // selectTF (tfId) {
+    //   let query = {
+    //     filterOnTF: tfId
+    //   }
+    //   if (this.drugId) query.filterOnDrug = this.drugId
+    //   if (this.gmId) query.filterOnGM = this.gmId
+    //   if (this.ctId) query.filterOnCT = this.ctId
+    //   router.push({
+    //     path: '/investigation/2',
+    //     query
+    //   })
+    // },
+    // deselectTF () {
+    //   let query = {}
+    //   if (this.drugId) query.filterOnDrug = this.drugId
+    //   if (this.gmId) query.filterOnGM = this.gmId
+    //   if (this.ctId) query.filterOnCT = this.ctId
+    //   router.push({
+    //     path: '/investigation/2',
+    //     query
+    //   })
+    // },
     clickClearAllHandler () {
       router.push({
         path: '/investigation/2',
         query: {}
       })
     },
-    updateDrugOptions () {
-      store.dispatch('flow2/updateDrugOptions', {
-        gmId: this.gmId,
-        ctId: this.ctId
-      })
-    },
+    // updateDrugOptions () {
+    //   store.dispatch('flow2/updateDrugOptions', {
+    //     gmId: this.gmId,
+    //     ctId: this.ctId
+    //   })
+    // },
     updateDrugAutocompleteOptions () {
       store.dispatch('flow2/updateDrugAutocompleteOptions', {
         gmId: this.gmId,
@@ -491,98 +491,39 @@ export default {
         ctId: this.ctId
       })
     },
-    updateGMOptions () {
-      store.dispatch('flow2/updateGMOptions', {
-        drugId: this.drugId,
-        ctId: this.ctId
-      })
-    },
-    updateCTOptions () {
-      store.dispatch('flow2/updateCTOptions', {
-        drugId: this.drugId,
-        gmId: this.gmId
-      })
-    },
-    updateTFOptions () {
-      store.dispatch('flow2/updateTFOptions', {
-        drugId: this.drugId,
-        gmId: this.gmId,
-        ctId: this.ctId
-      })
-    },
+    // updateGMOptions () {
+    //   store.dispatch('flow2/updateGMOptions', {
+    //     drugId: this.drugId,
+    //     ctId: this.ctId
+    //   })
+    // },
+    // updateCTOptions () {
+    //   store.dispatch('flow2/updateCTOptions', {
+    //     drugId: this.drugId,
+    //     gmId: this.gmId
+    //   })
+    // },
+    // updateTFOptions () {
+    //   store.dispatch('flow2/updateTFOptions', {
+    //     drugId: this.drugId,
+    //     gmId: this.gmId,
+    //     ctId: this.ctId
+    //   })
+    // },
     drugNameWithSynonym (option) {
       if (option.label === option.value) return option.label
       return option.label + ' (synonym of ' + option.value + ')'
     }
   },
   mounted () {
-    this.updateDrugOptions()
+    // this.updateDrugOptions()
     this.updateDrugAutocompleteOptions()
-    this.updateGMOptions()
+    // this.updateGMOptions()
     this.updateGMAutocompleteOptions()
-    this.updateCTOptions()
+    // this.updateCTOptions()
     this.updateCTAutocompleteOptions()
-    this.updateTFOptions()
+    // this.updateTFOptions()
     this.updateTFAutocompleteOptions()
   }
 }
 </script>
-
-<style>
-.item, .item.two-lines {
-  height: 32px;
-}
-.item > .item-content, .item.two-lines > .item-content {
-  padding: 8px 0;
-  font-size: 80%;
-}
-.token {
-  font-size: 80%;
-}
-
-
-.multiselect-container {
-  padding-top: 5px;
-  padding-bottom: 5px;
-}
-
-.multiselect {
-  margin-top: 0px;
-}
-.multiselect__tags {
-  border: none;
-  padding-left: 0px;
-  padding-top: 0px;
-  input {
-    font-size: 80%;
-  }
-}
-.multiselect__option {
-  padding: 4px 4px;
-  min-height: 10px;
-  font-size: 80%;
-}
-.multiselect__input {
-  border-radius: 0;
-  font-size: 80%;
-  padding: 0px;
-}
-.multiselect__option--highlight {
-  background: #B7E9F3;
-  color: #555;
-}
-
-div.card {
-  overflow: visible;
-}
-.before-list {
-  padding: 4px;
-  font-size: 80%;
-  font-weight: bold;
-}
-
-.multiselect-or-chip {
-  height: 40px;
-  margin-top: 0px;
-}
-</style>

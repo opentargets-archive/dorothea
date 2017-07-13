@@ -37,4 +37,62 @@ hr {
   width: 100%;
   margin: 0;
 }
+
+/* for filters */
+.item, .item.two-lines {
+  height: 32px;
+}
+.item > .item-content, .item.two-lines > .item-content {
+  padding: 8px 0;
+  font-size: 80%;
+}
+.token {
+  font-size: 80%;
+}
+
+.multiselect-container {
+  padding-top: 5px;
+  padding-bottom: 5px;
+}
+
+.multiselect {
+  margin-top: 0px;
+}
+.multiselect__tags {
+  border: none;
+  padding-left: 0px;
+  padding-top: 0px;
+  input {
+    font-size: 80%;
+  }
+}
+.multiselect__option {
+  padding: 4px 4px;
+  min-height: 10px;
+  font-size: 80%;
+}
+.multiselect__input {
+  border-radius: 0;
+  font-size: 80%;
+  padding: 0px;
+}
+.multiselect__option--highlight {
+  background: #B7E9F3;
+  color: #555;
+}
+
+div.card {
+  overflow: visible;
+}
+.before-list {
+  padding: 4px;
+  font-size: 80%;
+  font-weight: bold;
+}
+
+.multiselect-or-chip {
+  height: 40px;
+  margin-top: 0px;
+}
+
 </style>

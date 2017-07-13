@@ -43,9 +43,9 @@ import { mapGetters, mapActions } from 'vuex'
 
 export default {
   computed: {
-    dataLoaded () {
-      return this.$store.state.data.loaded
-    },
+    // dataLoaded () {
+    //   return this.$store.state.data.loaded
+    // },
     // gmId () {
     //   return this.$store.state.route.query.filterOnGM
     // },
@@ -57,7 +57,8 @@ export default {
     },
     ...mapGetters('flow2', {
       gmId: 'gmId',
-      tableData: 'gmTableData'
+      tableData: 'gmTableData',
+      dataLoaded: 'dataLoaded'
     })
   },
   watch: {
