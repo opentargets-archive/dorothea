@@ -1,6 +1,5 @@
 <template>
-  <dorothea-base-card v-if="pairs"
-                      title="Filter by cancer type"
+  <dorothea-base-card title="Filter by cancer type"
                       description="">
 
     <div slot="card-internals" class="card-content column">
