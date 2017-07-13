@@ -41,10 +41,10 @@ export default {
     drugAutocompleteOptions: (state) => state.drugAutocompleteOptions,
     tfAutocompleteOptions: (state) => state.tfAutocompleteOptions,
     sampleOptions: (state) => state.sampleOptions,
-    volcanoPlotData: (state) => () => state.volcanoPlotData,
+    volcanoPlotData: (state) => state.volcanoPlotData,
     samplePlotData: (state) => () => state.samplePlotData,
     interactionTableData: (state) => state.interactionTableData,
-    sampleTableData: (state) => () => state.sampleTableData,
+    sampleTableData: (state) => state.sampleTableData,
     drugsBarPlotData: (state) => state.drugsBarPlotData,
     tfsBarPlotData: (state) => state.tfsBarPlotData,
     drugName: (state, getters, rootState) => {

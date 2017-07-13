@@ -30,7 +30,10 @@
         </dorothea-association-table>
       </div>
       <div class="width-3of4">
-        <volcano-plot></volcano-plot>
+        <volcano-plot :drug-id="filterInteractionsOnDrug || 'all'"
+                      :tf-id="filterInteractionsOnTF || 'all'"
+                      :plot-data="volcanoPlotData">
+        </volcano-plot>
       </div>
     </div>
 
@@ -73,25 +76,55 @@ export default {
     },
     ...mapGetters('flow1', [
       'drugName',
+      'filterInteractionsBy',
+      'filterInteractionsOnDrug',
+      'filterInteractionsOnTF',
       'selectedInteractionDrug',
       'selectedInteractionTF',
       'selectedSample',
       'drugsBarPlotData',
       'tfsBarPlotData',
+      'volcanoPlotData',
       'dataLoaded',
       'interactionTableData'
-    ])
+    ]),
+    vpParams () {
+      let params = {
+        drugId: 'all',
+        tfId: 'all'
+      }
+      if (this.filterInteractionsBy === 'drug' && this.filterInteractionsOnDrug) {
+        params.drugId = this.filterInteractionsOnDrug
+      }
+      if (this.filterInteractionsBy === 'tf' && this.filterInteractionsOnTF) {
+        params.tfId = this.filterInteractionsOnTF
+      }
+      return params
+    }
   },
   methods: {
     ...mapActions('flow1', [
       'updateDrugsBarPlotData',
       'updateTFsBarPlotData',
-      'updateInteractionTableData'
+      'updateInteractionTableData',
+      'updateVolcanoPlotData'
     ]),
     onDataLoad () {
       this.updateDrugsBarPlotData({})
       this.updateTFsBarPlotData({})
       this.updateInteractionTableData()
+      // TODO: Make sampleTableData, vpData, spData update too
+      // this.updateInteractionTableData()
+      this.updateVolcanoPlotData(this.vpParams)
+    },
+    onFilterInteractionsByChange () {
+      this.updateVolcanoPlotData(this.vpParams)
+    },
+    onFilterInteractionsOnDrugChange () {
+      this.updateVolcanoPlotData(this.vpParams)
+    },
+    onFilterInteractionsOnTFChange () {
+      this.updateVolcanoPlotData(this.vpParams)
     },
     onSelectedDrugChange () {
       this.updateInteractionTableData()
@@ -105,6 +138,9 @@ export default {
   },
   watch: {
     dataLoaded: 'onDataLoad',
+    filterInteractionsBy: 'onFilterInteractionsByChange',
+    filterInteractionsOnDrug: 'onFilterInteractionsOnDrugChange',
+    filterInteractionsOnTF: 'onFilterInteractionsOnTFChange',
     selectedInteractionDrug: 'onSelectedDrugChange',
     selectedInteractionTF: 'onSelectedTFChange'
   }

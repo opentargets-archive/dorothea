@@ -6,7 +6,7 @@
                       plot-tab-name="Volcano Plot"
                       :resize-handler="handlerResize"
                       :filename="filename"
-                      :csv-data="csvData"
+                      :csv-data="plotData"
                       :csv-fields="csvFields"
                       :table-columns="tableColumns">
 
@@ -34,8 +34,10 @@ import volcanoPlot from 'volcano-plot'
 import router from '../../router'
 import * as _ from 'lodash'
 import * as d3 from 'd3'
+import { mapGetters } from 'vuex'
 
 export default {
+  props: ['drugId', 'tfId', 'plotData'],
   directives: {
     resize
   },
@@ -45,31 +47,7 @@ export default {
     }
   },
   computed: {
-    dataLoaded () {
-      return this.$store.state.data.loaded
-    },
-    filterInteractionsBy () {
-      return this.$store.state.route.query.filterInteractionsBy
-    },
-    drugId () {
-      if (this.filterInteractionsBy === 'drug') {
-        const drugId = this.$store.state.route.query.filterInteractionsOnDrug
-        return drugId ? +drugId : 'all'
-      }
-      else {
-        return 'all'
-      }
-    },
-    tfId () {
-      if (this.filterInteractionsBy === 'tf') {
-        let tfId = this.$store.state.route.query.filterInteractionsOnTF
-        if (!tfId) tfId = 'all'
-        return tfId
-      }
-      else {
-        return 'all'
-      }
-    },
+    ...mapGetters('flow1', ['filterInteractionsBy']),
     csvFields () {
       return [
         'drugId',
@@ -80,9 +58,6 @@ export default {
         'pval',
         'transcriptionFactor'
       ]
-    },
-    csvData () {
-      return this.plotData
     },
     tableColumns () {
       return [
@@ -120,9 +95,6 @@ export default {
     title () {
       return 'Showing ' + this.plotData.length + ' interactions'
     },
-    plotData () {
-      return this.$store.state.flow1.volcanoPlotData
-    },
     labelAccessor () {
       if (this.filterInteractionsBy === 'drug') {
         return d => d.transcriptionFactor
@@ -135,32 +107,14 @@ export default {
       }
     }
   },
-  watch: {
-    drugId () {
-      this.updateData()
-    },
-    tfId () {
-      this.updateData()
-    },
-    dataLoaded () {
-      this.updateData()
-    },
-    plotData () {
-      this.plot.data(this.plotData)
-              //  .render()
-      this.handlerResize()
-    }
-  },
   mounted () {
     this.createPlot()
-    this.updateData()
   },
   updated () {
     this.plot.data(this.plotData)
              .showCircleLabels(this.showLabels)
              .textAccessor(this.labelAccessor)
              .title('<tspan font-style="italic">' + this.title + '</tspan>')
-            //  .render()
     this.handlerResize()
   },
   methods: {
@@ -168,7 +122,6 @@ export default {
       this.showLabels = !this.showLabels
       this.plot.showCircleLabels(this.showLabels)
       this.handlerResize()
-      this.$children[0].$refs.downloadPopover.close()
     },
     clickHandler (d) {
       let q = _.clone(this.$route.query)
@@ -198,7 +151,6 @@ export default {
                     .xAccessor(d => d.effectSize)
                     .yAccessor(d => d.fdr)
                     .textAccessor(this.labelAccessor)
-                    // .rAccessor(d => d.sampleCount)
                     .rAccessor(d => 1)
                     .handleCircleClick(this.clickHandler)
                     .handleBackgroundClick(this.clickBackgroundHandler)
@@ -206,19 +158,7 @@ export default {
                     .xLabel('Effect Size')
                     .yLabel('- log FDR')
                     .title('<tspan font-style="italic">' + this.title + '</tspan>')
-                    // .margins({top: 5, bottom: 50, left: 40, right: 10})
-      // this.plot.render()
       this.handlerResize()
-    },
-    updateData () {
-      this.$store.dispatch('flow1/updateVolcanoPlotData', {
-        drugId: this.drugId,
-        tfId: this.tfId
-      }).then(response => {
-        this.plot.data(this.plotData)
-                //  .render()
-        this.handlerResize()
-      })
     },
     handlerResize () {
       let aspectRatio = 5.0 / 3
