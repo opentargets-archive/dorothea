@@ -19,18 +19,7 @@
             Filter by transcription factor
           </label>
         </div>
-
       </div>
-      <!--<div class="width-1of2">
-        <div v-if="filterInteractionsBy === 'drug'">
-          <small class="caption">Select a drug:</small>
-          <q-select type="list" @input="changeDrug" v-model="drugId" :options="drugOptions"></q-select>
-        </div>
-        <div v-if="filterInteractionsBy === 'tf'">
-          <small class="caption">Select a transcription factor:</small>
-          <q-select type="list" @input="changeTF" v-model="tfId" :options="tfOptions"></q-select>
-        </div>
-      </div>-->
 
       <div v-if="filterInteractionsBy === 'drug'" class="group multiselect-container">
         <label>Drug</label>
@@ -65,7 +54,7 @@
             </template>
           
           </multiselect>
-          <small class="token" v-else>{{ drugLabel }}<i class="cursor-pointer" @click="drugOptionChanged">close</i></small>
+          <small class="token" v-else>{{ drugName }}<i class="cursor-pointer" @click="drugOptionChanged">close</i></small>
         </div>
       </div>
 
@@ -113,8 +102,6 @@ export default {
   data () {
     return {
       selectedRouteModel: this.filterInteractionsByToRadioIndex(), // note this is not used, merely prevents vue errors
-      // drugId: +this.$store.state.route.query.filterInteractionsOnDrug, // note this is not used, merely prevents vue errors
-      // tfId: this.$store.state.route.query.filterInteractionsOnTF, // note this is not used, merely prevents vue errors
       myDrugTerm: null,
       myTFTerm: null
     }
@@ -139,27 +126,15 @@ export default {
     tfAutocompleteOptions () {
       return this.$store.state.flow1.tfAutocompleteOptions
     },
-    drugLabel () {
-      let label = ''
-      if (this.drugAutocompleteOptions && this.drugId) {
-        const option = this.drugAutocompleteOptions.filter(r => r.drugId === this.drugId)[0]
-        if (option && option.label) label = option.value
-      }
-      return label
-    },
     ...mapGetters('flow1', [
-      // 'drugName',
+      'drugName',
       'filterInteractionsBy'
-      // 'drugOptions',
-      // 'tfOptions'
     ])
   },
   watch: {
     dataLoaded () {
-      // this.updateFlow1DrugOptions()
       this.updateDrugAutocompleteOptions()
       this.updateTFAutocompleteOptions()
-      // this.updateFlow1TFOptions()
     }
   },
   methods: {
@@ -169,10 +144,8 @@ export default {
       'selectFixATf',
       'changeDrug',
       'changeTF',
-      // 'updateFlow1DrugOptions',
       'updateDrugAutocompleteOptions',
       'updateTFAutocompleteOptions'
-      // 'updateFlow1TFOptions'
     ]),
     filterInteractionsByToRadioIndex () {
       const filterBy = this.$store.state.route.query.filterInteractionsBy
@@ -187,9 +160,6 @@ export default {
       }
     },
     drugOptionChanged (option) {
-      // for use with vue-multiselect
-      // console.log(option)
-      // deselect
       this.myDrugTerm = null
       let query = {
         filterInteractionsBy: 'drug'
@@ -203,8 +173,6 @@ export default {
       })
     },
     tfOptionChanged (option) {
-      // for use with vue-multiselect
-      // deselect
       this.myTFTerm = null
       let query = {
         filterInteractionsBy: 'tf'
@@ -219,10 +187,8 @@ export default {
     }
   },
   mounted () {
-    // this.updateFlow1DrugOptions()
     this.updateDrugAutocompleteOptions()
     this.updateTFAutocompleteOptions()
-    // this.updateFlow1TFOptions()
   }
 }
 </script>
