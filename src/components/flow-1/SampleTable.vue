@@ -45,24 +45,17 @@
 
 <script>
 import * as d3 from 'd3'
+import { mapGetters } from 'vuex'
 
 export default {
   computed: {
-    dataLoaded () {
-      return this.$store.state.data.loaded
-    },
-    drugId () {
-      return +this.$store.state.route.query.selectedInteractionDrug
-    },
-    tfId () {
-      return this.$store.state.route.query.selectedInteractionTF
-    },
-    sampleId () {
-      return +this.$store.state.route.query.selectedSample
-    },
-    tableData () {
-      return this.$store.state.flow1.sampleTableData
-    },
+    ...mapGetters('flow1', {
+      dataLoaded: 'dataLoaded',
+      drugId: 'selectedInteractionDrug',
+      tfId: 'selectedInteractionTF',
+      sampleId: 'selectedSample',
+      tableData: 'sampleTableData'
+    }),
     tfActivity () {
       return d3.format('.3g')(this.tableData.tfActivity)
     },
