@@ -36,10 +36,6 @@ export default new VueRouter({
         {
           path: 'investigation/2',
           component: load('Flow2')
-        },
-        {
-          path: 'glossary',
-          component: load('Glossary')
         }
       ]
     }, // Default with query

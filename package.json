@@ -13,7 +13,6 @@
     "babel-polyfill": "^6.23.0",
     "babel-runtime": "^6.0.0",
     "bar-plot": "git+https://git@github.com/opentargets/bar-plot.git#v1.0.0",
-    "comparison-box-plot": "git+https://git@github.com/opentargets/comparison-box-plot.git#v1.0.2",
     "d3": "^4.8.0",
     "d3-scale-chromatic": "^1.1.1",
     "d3-svg-legend": "^2.24.0",
