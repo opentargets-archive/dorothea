@@ -27,6 +27,10 @@ export default {
 </script>
 
 <style>
+div.spinner-container {
+  min-height: 80vh;
+}
+
 div.card div.card-content {
   color: #555;
 }

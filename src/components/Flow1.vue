@@ -1,60 +1,66 @@
 <template>
-  <div class="column">
-    <div class="row gutter wrap">
-      <div class="width-1of1">
-        <div class="card">
-          <div class="card-content bg-white text-center">
-            Single TF-drug statistical interactions between 127 TFs and 265 compound across ~1,000 cancer cell lines.
+  <div>
+    <div v-if="dataLoaded" class="column">
+      <div class="row gutter wrap">
+        <div class="width-1of1">
+          <div class="card">
+            <div class="card-content bg-white text-center">
+              Single TF-drug statistical interactions between 127 TFs and 265 compound across ~1,000 cancer cell lines.
+            </div>
+          </div>
+        </div>
+      </div>
+      <h5>Results summary</h5>
+      <div class="row gutter">
+        <div class="width-1of2">
+          <dorothea-drugs-bar-plot :plot-data="drugsBarPlotData"></dorothea-drugs-bar-plot>
+        </div>
+        <div class="width-1of2">
+          <dorothea-tfs-bar-plot :plot-data="tfsBarPlotData"></dorothea-tfs-bar-plot>
+        </div>
+      </div>
+      
+      <hr>
+      <h5>Results search</h5>
+      <div class="row gutter">
+        <div class="column width-1of4">
+          <dorothea-flow-1-filter></dorothea-flow-1-filter>
+          <dorothea-association-table v-if="showInteractionDetail"
+                                      :drug-id="selectedInteractionDrug"
+                                      :table-data="interactionTableData">
+          </dorothea-association-table>
+        </div>
+        <div class="width-3of4">
+          <volcano-plot :drug-id="filterInteractionsOnDrug || 'all'"
+                        :tf-id="filterInteractionsOnTF || 'all'"
+                        :plot-data="volcanoPlotData">
+          </volcano-plot>
+        </div>
+      </div>
+
+      <div v-if="showInteractionDetail">
+        <hr>
+        <h5>Interaction between {{ drugName }} and {{ selectedInteractionTF }}</h5>
+        <div class="row gutter">
+          <div class="column width-1of4">
+            <dorothea-sample-plot-filter :color-scale="colorScale">
+            </dorothea-sample-plot-filter>
+            <dorothea-sample-table v-if="showSampleDetail">
+            </dorothea-sample-table>
+          </div>
+          <div class="column width-3of4">
+            <sample-plot :drug-id="selectedInteractionDrug"
+                        :tf-id="selectedInteractionTF"
+                        :plot-data="samplePlotData"
+                        :color-scale="colorScale">
+            </sample-plot>
           </div>
         </div>
       </div>
     </div>
-    <h5>Results summary</h5>
-    <div class="row gutter">
-      <div class="width-1of2">
-        <dorothea-drugs-bar-plot :plot-data="drugsBarPlotData"></dorothea-drugs-bar-plot>
-      </div>
-      <div class="width-1of2">
-        <dorothea-tfs-bar-plot :plot-data="tfsBarPlotData"></dorothea-tfs-bar-plot>
-      </div>
-    </div>
-    
-    <hr>
-    <h5>Results search</h5>
-    <div class="row gutter">
-      <div class="column width-1of4">
-        <dorothea-flow-1-filter></dorothea-flow-1-filter>
-        <dorothea-association-table v-if="showInteractionDetail"
-                                    :drug-id="selectedInteractionDrug"
-                                    :table-data="interactionTableData">
-        </dorothea-association-table>
-      </div>
-      <div class="width-3of4">
-        <volcano-plot :drug-id="filterInteractionsOnDrug || 'all'"
-                      :tf-id="filterInteractionsOnTF || 'all'"
-                      :plot-data="volcanoPlotData">
-        </volcano-plot>
-      </div>
-    </div>
-
-    <div v-if="showInteractionDetail">
-      <hr>
-      <h5>Interaction between {{ drugName }} and {{ selectedInteractionTF }}</h5>
-      <div class="row gutter">
-        <div class="column width-1of4">
-          <dorothea-sample-plot-filter :color-scale="colorScale">
-          </dorothea-sample-plot-filter>
-          <dorothea-sample-table v-if="showSampleDetail">
-          </dorothea-sample-table>
-        </div>
-        <div class="column width-3of4">
-          <sample-plot :drug-id="selectedInteractionDrug"
-                       :tf-id="selectedInteractionTF"
-                       :plot-data="samplePlotData"
-                       :color-scale="colorScale">
-          </sample-plot>
-        </div>
-      </div>
+    <div v-else class="column justify-center items-center spinner-container">
+      <spinner name="grid" color="#555" :size="100"></spinner>
+      <h5>Loading data files...</h5>
     </div>
   </div>
 </template>
