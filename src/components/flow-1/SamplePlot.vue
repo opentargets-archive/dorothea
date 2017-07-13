@@ -43,32 +43,18 @@ import * as d3 from 'd3'
 import { mapGetters } from 'vuex'
 
 export default {
-  props: ['colorScale'],
+  props: ['drugId', 'tfId', 'plotData', 'colorScale'],
   directives: {
     resize
   },
   data () {
     return {
       showLabels: true,
-      showLegend: false,
       showBoxPlots: true,
       radioValue: 'box'
     }
   },
   computed: {
-    filterSamplesOnTypes () {
-      const sampleTypes = this.$store.state.route.query.filterSamplesOnTypes
-      if (sampleTypes) {
-        return sampleTypes
-      }
-      else {
-        return []
-      }
-    },
-    plotData () {
-      const allData = this.$store.state.flow1.samplePlotData
-      return allData.filter(d => !(this.filterSamplesOnTypes.indexOf(d.gdscDesc1) >= 0))
-    },
     csvFields () {
       return [
         'analysisSetName',
@@ -125,42 +111,20 @@ export default {
              'lines'
     },
     ...mapGetters('flow1', {
-      drugName: 'drugName',
-      dataLoaded: 'dataLoaded',
-      drugId: 'selectedInteractionDrug',
-      tfId: 'selectedInteractionTF'
+      drugName: 'drugName'
     })
   },
-  watch: {
-    drugId () {
-      this.updateData()
-    },
-    tfId () {
-      this.updateData()
-    },
-    dataLoaded () {
-      this.updateData()
-    },
-    plotData () {
-      this.plot.data(this.plotData)
-              //  .render()
-      this.handlerResize()
-    }
-  },
   mounted () {
-    this.updateData()
     this.createPlot()
   },
   updated () {
     this.plot.data(this.plotData)
              .showCircleLabels(this.showLabels)
-             .showLegend(this.showLegend)
              .showBoxPlots(this.showBoxPlots)
              .colorScale(this.colorScale)
              .xLabel('<tspan font-weight="bold">' + this.tfId + '</tspan> estimated activity')
              .yLabel('<tspan font-weight="bold">' + this.drugName + '</tspan> log IC50')
              .title('<tspan font-style="italic">' + this.title + '</tspan>')
-            //  .render()
     this.handlerResize()
   },
   methods: {
@@ -204,28 +168,13 @@ export default {
                     .legendFieldAccessor(d => d.gdscDesc1)
                     .colorScale(this.colorScale)
                     .showCircleLabels(this.showLabels)
-                    .showLegend(this.showLegend)
                     .showBoxPlots(this.showBoxPlots)
                     .handleCircleClick(this.clickHandler)
                     .handleBackgroundClick(this.clickBackgroundHandler)
-                    .legendTitle('GDSC Description 1')
                     .xLabel('<tspan font-weight="bold">' + this.tfId + '</tspan> estimated activity')
                     .yLabel('<tspan font-weight="bold">' + this.drugName + '</tspan> log IC50')
                     .title('<tspan font-style="italic">' + this.title + '</tspan>')
-                    .showRegression(false)
-      // this.plot.render()
       this.handlerResize()
-    },
-    updateData () {
-      this.$store.dispatch('flow1/updateSamplePlotData', {
-        drugId: this.drugId,
-        tfId: this.tfId
-      }).then(response => {
-        this.plot.data(this.plotData)
-                 .colorScale(this.colorScale)
-                //  .render()
-        this.handlerResize()
-      })
     },
     handlerResize () {
       let aspectRatio = 5.0 / 3

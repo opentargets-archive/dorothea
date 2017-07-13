@@ -36,13 +36,13 @@ export default {
     selectedInteractionDrug: (state, getters, rootState) => +rootState.route.query.selectedInteractionDrug,
     selectedInteractionTF: (state, getters, rootState) => rootState.route.query.selectedInteractionTF,
     selectedSample: (state, getters, rootState) => rootState.route.query.selectedSample,
+    filterSamplesOnTypes: (state, getters, rootState) => (rootState.route.query.filterSamplesOnTypes || []),
 
     // local
     drugAutocompleteOptions: (state) => state.drugAutocompleteOptions,
     tfAutocompleteOptions: (state) => state.tfAutocompleteOptions,
     sampleOptions: (state) => state.sampleOptions,
     volcanoPlotData: (state) => state.volcanoPlotData,
-    samplePlotData: (state) => () => state.samplePlotData,
     interactionTableData: (state) => state.interactionTableData,
     sampleTableData: (state) => state.sampleTableData,
     drugsBarPlotData: (state) => state.drugsBarPlotData,
@@ -68,6 +68,12 @@ export default {
       else {
         return 0
       }
+    },
+    samplePlotData: (state, getters) => {
+      if (!state.samplePlotData) return []
+      return state.samplePlotData.filter(d => {
+        return !(getters.filterSamplesOnTypes.indexOf(d.gdscDesc1) >= 0)
+      })
     }
   },
   mutations: {

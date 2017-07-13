@@ -48,7 +48,11 @@
           </dorothea-sample-table>
         </div>
         <div class="column width-3of4">
-          <sample-plot :color-scale="colorScale"></sample-plot>
+          <sample-plot :drug-id="selectedInteractionDrug"
+                       :tf-id="selectedInteractionTF"
+                       :plot-data="samplePlotData"
+                       :color-scale="colorScale">
+          </sample-plot>
         </div>
       </div>
     </div>
@@ -85,6 +89,7 @@ export default {
       'drugsBarPlotData',
       'tfsBarPlotData',
       'volcanoPlotData',
+      'samplePlotData',
       'dataLoaded',
       'interactionTableData'
     ]),
@@ -100,6 +105,12 @@ export default {
         params.tfId = this.filterInteractionsOnTF
       }
       return params
+    },
+    spParams () {
+      return {
+        drugId: this.selectedInteractionDrug,
+        tfId: this.selectedInteractionTF
+      }
     }
   },
   methods: {
@@ -107,7 +118,8 @@ export default {
       'updateDrugsBarPlotData',
       'updateTFsBarPlotData',
       'updateInteractionTableData',
-      'updateVolcanoPlotData'
+      'updateVolcanoPlotData',
+      'updateSamplePlotData'
     ]),
     onDataLoad () {
       this.updateDrugsBarPlotData({})
@@ -116,6 +128,7 @@ export default {
       // TODO: Make sampleTableData, vpData, spData update too
       // this.updateInteractionTableData()
       this.updateVolcanoPlotData(this.vpParams)
+      this.updateSamplePlotData(this.spParams)
     },
     onFilterInteractionsByChange () {
       this.updateVolcanoPlotData(this.vpParams)
@@ -128,9 +141,11 @@ export default {
     },
     onSelectedDrugChange () {
       this.updateInteractionTableData()
+      this.updateSamplePlotData(this.spParams)
     },
     onSelectedTFChange () {
       this.updateInteractionTableData()
+      this.updateSamplePlotData(this.spParams)
     }
   },
   mounted () {
