@@ -101,7 +101,7 @@ export default {
   components: { Multiselect },
   data () {
     return {
-      selectedRouteModel: this.filterInteractionsByToRadioIndex(), // note this is not used, merely prevents vue errors
+      selectedRouteModel: null,
       myDrugTerm: null,
       myTFTerm: null
     }
@@ -118,7 +118,8 @@ export default {
       tfId: 'filterInteractionsOnTF',
       dataLoaded: 'dataLoaded',
       drugAutocompleteOptions: 'drugAutocompleteOptions',
-      tfAutocompleteOptions: 'tfAutocompleteOptions'
+      tfAutocompleteOptions: 'tfAutocompleteOptions',
+      filterInteractionsByToRadioIndex: 'filterInteractionsByToRadioIndex'
     })
   },
   watch: {
@@ -135,18 +136,6 @@ export default {
       'updateDrugAutocompleteOptions',
       'updateTFAutocompleteOptions'
     ]),
-    filterInteractionsByToRadioIndex () {
-      const filterBy = this.$store.state.route.query.filterInteractionsBy
-      if (filterBy === 'drug') {
-        return 1
-      }
-      else if (filterBy === 'tf') {
-        return 2
-      }
-      else {
-        return 0
-      }
-    },
     drugOptionChanged (option) {
       this.myDrugTerm = null
       let query = {
@@ -175,6 +164,7 @@ export default {
     }
   },
   mounted () {
+    this.selectedRouteModel = this.filterInteractionsByToRadioIndex
     this.updateDrugAutocompleteOptions()
     this.updateTFAutocompleteOptions()
   }

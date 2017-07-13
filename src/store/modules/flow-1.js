@@ -56,6 +56,18 @@ export default {
         if (option && option.label) label = option.value
       }
       return label
+    },
+    filterInteractionsByToRadioIndex: (state, getters) => {
+      const filterBy = getters.filterInteractionsBy
+      if (filterBy === 'drug') {
+        return 1
+      }
+      else if (filterBy === 'tf') {
+        return 2
+      }
+      else {
+        return 0
+      }
     }
   },
   mutations: {
