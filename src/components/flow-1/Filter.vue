@@ -129,37 +129,16 @@ export default {
     tfId () {
       return this.$store.state.route.query.filterInteractionsOnTF
     },
-    // drugAutocompleteOptions () {
-    //   return this.$store.state.flow1.drugAutocompleteOptions
-    // },
     drugNameWithSynonym (option) {
       if (option.label === option.value) return option.label
       return option.label + ' (synonym of ' + option.value + ')'
     },
-    // filterInteractionsBy () {
-    //   return this.$store.state.route.query.filterInteractionsBy
-    // },
-    // drugOptions () {
-    //   return this.$store.state.flow1.drugOptions
-    // },
-    // tfOptions () {
-    //   return this.$store.state.flow1.tfOptions
-    // },
     drugAutocompleteOptions () {
       return this.$store.state.flow1.drugAutocompleteOptions
     },
     tfAutocompleteOptions () {
       return this.$store.state.flow1.tfAutocompleteOptions
     },
-    // drugLabel () {
-    //   // console.log(this.drugOptions)
-    //   let label = ''
-    //   if (this.drugOptions && this.drugId) {
-    //     const pair = this.drugOptions.filter(r => r.value === this.drugId)[0]
-    //     if (pair && pair.label) label = pair.label
-    //   }
-    //   return label
-    // },
     drugLabel () {
       let label = ''
       if (this.drugAutocompleteOptions && this.drugId) {

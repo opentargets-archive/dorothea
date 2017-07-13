@@ -25,21 +25,6 @@ export default {
     dataFilesLoaded: (state) => () => state.loaded,
 
     // FLOW 1
-    flow1DrugOptions: (state, getters) => () => {
-      if (!state.aDrugs) return []
-      const drugIds = Object.keys(state.aDrugs)
-      const pairs = drugIds.map((drugId) => {
-        return {
-          label: state.aDrugs[drugId].drugName,
-          value: state.aDrugs[drugId].drugId
-        }
-      }).sort((a, b) => {
-        if (a.label < b.label) return -1
-        if (a.label > b.label) return 1
-        return 0
-      })
-      return pairs
-    },
     flow1DrugAutocompleteOptions: (state, getters) => () => {
       if (!state.aDrugs) return []
       let options = []
@@ -57,7 +42,6 @@ export default {
               label: s,
               drugId: r.drugId,
               secondLabel: '(synonym of ' + r.drugName + ')'
-              // stamp: r.drugName
             })
           })
         }
@@ -67,24 +51,10 @@ export default {
             value: r.drugName,
             label: r.drugName,
             drugId: r.drugId
-            // info: state.aDrugs[r.drugId]
           })
         }
       })
       return options
-
-      // const options = drugIds.map((drugId) => {
-      //   return {
-      //     label: state.aDrugs[drugId].drugName,
-      //     value: state.aDrugs[drugId].drugId
-      //     drugId: state.aDrugs[drugId].drugId
-      //   }
-      // }).sort((a, b) => {
-      //   if (a.label < b.label) return -1
-      //   if (a.label > b.label) return 1
-      //   return 0
-      // })
-      // return pairs
     },
     flow1TFAutocompleteOptions: (state) => () => {
       if (!state.rTfDrugAssoGdsc) return []
@@ -97,27 +67,6 @@ export default {
         tfId
       }))
       return options
-      // let tfIdsSet = new Set(state.rTfDrugAssoGdsc.map(d => d.transcriptionFactor))
-      // let pairs = [...tfIdsSet].sort().map((tfId) => {
-      //   return {
-      //     label: tfId,
-      //     value: tfId
-      //   }
-      // })
-      // return pairs
-    },
-    flow1TFOptions: (state) => () => {
-      if (!state.rTfDrugAssoGdsc) return []
-      // get unique tfs from this table
-      // (ie. they appear in at least one association)
-      let tfIdsSet = new Set(state.rTfDrugAssoGdsc.map(d => d.transcriptionFactor))
-      let pairs = [...tfIdsSet].sort().map((tfId) => {
-        return {
-          label: tfId,
-          value: tfId
-        }
-      })
-      return pairs
     },
     sampleOptions: (state) => () => {
       // get the filter options for the sample plot
@@ -256,32 +205,6 @@ export default {
     },
 
     // FLOW 2
-    drugGMPairData: (state) => (tf) => {
-      // // // get the unique drug-gm pairs (optionally filtered for a given tf)
-      // // return state.rTfDrugGmAssoGdsc.filter(r => (!tf || r.transcriptionFactor === tf))
-
-      // // get all unique drug-tf-gm triplets
-      // const setAssociations = new Set(state.rTfDrugGmAssoGdsc.map(r => {
-      //   // return {
-      //   //   tf: r.transcriptionFactor,
-      //   //   drug: r.drugId,
-      //   //   gm: r.gm
-      //   // }
-      //   return r.transcriptionFactor + ':' + r.drugId + ':' + r.gm
-      // }))
-      // console.log(Array.from(setAssociations).map(str => {
-      //   const a = str.split(':')
-      //   return {
-      //     tf: r.transcriptionFactor,
-      //     drug: r.drugId,
-      //     gm: r.gm
-      //   }
-      // })
-      // console.log(state.rTfDrugGmAssoGdsc.filter(r => (!tf || r.transcriptionFactor === tf)))
-      // // return new Array(setAssociations)
-
-      return state.rTfDrugGmAssoGdsc.filter(r => (!tf || r.transcriptionFactor === tf))
-    },
     boxPlotData: (state) => (drugId, gmId, ctId, tfId, nested = false) => {
       if (!state.rTfDrugGmAssoGdsc) {
         console.log('no rTfDrugGmAssoGdsc')
@@ -472,28 +395,6 @@ export default {
                                     .filter(r => (!ctId || r.cancerType === ctId))
                                     .filter(r => (!tfId || r.transcriptionFactor === tfId))
     },
-    flow2DrugPairs: (state) => (gmId) => {
-      // console.log('flow2DrugPairs called with: ' + gmId)
-      // get all drug options, as label-value pairs, possibly given a fixed GM
-      const filtered = state.rTfDrugGmAssoGdsc.filter(r => (!gmId || r.gmId === gmId))
-      const pairs = filtered.map(r => {
-        return {
-          label: r.drugName,
-          value: r.drugId
-        }
-      })
-
-      const uniquePairs = _.uniqBy(pairs, r => r.value)
-      // console.log(state.rTfDrugGmAssoGdsc.length)
-      // console.log(filtered.length)
-      // console.log(pairs.length)
-      // console.log(uniquePairs.length)
-      return uniquePairs.sort((a, b) => {
-        if (a.label < b.label) return -1
-        if (a.label > b.label) return 1
-        return 0
-      })
-    },
     flow2DrugAutocompleteOptions: (state) => (p) => {
       // get all the drug options for drug autocompletion
       const options = []
@@ -562,56 +463,6 @@ export default {
         label: r.transcriptionFactor,
         tfId: r.transcriptionFactor
       }))
-    },
-    flow2GMPairs: (state) => (drugId) => {
-      // get all GM options, as label-value pairs, possibly given a fixed drug
-      const filtered = state.rTfDrugGmAssoGdsc.filter(r => (!drugId || r.drugId === drugId))
-      const pairs = filtered.map(r => {
-        return {
-          label: r.gm,
-          value: r.gmId
-        }
-      })
-      const uniquePairs = _.uniqBy(pairs, r => r.value)
-      return uniquePairs.sort((a, b) => {
-        if (a.label < b.label) return -1
-        if (a.label > b.label) return 1
-        return 0
-      })
-    },
-    flow2CTPairs: (state) => (drugId, gmId) => {
-      // get all CT options, as label-value pairs, possibly given a fixed drug, GM
-      const filtered = state.rTfDrugGmAssoGdsc.filter(r => (!drugId || r.drugId === drugId))
-                                              .filter(r => (!gmId || r.gmId === gmId))
-      const pairs = filtered.map(r => {
-        return {
-          label: r.cancerType,
-          value: r.cancerType
-        }
-      })
-      const uniquePairs = _.uniqBy(pairs, r => r.value)
-      return uniquePairs.sort((a, b) => {
-        if (a.label < b.label) return -1
-        if (a.label > b.label) return 1
-        return 0
-      })
-    },
-    flow2TFPairs: (state) => (drugId, gmId) => {
-      // get all TF options, as label-value pairs, given a fixed drug and GM
-      const filtered = state.rTfDrugGmAssoGdsc.filter(r => (!drugId || r.drugId === drugId))
-                                              .filter(r => (!gmId || r.gmId === gmId))
-      const pairs = filtered.map(r => {
-        return {
-          label: r.transcriptionFactor,
-          value: r.transcriptionFactor
-        }
-      })
-      const uniquePairs = _.uniqBy(pairs, r => r.value)
-      return uniquePairs.sort((a, b) => {
-        if (a.label < b.label) return -1
-        if (a.label > b.label) return 1
-        return 0
-      })
     },
     gmTableData: (state) => (gmId) => {
       if (!gmId) return {}

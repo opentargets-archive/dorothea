@@ -15,17 +15,10 @@ function updateRoute (query) {
 export default {
   namespaced: true,
   state: {
-    drugOptions: [],
     drugAutocompleteOptions: [],
     gmAutocompleteOptions: [],
     ctAutocompleteOptions: [],
     tfAutocompleteOptions: [],
-    gmOptions: [],
-    ctOptions: [],
-    tfOptions: [],
-    // boxPlotData: {},
-    // nestedBoxPlotData: {},
-    // simpleSamplePlotData: [],
     effectPlotData: [],
     gmTableData: {},
     drugTableData: {},
@@ -37,51 +30,40 @@ export default {
     dataLoaded: (state, getters, rootState) => rootState.data.loaded,
 
     // route module (synced to url)
-    drugId: (state, getters, rootState) => rootState.route.query.filterOnDrug,
+    drugId: (state, getters, rootState) => +rootState.route.query.filterOnDrug,
     gmId: (state, getters, rootState) => rootState.route.query.filterOnGM,
     ctId: (state, getters, rootState) => rootState.route.query.filterOnCT,
     tfId: (state, getters, rootState) => rootState.route.query.filterOnTF,
 
     // local
-    drugOptions: (state) => () => state.drugOptions,
-    drugAutocompleteOptions: (state) => () => state.drugAutocompleteOptions,
-    gmAutocompleteOptions: (state) => () => state.gmAutocompleteOptions,
-    ctAutocompleteOptions: (state) => () => state.ctAutocompleteOptions,
-    tfAutocompleteOptions: (state) => () => state.tfAutocompleteOptions,
-    gmOptions: (state) => () => state.gmOptions,
-    ctOptions: (state) => () => state.ctOptions,
-    tfOptions: (state) => () => state.tfOptions,
-    // boxPlotData: (state) => () => state.boxPlotData,
-    // nestedBoxPlotData: (state) => () => state.nestedBoxPlotData,
-    // simpleSamplePlotData: (state) => () => state.simpleSamplePlotData,
+    drugAutocompleteOptions: (state) => state.drugAutocompleteOptions,
+    gmAutocompleteOptions: (state) => state.gmAutocompleteOptions,
+    ctAutocompleteOptions: (state) => state.ctAutocompleteOptions,
+    tfAutocompleteOptions: (state) => state.tfAutocompleteOptions,
     effectPlotData: (state) => state.effectPlotData,
     tfsBarPlotData: (state) => state.tfsBarPlotData,
     tripletsBarPlotData: (state) => state.tripletsBarPlotData,
     gmTableData: (state) => state.gmTableData,
     drugTableData: (state) => () => state.drugTableData,
     drugName: (state, getters, rootState) => {
-      const drugId = +rootState.route.query.filterOnDrug
-      let drugName = ''
-      if (drugId) {
-        state.drugOptions.map(d => {
-          if (d.value === drugId) {
-            drugName = d.label
-          }
-        })
+      const drugId = getters.drugId
+      const drugAutocompleteOptions = getters.drugAutocompleteOptions
+      let label = ''
+      if (drugAutocompleteOptions && drugId) {
+        const option = drugAutocompleteOptions.filter(r => r.drugId === drugId)[0]
+        if (option && option.label) label = option.value
       }
-      return drugName
+      return label
     },
     gmName: (state, getters, rootState) => {
-      const gmId = rootState.route.query.filterOnGM
-      let gmName = ''
-      if (gmId) {
-        state.gmOptions.map(d => {
-          if (d.value === gmId) {
-            gmName = d.label
-          }
-        })
+      const gmId = getters.gmId
+      const gmAutocompleteOptions = getters.gmAutocompleteOptions
+      let label = ''
+      if (gmAutocompleteOptions && gmId) {
+        const option = gmAutocompleteOptions.filter(r => r.gmId === gmId)[0]
+        if (option && option.label) label = option.value
       }
-      return gmName
+      return label
     },
     interaction: (state, getters, rootState, rootGetters) => {
       const drugId = +rootState.route.query.filterOnDrug
@@ -105,9 +87,6 @@ export default {
     }
   },
   mutations: {
-    mUpdateDrugOptions (state, payload) {
-      state.drugOptions = payload
-    },
     mUpdateDrugAutocompleteOptions (state, payload) {
       state.drugAutocompleteOptions = payload
     },
@@ -120,24 +99,6 @@ export default {
     mUpdateTFAutocompleteOptions (state, payload) {
       state.tfAutocompleteOptions = payload
     },
-    mUpdateGMOptions (state, payload) {
-      state.gmOptions = payload
-    },
-    mUpdateCTOptions (state, payload) {
-      state.ctOptions = payload
-    },
-    mUpdateTFOptions (state, payload) {
-      state.tfOptions = payload
-    },
-    // mUpdateBoxPlotData (state, payload) {
-    //   state.boxPlotData = payload
-    // },
-    // mUpdateNestedBoxPlotData (state, payload) {
-    //   state.nestedBoxPlotData = payload
-    // },
-    // mUpdateSimpleSamplePlotData (state, payload) {
-    //   state.simpleSamplePlotData = payload
-    // },
     mUpdateEffectPlotData (state, payload) {
       state.effectPlotData = payload
     },
@@ -155,12 +116,6 @@ export default {
     }
   },
   actions: {
-    updateDrugOptions ({ state, commit }, params) {
-      Vue.http.get(apiBase + 'flow-2/drug-options', {params: params})
-        .then(function (response) {
-          commit('mUpdateDrugOptions', response.body)
-        })
-    },
     updateDrugAutocompleteOptions ({ state, commit }, params) {
       Vue.http.get(apiBase + 'flow-2/drug-autocomplete-options', {params: params})
         .then(function (response) {
@@ -185,63 +140,6 @@ export default {
           commit('mUpdateTFAutocompleteOptions', response.body)
         })
     },
-    updateGMOptions ({ state, commit }, params) {
-      Vue.http.get(apiBase + 'flow-2/gm-options', {params: params})
-        .then(function (response) {
-          commit('mUpdateGMOptions', response.body)
-        })
-    },
-    updateCTOptions ({ state, commit }, params) {
-      Vue.http.get(apiBase + 'flow-2/ct-options', {params: params})
-        .then(function (response) {
-          commit('mUpdateCTOptions', response.body)
-        })
-    },
-    updateTFOptions ({ state, commit }, params) {
-      Vue.http.get(apiBase + 'flow-2/tf-options', {params: params})
-        .then(function (response) {
-          commit('mUpdateTFOptions', response.body)
-        })
-    },
-    // updateBoxPlotData ({state, commit}, params) {
-    //   if (params.drugId && params.gmId && params.ctId && params.tfId) {
-    //     Vue.http.get(apiBase + 'flow-2/box-plot', {params: params})
-    //     .then(function (response) {
-    //       console.log('p1')
-    //       console.log(response.body)
-    //       commit('mUpdateBoxPlotData', response.body)
-    //     })
-    //   }
-    //   else {
-    //     commit('mUpdateBoxPlotData', {})
-    //   }
-    // },
-    // updateNestedBoxPlotData ({state, commit}, params) {
-    //   if (params.drugId && params.gmId && params.ctId && params.tfId) {
-    //     Vue.http.get(apiBase + 'flow-2/nested-box-plot', {params: params})
-    //       .then(function (response) {
-    //         console.log('p3')
-    //         console.log(response.body)
-    //         commit('mUpdateNestedBoxPlotData', response.body)
-    //       })
-    //   }
-    //   else {
-    //     commit('mUpdateNestedBoxPlotData', {})
-    //   }
-    // },
-    // updateSimpleSamplePlotData ({state, commit}, params) {
-    //   if (params.drugId && params.gmId && params.ctId && params.tfId) {
-    //     Vue.http.get(apiBase + 'flow-2/simple-sample-plot', {params: params})
-    //       .then(function (response) {
-    //         console.log('p2')
-    //         console.log(response.body)
-    //         commit('mUpdateSimpleSamplePlotData', response.body)
-    //       })
-    //   }
-    //   else {
-    //     commit('mUpdateSimpleSamplePlotData', [])
-    //   }
-    // },
     updateEffectPlotData ({state, commit}, params) {
       if (params.drugId && params.gmId && params.ctId && params.tfId) {
         Vue.http.get(apiBase + 'flow-2/effect-plot', {params: params})

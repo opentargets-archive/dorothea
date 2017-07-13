@@ -15,10 +15,8 @@ function updateRoute (query) {
 export default {
   namespaced: true,
   state: {
-    drugOptions: [],
     drugAutocompleteOptions: [],
     tfAutocompleteOptions: [],
-    tfOptions: [],
     sampleOptions: [],
     volcanoPlotData: [],
     samplePlotData: [],
@@ -40,10 +38,8 @@ export default {
     selectedSample: (state, getters, rootState) => rootState.route.query.selectedSample,
 
     // local
-    drugOptions: (state) => state.drugOptions,
     drugAutocompleteOptions: (state) => state.drugAutocompleteOptions,
     tfAutocompleteOptions: (state) => state.tfAutocompleteOptions,
-    tfOptions: (state) => state.tfOptions,
     sampleOptions: (state) => state.sampleOptions,
     volcanoPlotData: (state) => () => state.volcanoPlotData,
     samplePlotData: (state) => () => state.samplePlotData,
@@ -52,33 +48,25 @@ export default {
     drugsBarPlotData: (state) => state.drugsBarPlotData,
     tfsBarPlotData: (state) => state.tfsBarPlotData,
     drugName: (state, getters, rootState) => {
-      const selectedInteractionDrug = +rootState.route.query.selectedInteractionDrug
-      let drugName = ''
-      if (selectedInteractionDrug) {
-        state.drugOptions.map(d => {
-          if (d.value === selectedInteractionDrug) {
-            drugName = d.label
-          }
-        })
+      const drugId = getters.drugId
+      const drugAutocompleteOptions = getters.drugAutocompleteOptions
+      let label = ''
+      if (drugAutocompleteOptions && drugId) {
+        const option = drugAutocompleteOptions.filter(r => r.drugId === drugId)[0]
+        if (option && option.label) label = option.value
       }
-      return drugName
+      return label
     }
   },
   mutations: {
     setFilterInteractionsBy (state, value) {
       state.filterInteractionsBy = value
     },
-    mUpdateFlow1DrugOptions (state, payload) {
-      state.drugOptions = payload
-    },
     mUpdateFlow1DrugAutocompleteOptions (state, payload) {
       state.drugAutocompleteOptions = payload
     },
     mUpdateFlow1TFAutocompleteOptions (state, payload) {
       state.tfAutocompleteOptions = payload
-    },
-    mUpdateFlow1TFOptions (state, payload) {
-      state.tfOptions = payload
     },
     mUpdateVolcanoPlotData (state, payload) {
       state.volcanoPlotData = payload
@@ -144,12 +132,6 @@ export default {
           return response.body
         })
     },
-    updateFlow1DrugOptions ({ state, commit, rootState }, params) {
-      return Vue.http.get(apiBase + 'flow-1/drug-options', {params: params})
-        .then(function (response) {
-          commit('mUpdateFlow1DrugOptions', response.body)
-        })
-    },
     updateDrugAutocompleteOptions ({ state, commit }, params) {
       Vue.http.get(apiBase + 'flow-1/drug-autocomplete-options', {params: params})
         .then(function (response) {
@@ -160,12 +142,6 @@ export default {
       Vue.http.get(apiBase + 'flow-1/tf-autocomplete-options', {params: params})
         .then(function (response) {
           commit('mUpdateFlow1TFAutocompleteOptions', response.body)
-        })
-    },
-    updateFlow1TFOptions ({ state, commit }, params) {
-      return Vue.http.get(apiBase + 'flow-1/tf-options', {params: params})
-        .then(function (response) {
-          commit('mUpdateFlow1TFOptions', response.body)
         })
     },
     updateVolcanoPlotData ({state, commit}, params) {
