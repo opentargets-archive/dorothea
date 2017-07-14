@@ -12,6 +12,7 @@ export default {
     mTfActivitiesGdsc: null,
     rTfDrugAssoGdsc: [],
     rTfDrugGmAssoGdsc: [],
+    rTfDrugAssoPerCancerTypeGdsc: [],
     loaded: false
   },
   mutations: {
@@ -478,6 +479,16 @@ export default {
       // as part of interaction data
       if (!state.aTF) return ''
       return state.aTF[tfId]
+    },
+    isCancerTypeSignificantForInteraction: (state) => (drugId, tfId, gdscDesc1) => {
+      // TODO: use an api call to retrieve this
+      // (currently using filtered data just to check significance)
+      // (could potentially display pval/coeff on plot when relevant?)
+      if (!state.rTfDrugAssoPerCancerTypeGdsc) return false
+      const rows = state.rTfDrugAssoPerCancerTypeGdsc.filter(r => r.drugId === drugId)
+                                                     .filter(r => r.transcriptionFactor === tfId)
+                                                     .filter(r => r.cancerTypeGdsc1 === gdscDesc1)
+      return (rows.length === 1) ? rows[0].fdr : false
     }
   },
   actions: {
@@ -655,6 +666,30 @@ export default {
           .get(function (data) {
             commit('setData', {
               name: 'rTfDrugGmAssoGdsc',
+              data: data
+            })
+            resolve()
+          })
+      })
+    },
+    loadRTfDrugAssoPerCancerTypeGdsc ({ commit }) {
+      return new Promise((resolve, reject) => {
+        d3.tsv('./statics/dorothea-data/r_tf_drug_assoPerCancerType_gdsc_significant_only.txt')
+          .row(function (r) {
+            return {
+              drugId: +r.Drug_id,
+              drugName: r.Drug_name,
+              drugTargets: r.Drug_targets,
+              transcriptionFactor: r.TF,
+              effectSize: +r['effect_size_(reg_coeff)'],
+              cancerTypeGdsc1: r.cancer_type_gdsc1,
+              fdr: +r.fdr,
+              pval: +r.pval
+            }
+          })
+          .get(function (data) {
+            commit('setData', {
+              name: 'rTfDrugAssoPerCancerTypeGdsc',
               data: data
             })
             resolve()

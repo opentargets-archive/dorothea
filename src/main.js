@@ -122,6 +122,7 @@ Quasar.start(() => {
           store.dispatch('loadMDrugIc50Gdsc'),
           store.dispatch('loadRTfDrugGmAssoGdsc'),
           store.dispatch('loadRTfDrugAssoGdsc'),
+          store.dispatch('loadRTfDrugAssoPerCancerTypeGdsc'),
           store.dispatch('loadMTfActivitiesGdsc'),
           store.dispatch('loadMGM')
         ]).then(() => {

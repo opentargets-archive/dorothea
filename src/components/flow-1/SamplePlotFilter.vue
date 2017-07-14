@@ -3,6 +3,9 @@
                       description="">
 
     <div slot="card-internals" class="card-content column">
+      <div class="group">
+        <small class="text-red text-bold">Significant cancer types appear in red.</small>
+      </div>
       <div class="row group self-start">
         <button class="capitalize primary small clear outline" @click="clickAllHandler">All</button>
         <button class="capitalize primary small clear outline" @click="clickNoneHandler">None</button>
@@ -10,7 +13,7 @@
       <div class="column group">
         <label class="sample-type-option no-margin row items-center" v-for="pair in pairs">
           <q-checkbox v-model="pair.checked" @input="togglers[pair.value]()"></q-checkbox>
-          <span>{{ formatter(pair.value) }}</span>
+          <span :class="{ 'text-red text-bold': significantSampleTypes[pair.value] }">{{ formatter(pair.value) }}</span>
           <icon name="circle" class="color-icon" :class="{ [pair.value]: true, hidden: !pair.checked }"></icon>
         </label>
       </div>
@@ -33,7 +36,8 @@ export default {
     }
   },
   computed: {
-    ...mapGetters('flow1', ['sampleOptions']),
+    ...mapGetters('flow1', ['sampleOptions', 'selectedInteractionDrug', 'selectedInteractionTF']),
+    ...mapGetters(['isCancerTypeSignificantForInteraction']),
     filterSamplesOnTypes () {
       const sampleTypes = this.$store.state.route.query.filterSamplesOnTypes
       if (sampleTypes) {
@@ -47,6 +51,13 @@ export default {
       return this.sampleOptions.filter(st => {
         return this.sampleTypesModel[st]
       })
+    },
+    significantSampleTypes () {
+      const isSignificant = {}
+      this.sampleOptions.map(st => {
+        isSignificant[st] = this.isCancerTypeSignificantForInteraction(this.selectedInteractionDrug, this.selectedInteractionTF, st)
+      })
+      return isSignificant
     }
   },
   methods: {
