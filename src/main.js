@@ -118,6 +118,7 @@ Quasar.start(() => {
           store.dispatch('loadADrugs'),
           store.dispatch('loadASamples'),
           store.dispatch('loadAGM'),
+          store.dispatch('loadATF'),
           store.dispatch('loadMDrugIc50Gdsc'),
           store.dispatch('loadRTfDrugGmAssoGdsc'),
           store.dispatch('loadRTfDrugAssoGdsc'),

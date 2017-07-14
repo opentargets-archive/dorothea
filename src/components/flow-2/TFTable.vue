@@ -8,12 +8,12 @@
         <th>{{ tfId }}</th>
       </tr>
     </thead>
-    <!--<tbody slot="tbody">
+    <tbody slot="tbody">
       <tr>
         <td>Long Name</td>
-        <td>{{ longNames[ctId] }}</td>
+        <td>{{ tfLongName }}</td>
       </tr>
-    </tbody>-->
+    </tbody>
 
   </dorothea-table-card>
 </template>
@@ -25,7 +25,11 @@ import { mapGetters } from 'vuex'
 
 export default {
   computed: {
-    ...mapGetters('flow2', ['tfId'])
+    ...mapGetters('flow2', ['tfId']),
+    ...mapGetters(['tfDescription']),
+    tfLongName () {
+      return this.tfDescription(this.tfId)
+    }
   }
 }
 //   mounted () {

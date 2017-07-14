@@ -6,6 +6,7 @@ export default {
     aSamples: null,
     aDrugs: null,
     aGM: null,
+    aTF: null,
     mDrugIc50Gdsc: null,
     mGM: null,
     mTfActivitiesGdsc: null,
@@ -471,6 +472,12 @@ export default {
     drugTableData: (state) => (drugId) => {
       if (!drugId) return {}
       return state.aDrugs[drugId]
+    },
+    tfDescription: (state) => (tfId) => {
+      // TODO: use an api call to retrieve this or return with tfId
+      // as part of interaction data
+      if (!state.aTF) return ''
+      return state.aTF[tfId]
     }
   },
   actions: {
@@ -565,6 +572,33 @@ export default {
 
             commit('setData', {
               name: 'aGM',
+              data: converted
+            })
+            resolve()
+          })
+      })
+    },
+    loadATF ({ commit }) {
+      return new Promise((resolve, reject) => {
+        d3.tsv('./statics/dorothea-data/a_TF.txt')
+          .row(function (r, i) {
+            return {
+              tfId: r.TF,
+              tfName: r.TF_name
+            }
+          })
+          .get(function (data) {
+            // require data
+            if (!data) return
+
+            // convert list to object (where tf id is the key)
+            let converted = {}
+            data.map(el => {
+              converted[el.tfId] = el.tfName
+            })
+
+            commit('setData', {
+              name: 'aTF',
               data: converted
             })
             resolve()
