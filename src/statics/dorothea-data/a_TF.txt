@@ -1,0 +1,127 @@
+TF	TF_name
+AHR	Aryl hydrocarbon receptor
+AR	Androgen receptor
+TFAP2A	Transcription factor AP-2-alpha
+TFAP2C	Transcription factor AP-2 gamma
+ARNT	Aryl hydrocarbon receptor nuclear translocator
+ATF1	Cyclic AMP-dependent transcription factor ATF-1
+ATF2	Cyclic AMP-dependent transcription factor ATF-2
+ATF3	Cyclic AMP-dependent transcription factor ATF-3
+ATF4	Cyclic AMP-dependent transcription factor ATF-4
+BACH1	Transcription regulator protein BACH1
+BATF	Basic leucine zipper transcriptional factor ATF-like
+ARNTL	Aryl hydrocarbon receptor nuclear translocator-like protein 1
+CDC5L	Cell division cycle 5-like protein
+CDX2	Homeobox protein CDX-2
+CEBPA	CCAAT/enhancer-binding protein alpha
+CEBPB	CCAAT/enhancer-binding protein beta
+CLOCK	Circadian locomoter output cycles protein kaput
+EBF1	Transcription factor COE1
+CREB1	Cyclic AMP-responsive element-binding protein 1
+CTCF	Transcriptional repressor CTCF
+E2F1	Transcription factor E2F1
+E2F4	Transcription factor E2F4
+E2F6	Transcription factor E2F6
+E2F7	Transcription factor E2F7
+EGR1	Early growth response protein 1
+ELF1	ETS-related transcription factor Elf-1
+ELF5	ETS-related transcription factor Elf-5
+ELK1	ETS domain-containing protein Elk-1
+ELK4	ETS domain-containing protein Elk-4
+ERG	Transcriptional regulator ERG
+ESR1	Estrogen receptor
+ESR2	Estrogen receptor beta
+ETS1	Protein C-ets-1
+EZH2	Histone-lysine N-methyltransferase EZH2
+FLI1	Friend leukemia integration 1 transcription factor
+FOS	Proto-oncogene c-Fos
+FOXA1	Hepatocyte nuclear factor 3-alpha
+FOXA2	Hepatocyte nuclear factor 3-beta
+FOXD1	Forkhead box protein D1
+FOXF2	Forkhead box protein F2
+FOXI1	Forkhead box protein I1
+FOXM1	Forkhead box protein M1
+FOXO3	Forkhead box protein O3
+FOXP3	Forkhead box protein P3
+GABPA	GA-binding protein alpha chain
+GATA1	Erythroid transcription factor
+GATA2	Endothelial transcription factor GATA-2
+GATA3	Trans-acting T-cell-specific transcription factor GATA-3
+GATA4	Transcription factor GATA-4
+GATA6	Transcription factor GATA-6
+NR3C1	Glucocorticoid receptor
+GLI2	Zinc finger protein GLI2
+NHLH1	Helix-loop-helix protein 1
+HIF1A	Hypoxia-inducible factor 1-alpha
+HLF	Hepatic leukemia factor
+HNF1A	Hepatocyte nuclear factor 1-alpha
+HNF4A	Hepatocyte nuclear factor 4-alpha
+HSF1	Heat shock factor protein 1
+TCF12	Transcription factor 12
+IKZF1	DNA-binding protein Ikaros
+IRF1	Interferon regulatory factor 1
+IRF2	Interferon regulatory factor 2
+TCF4	Transcription factor 4
+JUND	Transcription factor jun-D
+JUN	Transcription factor AP-1
+KLF5	Krueppel-like factor 5
+LEF1	Lymphoid enhancer-binding factor 1
+MAX	Protein max
+MAZ	Myc-associated zinc finger protein
+MEF2A	Myocyte-specific enhancer factor 2A
+MITF	Microphthalmia-associated transcription factor
+MYB	Transcriptional activator Myb
+MYCN	N-myc proto-oncogene protein
+MYC	Myc proto-oncogene protein
+NANOG	Homeobox protein NANOG
+NFE2L2	Nuclear factor erythroid 2-related factor 2
+NFE2	Transcription factor NF-E2 45 kDa subunit
+NFKB1	Nuclear factor NF-kappa-B p105 subunit
+NFYA	Nuclear transcription factor Y subunit alpha
+NRF1	Nuclear respiratory factor 1
+TP53	Cellular tumor antigen p53
+TP63	Tumor protein 63
+PAX5	Paired box protein Pax-5
+PAX6	Paired box protein Pax-6
+PBX1	Pre-B-cell leukemia transcription factor 1
+PLAG1	Zinc finger protein PLAG1
+POU2F1	POU domain, class 2, transcription factor 1
+POU3F2	POU domain, class 3, transcription factor 2
+POU5F1	POU domain, class 5, transcription factor 1
+PPARA	Peroxisome proliferator-activated receptor alpha
+PPARD	Peroxisome proliferator-activated receptor delta
+PPARG	Peroxisome proliferator-activated receptor gamma
+PRDM14	PR domain zinc finger protein 14
+RARA	Retinoic acid receptor alpha
+REL	Proto-oncogene c-Rel
+REST	RE1-silencing transcription factor
+RREB1	Ras-responsive element-binding protein 1
+RUNX1	Runt-related transcription factor 1
+RUNX2	Runt-related transcription factor 2
+RXRA	Retinoic acid receptor RXR-alpha
+SMAD3	Mothers against decapentaplegic homolog 3
+SMAD4	Mothers against decapentaplegic homolog 4
+SOX2	Transcription factor SOX-2
+SP1	Transcription factor Sp1
+SP3	Transcription factor Sp3
+SPI1	Transcription factor PU.1
+SREBF1	Sterol regulatory element-binding protein 1
+SREBF2	Sterol regulatory element-binding protein 2
+SRF	Serum response factor
+STAT1	Signal transducer and activator of transcription 1-alpha/beta
+STAT2	Signal transducer and activator of transcription 2
+STAT3	Signal transducer and activator of transcription 3
+STAT6	Signal transducer and activator of transcription 6
+TBP	TATA-box-binding protein
+TEAD1	Transcriptional enhancer factor TEF-1
+RELA	Transcription factor p65
+TCF3	Transcription factor E2-alpha
+YY1	Transcriptional repressor protein YY1
+USF1	Upstream stimulatory factor 1
+USF2	Upstream stimulatory factor 2
+VDR	Vitamin D3 receptor
+WT1	Wilms tumor protein
+YBX1	Nuclease-sensitive element-binding protein 1
+ZEB1	Zinc finger E-box-binding homeobox 1
+ZNF263	Zinc finger protein 263
+ZNF423	Zinc finger protein 423
