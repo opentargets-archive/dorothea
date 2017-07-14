@@ -8,7 +8,8 @@
                       :filename="filename"
                       :csv-data="plotData"
                       :csv-fields="csvFields"
-                      :table-columns="tableColumns">
+                      :table-columns="tableColumns"
+                      :png-download-handler="pngDownloadHandler">
 
     <div slot="extra-toolbar-buttons" class="list item-delimiter hightlight">
       <button class="item item-link small text-left light-paragraph" style="text-transform:none;min-width:300px;" @click="showlabels">
@@ -34,6 +35,7 @@ import volcanoPlot from 'volcano-plot'
 import router from '../../router'
 import * as _ from 'lodash'
 import * as d3 from 'd3'
+import tntUtils from 'tnt.utils'
 import { mapGetters } from 'vuex'
 
 export default {
@@ -171,62 +173,61 @@ export default {
     },
     formatter (value) {
       return d3.format('.3g')(value)
+    },
+    pngDownloadHandler () {
+      const filename = this.filename + '.png'
+      const width = this.plot.width()
+      const height = this.plot.height()
+      let pngExporter = tntUtils.png()
+                                .filename(filename)
+                                .scale_factor(1)
+                                .callback(function (originalPng) {
+                                  // Need to add the points (from canvas element)
+                                  // since pngExporter only handles the svg element
+
+                                  // get the volcano plot canvas and convert to png
+                                  let canvas = d3.select('canvas.render-canvas').node()
+                                  let pointsPng = canvas.toDataURL('image/png')
+
+                                  // create points image
+                                  let pointsImg = new Image()
+                                  pointsImg.width = width
+                                  pointsImg.height = height
+                                  pointsImg.src = pointsPng
+
+                                  // create original image (svg of axes)
+                                  let originalImg = new Image()
+                                  originalImg.width = width
+                                  originalImg.height = height
+                                  originalImg.src = originalPng
+
+                                  // combine the images
+                                  let combinedCanvas = document.createElement('canvas')
+                                  combinedCanvas.width = width
+                                  combinedCanvas.height = height
+                                  let context = combinedCanvas.getContext('2d')
+                                  context.drawImage(originalImg, 0, 0)
+                                  context.drawImage(pointsImg, 0, 0)
+                                  let combinedPng = combinedCanvas.toDataURL('image/png')
+
+                                  // add download behaviour
+                                  var a = document.createElement('a')
+                                  a.download = filename
+                                  a.href = combinedPng
+                                  document.body.appendChild(a)
+                                  a.click()
+                                  document.body.removeChild(a)
+                                })
+                                // TODO: Fix the stylesheet to be just the needed (not all)
+                                //  .stylesheets(['components-OpenTargetsWebapp.min.css'])
+                                .limit({
+                                  limit: 2100000,
+                                  onError: function () {
+                                    console.log('Could not create image: too large.')
+                                  }
+                                })
+      pngExporter(d3.select('svg.volcano-plot'))
     }
-    // pngDownload () {
-    //   // TODO: Combine svg and canvas
-    //   let filename = this.filename() + '.png'
-    //   let width = this.plot.width()
-    //   let height = this.plot.height()
-    //   let pngExporter = tntUtils.png()
-    //                             .filename(filename)
-    //                             .scale_factor(1)
-    //                             .callback(function (originalPng) {
-    //                               // Need to add the points (from canvas element)
-    //                               // since pngExporter only handles the svg element
-
-    //                               // get the volcano plot canvas and convert to png
-    //                               let canvas = d3.select('.volcano-plot canvas').node()
-    //                               let pointsPng = canvas.toDataURL('image/png')
-
-    //                               // create points image
-    //                               let pointsImg = new Image()
-    //                               pointsImg.width = width
-    //                               pointsImg.height = height
-    //                               pointsImg.src = pointsPng
-
-    //                               // create original image (svg of axes)
-    //                               let originalImg = new Image()
-    //                               originalImg.width = width
-    //                               originalImg.height = height
-    //                               originalImg.src = originalPng
-
-    //                               // combine the images
-    //                               let combinedCanvas = document.createElement('canvas')
-    //                               combinedCanvas.width = width
-    //                               combinedCanvas.height = height
-    //                               let context = combinedCanvas.getContext('2d')
-    //                               context.drawImage(originalImg, 0, 0)
-    //                               context.drawImage(pointsImg, 0, 0)
-    //                               let combinedPng = combinedCanvas.toDataURL('image/png')
-
-    //                               // add download behaviour
-    //                               var a = document.createElement('a')
-    //                               a.download = filename
-    //                               a.href = combinedPng
-    //                               document.body.appendChild(a)
-    //                               a.click()
-    //                               document.body.removeChild(a)
-    //                             })
-    //                             // TODO: Fix the stylesheet to be just the needed (not all)
-    //                             //  .stylesheets(['components-OpenTargetsWebapp.min.css'])
-    //                             .limit({
-    //                               limit: 2100000,
-    //                               onError: function () {
-    //                                 console.log('Could not create image: too large.')
-    //                               }
-    //                             })
-    //   pngExporter(d3.select('svg.volcano-plot'))
-    // }
   }
 }
 </script>

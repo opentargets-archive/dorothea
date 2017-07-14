@@ -65,7 +65,18 @@ import FileSaver from 'file-saver'
 import tntUtils from 'tnt.utils'
 
 export default {
-  props: ['name', 'title', 'description', 'resizeHandler', 'filename', 'csvFields', 'csvData', 'tableColumns', 'plotTabName'],
+  props: [
+    'name',
+    'title',
+    'description',
+    'resizeHandler',
+    'filename',
+    'csvFields',
+    'csvData',
+    'tableColumns',
+    'plotTabName',
+    'pngDownloadHandler'
+  ],
   directives: {
     resize
   },
@@ -99,18 +110,25 @@ export default {
       FileSaver.saveAs(blob, this.filename + '.tsv')
     },
     pngDownload () {
-      let pngExporter = tntUtils.png()
-                                .filename(this.filename + '.png')
-                                .scale_factor(1)
-                                // TODO: Fix the stylesheet to be just the needed (not all)
-                                //  .stylesheets(['components-OpenTargetsWebapp.min.css'])
-                                .limit({
-                                  limit: 2100000,
-                                  onError: function () {
-                                    console.log('Could not create image: too large.')
-                                  }
-                                })
-      pngExporter(d3.select('svg.' + this.name))
+      if (this.pngDownloadHandler) {
+        // use custom
+        this.pngDownloadHandler()
+      }
+      else {
+        // use default
+        let pngExporter = tntUtils.png()
+                                  .filename(this.filename + '.png')
+                                  .scale_factor(1)
+                                  // TODO: Fix the stylesheet to be just the needed (not all)
+                                  //  .stylesheets(['components-OpenTargetsWebapp.min.css'])
+                                  .limit({
+                                    limit: 2100000,
+                                    onError: function () {
+                                      console.log('Could not create image: too large.')
+                                    }
+                                  })
+        pngExporter(d3.select('svg.' + this.name))
+      }
     }
   }
 }
