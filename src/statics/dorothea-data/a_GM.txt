@@ -31,6 +31,7 @@ HGF_mut	HGF	somatic mutation	NA	NA	NA	NA	1
 KDR_mut	KDR	somatic mutation	NA	NA	NA	NA	1
 CDK12_mut	CDK12	somatic mutation	NA	NA	NA	NA	1
 PIK3CA_mut	PIK3CA	somatic mutation	NA	NA	NA	NA	1
+ASXL2_mut	ASXL2	somatic mutation	NA	NA	NA	NA	1
 MYC_mut	MYC	somatic mutation	NA	NA	NA	NA	1
 GNAS_mut	GNAS	somatic mutation	NA	NA	NA	NA	1
 RB1_mut	RB1	somatic mutation	NA	NA	NA	NA	1
@@ -38,7 +39,6 @@ EGFR_mut	EGFR	somatic mutation	NA	NA	NA	NA	1
 CNOT1_mut	CNOT1	somatic mutation	NA	NA	NA	NA	1
 CDKN1B_mut	CDKN1B	somatic mutation	NA	NA	NA	NA	1
 CLSPN_mut	CLSPN	somatic mutation	NA	NA	NA	NA	1
-ASXL2_mut	ASXL2	somatic mutation	NA	NA	NA	NA	1
 BCOR_mut	BCOR	somatic mutation	NA	NA	NA	NA	1
 POLR2B_mut	POLR2B	somatic mutation	NA	NA	NA	NA	1
 NRAS_mut	NRAS	somatic mutation	NA	NA	NA	NA	1
@@ -59,7 +59,7 @@ NF2_mut	NF2	somatic mutation	NA	NA	NA	NA	1
 VHL_mut	VHL	somatic mutation	NA	NA	NA	NA	1
 BAP1_mut	BAP1	somatic mutation	NA	NA	NA	NA	1
 BRWD1_mut	BRWD1	somatic mutation	NA	NA	NA	NA	1
+NOTCH1_mut	NOTCH1	somatic mutation	NA	NA	NA	NA	1
 LPHN2_mut	LPHN2	somatic mutation	NA	NA	NA	NA	1
 MLL2_mut	MLL2	somatic mutation	NA	NA	NA	NA	1
 FAT1_mut	FAT1	somatic mutation	NA	NA	NA	NA	1
-NOTCH1_mut	NOTCH1	somatic mutation	NA	NA	NA	NA	1
