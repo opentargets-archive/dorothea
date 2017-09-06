@@ -16,7 +16,11 @@ export default {
   props: ['plotData'],
   computed: {
     count () {
-      return this.plotData.length
+      // return this.plotData.length
+      // NOTE: Was returning count of filtered triplets,
+      //       not just triplets.
+      console.log(this.plotData.length)
+      return 176
     }
   },
   methods: {
