@@ -19,7 +19,7 @@
                 or improve well-established genomic markers in the prediction of drug response.</p>
 
           <p>Please see
-            <a href="http://biorxiv.org/content/early/2017/04/21/129478" target="_blank">Garcia-Alonso et al.</a>
+            <a href="http://cancerres.aacrjournals.org/content/early/2017/12/09/0008-5472.CAN-17-1679" target="_blank">Garcia-Alonso et al.</a>
             for an explanation of the approach.</p>
         </div>
       </div>

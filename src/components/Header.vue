@@ -7,7 +7,7 @@
       DoRothEA <span class="text-dark">Discriminant Regulon Expression Analysis</span>
     </q-toolbar-title>
 
-    <button onclick="window.open('http://biorxiv.org/content/early/2017/04/21/129478', '_blank')">
+    <button onclick="window.open('http://cancerres.aacrjournals.org/content/early/2017/12/09/0008-5472.CAN-17-1679', '_blank')">
       <q-tooltip>Go to the paper</q-tooltip>
       <icon name="file-text-o"></icon>
     </button>
