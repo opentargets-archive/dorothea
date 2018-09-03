@@ -25,7 +25,7 @@
     "quasar-framework": "^0.13.10",
     "roboto-fontface": "^0.7.0",
     "sass-loader": "^6.0.3",
-    "vue": "2.3.0",
+    "vue": "^2.5.17",
     "vue-awesome": "^2.3.1",
     "vue-multiselect": "^2.0.2",
     "vue-resize-directive": "^1.0.0",
