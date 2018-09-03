@@ -1,0 +1,75 @@
+$axis-text-color: #999;
+$axis-line-color: #ddd;
+$wt-color: #EE0053;
+$mut-color: #008CFE;
+
+$subplot-medium-green-color: green;
+$subplot-light-green-color: lighten($subplot-medium-green-color, 15);
+$subplot-dark-green-color: darken($subplot-medium-green-color, 15);
+
+@mixin plot-text() {
+  font-size: 12px;
+  font-family: "arial";
+  fill: #999;
+  font-weight: bold;
+}
+
+.box-plot {
+  .x-axis-label {
+    text-anchor: middle;
+  }
+  .y-axis-label {
+    text-anchor: end;
+  }
+  .whisker, .iqr-box, .median, .outlier {
+    fill: none;
+    &.wt {
+      stroke: $wt-color;
+    }
+    &.mut {
+      stroke: $mut-color;
+    }
+    &.subplot-1 {
+      stroke: $subplot-light-green-color;
+      fill: rgba($subplot-light-green-color, 0.2);
+    }
+    &.subplot-2 {
+      stroke: $subplot-medium-green-color;
+      fill: rgba($subplot-medium-green-color, 0.2);
+    }
+    &.subplot-3 {
+      stroke: $subplot-dark-green-color;
+      fill: rgba($subplot-dark-green-color, 0.2);
+    }
+  }
+  .coeff, .pval {
+    @include plot-text();
+    text-anchor: end;
+  }
+  .median {
+    stroke-width: 2;
+  }
+  .axes {
+    .y-axis .domain {
+      stroke: $axis-line-color;
+      stroke-width: 2;
+    }
+    .x-axis .domain {
+      stroke: $axis-line-color;
+      stroke-width: 2;
+    }
+    .axis-label text {
+      @include plot-text();
+    }
+    .tick {
+      line {
+        stroke: $axis-line-color;
+      }
+      text {
+        fill: $axis-text-color;
+        font-weight: bold;
+        text-transform: uppercase;
+      }
+    }
+  }
+}

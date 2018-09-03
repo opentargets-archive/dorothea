@@ -31,7 +31,7 @@
 
 <script>
 import resize from 'vue-resize-directive'
-import volcanoPlot from 'volcano-plot'
+import volcanoPlot from '../../charts/volcano-plot'
 import router from '../../router'
 import * as _ from 'lodash'
 import * as d3 from 'd3'

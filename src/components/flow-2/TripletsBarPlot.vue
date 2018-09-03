@@ -10,7 +10,7 @@
 </template>
 
 <script>
-import barPlot from 'bar-plot'
+import barPlot from '../../charts/bar-plot'
 
 export default {
   props: ['plotData'],

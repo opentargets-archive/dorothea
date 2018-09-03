@@ -1,0 +1,48 @@
+@mixin plot-text() {
+  font-size: 12px;
+  font-family: "arial";
+  fill: #999;
+}
+
+$axis-text-color: #999;
+$axis-line-color: #ddd;
+
+.bar-plot {
+  // .bars rect {
+  //   fill: green;
+  // }
+  .y-axis-label text {
+    text-anchor: end;
+  }
+  .axis-label, .title text {
+    @include plot-text();
+  }
+  .title text {
+    text-anchor: start;
+  }
+  .legend .label {
+    font-size: 12px;
+    fill: $axis-text-color;
+  }
+  .axes {
+    .y-axis .domain {
+      stroke: $axis-line-color;
+      stroke-width: 1;
+    }
+    .x-axis .domain {
+      stroke: $axis-line-color;
+      stroke-width: 1;
+    }
+    .axis-label text {
+      @include plot-text();
+    }
+    .tick {
+      line {
+        stroke: $axis-line-color;
+      }
+      text {
+        fill: $axis-text-color;
+      }
+    }
+  }
+}

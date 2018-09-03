@@ -6,10 +6,10 @@ require(`./themes/app.${__THEME}.styl`)
 // require(`quasar/dist/quasar.${__THEME}.css`)
 // ==============================
 // Custom charts
-require(`../node_modules/volcano-plot/index.scss`)
-require(`../node_modules/sample-plot/index.scss`)
-require(`../node_modules/bar-plot/index.scss`)
-require(`../node_modules/effect-plot/index.scss`)
+require(`./charts/volcano-plot.scss`)
+require(`./charts/sample-plot.scss`)
+require(`./charts/bar-plot.scss`)
+require(`./charts/effect-plot.scss`)
 
 // multiselect
 require(`../node_modules/vue-multiselect/dist/vue-multiselect.min.css`)

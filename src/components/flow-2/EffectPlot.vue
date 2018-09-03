@@ -40,8 +40,7 @@
 </template>
 
 <script>
-// import samplePlot from 'sample-plot'
-import effectPlot from 'effect-plot'
+import effectPlot from '../../charts/effect-plot'
 import { mapGetters } from 'vuex'
 
 export default {

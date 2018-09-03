@@ -1,0 +1,170 @@
+$axis-text-color: #999;
+$axis-line-color: #ddd;
+$circle-color: #777;
+$tooltip-background-color: transparentize(#fff, 0.2);
+$emphasis-text-color: #555;
+$regression-color: #3a3;
+$dorothea-selected: black;
+$dorothea-highlighted: purple;
+
+@mixin plot-text() {
+  font-size: 12px;
+  font-family: "arial";
+  fill: #999;
+}
+
+.sample-plot {
+  cursor: pointer;
+  .circles {
+    circle {
+      stroke: $circle-color;
+      stroke-width: 1;
+      // fill: #ddd;
+      // fill-opacity: 0.5;
+    }
+    text {
+      text-anchor: middle;
+      fill: $emphasis-text-color;
+      font-size: 10px;
+      stroke-opacity: 0;
+      fill-opacity: 1;
+    }
+  }
+
+  .whisker, .iqr-box, .median, .outlier {
+    fill: #999;
+    fill-opacity: 0.3;
+    stroke: #999;
+    stroke-opacity: 0.5;
+    stroke-width: 2;
+    pointer-events: none;
+  }
+
+  .coeff, .pval {
+    @include plot-text();
+    text-anchor: end;
+  }
+
+  .x-axis-label {
+    text-anchor: middle;
+  }
+  .y-axis-label {
+    text-anchor: middle;
+  }
+
+  .x-zero-line, .y-zero-line {
+    stroke: #999;
+  }
+
+  .selected-circle {
+    circle {
+      fill: $dorothea-selected;
+    }
+    text {
+      fill: $dorothea-selected;
+    }
+  }
+  .hovered-circle {
+    circle {
+      fill: $dorothea-highlighted;
+    }
+    text {
+      fill: $dorothea-highlighted;
+    }
+    rect {
+      fill: $tooltip-background-color;
+    }
+  }
+  .selected-circle, .hovered-circle {
+    text {
+      text-anchor: middle;
+      font-size: 11px;
+      font-weight: bold;
+      stroke-opacity: 0;
+      fill-opacity: 1;
+    }
+  }
+
+  .axes {
+    .y-axis .domain {
+      stroke: $axis-line-color;
+      stroke-width: 1;
+    }
+    .x-axis .domain {
+      stroke: $axis-line-color;
+      stroke-width: 1;
+    }
+    .axis-label text, .title text {
+      @include plot-text();
+    }
+    .tick {
+      line {
+        stroke: $axis-line-color;
+      }
+      text {
+        fill: $axis-text-color;
+      }
+    }
+    .separator-lines line {
+      stroke: green;
+      stroke-dasharray: 5, 5;
+    }
+  }
+
+  .regression {
+    line {
+      stroke: $regression-color;
+      stroke-width: 2;
+    }
+    text {
+      fill: $regression-color;
+      fill-opacity: 1;
+      font-weight: bold;
+      font-size: 12px;
+      text-anchor: end;
+    }
+    rect {
+      fill: $regression-color;
+      fill-opacity: 0.3;
+      stroke: $regression-color;
+      stroke-opacity: 1;
+    }
+  }
+
+  .legend {
+    text {
+      font-size: 12px;
+    }
+    .cell {
+      circle {
+        stroke: #555;
+        stroke-width: 0;
+      }
+      &.selected {
+        circle {
+          stroke-width: 2;
+        }
+      }
+    }
+  }
+
+  &.d3-tip {
+    background-color: $tooltip-background-color;
+    border: 1px solid $axis-line-color;
+    @include plot-text();
+    color: $axis-text-color;
+    th, td {
+      border-bottom: 1px solid $axis-line-color;
+    }
+    .emphasis-row td {
+      font-size: 16px;
+      color: $emphasis-text-color;
+    }
+    tr:last-child td {
+      border-bottom: none;
+    }
+    td:nth-child(2) {
+      color: $emphasis-text-color;
+    }
+  }
+}

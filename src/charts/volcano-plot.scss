@@ -1,0 +1,201 @@
+@mixin plot-text() {
+  font-size: 12px;
+  font-family: "arial";
+  fill: #999;
+}
+
+$dorothea-peach: #EE0053;
+$dorothea-blue: #008CFE;
+$emphasis-text-color: #999;
+$axis-text-color: #999;
+$axis-line-color: #ddd;
+$not-significant-color: $emphasis-text-color;
+// $significant-positive-effect-color: $dorothea-peach;
+// $significant-negative-effect-color: $dorothea-blue;
+
+$significant-positive-effect-color: #B8D9BE;
+$significant-negative-effect-color: #B7E9F3;
+
+// $significant-positive-effect-color: #a73b2a; //$dorothea-peach;
+// $significant-negative-effect-color: #1f9eb7; //darken(#B7E9F3, 20%);
+$tooltip-background-color: transparentize(#fff, 0.2);
+$dorothea-selected: black;
+$dorothea-highlighted: purple;
+
+.volcano-plot-overlay {
+  top: 0;
+  left: 0;
+  position: absolute;
+  pointer-events: none;
+  cursor: pointer;
+  z-index: 1;
+
+  .selected-circle {
+    circle {
+      fill: $dorothea-selected;
+    }
+    text {
+      fill: $dorothea-selected;
+    }
+  }
+  .hovered-circle {
+    circle {
+      fill: $dorothea-highlighted;
+    }
+    text {
+      fill: $dorothea-highlighted;
+    }
+    rect {
+      fill: $tooltip-background-color;
+    }
+  }
+
+  text {
+    text-anchor: middle;
+    font-size: 11px;
+    font-weight: bold;
+    stroke-opacity: 0;
+    fill-opacity: 1;
+  }
+}
+.volcano-plot {
+  cursor: pointer;
+  .container {
+    position: relative;
+    float: left;
+  }
+  canvas {
+    position: absolute;
+    top: 0;
+    left: 0;
+  }
+  .circles {
+    // unless significant, default to hollow grey circles
+    circle {
+      stroke: $not-significant-color;
+      fill: $not-significant-color;
+      stroke-opacity: 1;
+      fill-opacity: 0;
+      &.significant {
+        stroke: $significant-negative-effect-color;
+        fill: $significant-negative-effect-color;
+        stroke-opacity: 1;
+        fill-opacity: 0.3;
+        &.positive-x {
+          stroke: $significant-positive-effect-color;
+          fill: $significant-positive-effect-color;
+        }
+      }
+    }
+    text {
+      text-anchor: middle;
+      fill: $emphasis-text-color;
+      font-size: 10px;
+      stroke-opacity: 0;
+      fill-opacity: 1;
+      &.significant {
+        fill: $significant-negative-effect-color;
+        &.positive-x {
+          fill: $significant-positive-effect-color;
+        }
+      }
+    }
+  }
+  .significance-cutoff {
+    line {
+      stroke: $axis-text-color;
+      stroke-dasharray: 5 3 2 3;
+    }
+  }
+  .axis-label, .significance-cutoff {
+    text-anchor: end;
+  }
+  .x-axis-label {
+    text-anchor: middle;
+  }
+  .axis-label text, .significance-cutoff text, .title text {
+    @include plot-text();
+  }
+  .x-zero-line {
+    stroke: $emphasis-text-color;
+  }
+  .axes {
+    .y-axis .domain {
+      stroke: $axis-line-color;
+      stroke-width: 0;
+      fill: none;
+    }
+    .x-axis .domain {
+      stroke: $axis-line-color;
+      stroke-width: 1;
+      fill: none;
+    }
+    .tick {
+      line {
+        stroke: $axis-line-color;
+      }
+      text {
+        fill: $axis-text-color;
+      }
+    }
+  }
+  .sensitivity-resistance-annotation {
+    polygon {
+      stroke-opacity: 1;
+      &.resistance {
+        stroke: $significant-positive-effect-color;
+        fill: $significant-positive-effect-color;
+      }
+      &.sensitivity {
+        stroke: $significant-negative-effect-color;
+        fill: $significant-negative-effect-color;
+      }
+    }
+    text {
+      font-size: 12px;
+      // font-weight: bold;
+      fill: #333;
+      &.resistance {
+        text-anchor: end;
+      }
+      &.sensitivity {
+        text-anchor: start;
+      }
+    }
+  }
+  &.d3-tip {
+    // custom
+    &.show {
+      position: absolute;
+      pointer-events: all;
+      box-sizing: border-box;
+      opacity: 1;
+
+    }
+    &.hidden {
+      opacity: 0;
+      pointer-events: none;
+    }
+
+
+
+    // old
+    background-color: $tooltip-background-color;
+    border: 1px solid $axis-line-color;
+    @include plot-text();
+    color: $axis-text-color;
+    th, td {
+      border-bottom: 1px solid $axis-line-color;
+    }
+    .emphasis-row td {
+      font-size: 16px;
+      color: $emphasis-text-color;
+    }
+    tr:last-child td {
+      border-bottom: none;
+    }
+    td:nth-child(2) {
+      color: $emphasis-text-color;
+    }
+  }
+}

@@ -36,7 +36,7 @@
 
 <script>
 import resize from 'vue-resize-directive'
-import samplePlot from 'sample-plot'
+import samplePlot from '../../charts/sample-plot'
 import router from '../../router'
 import * as _ from 'lodash'
 import * as d3 from 'd3'
