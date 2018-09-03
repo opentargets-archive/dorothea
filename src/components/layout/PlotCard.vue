@@ -62,7 +62,7 @@ import resize from 'vue-resize-directive'
 import * as d3 from 'd3'
 import json2csv from 'json2csv'
 import FileSaver from 'file-saver'
-import tntUtils from 'tnt.utils'
+import png from '../../charts/png.js'
 
 export default {
   props: [
@@ -116,7 +116,7 @@ export default {
       }
       else {
         // use default
-        let pngExporter = tntUtils.png()
+        let pngExporter = png()
                                   .filename(this.filename + '.png')
                                   .scale_factor(1)
                                   // TODO: Fix the stylesheet to be just the needed (not all)
